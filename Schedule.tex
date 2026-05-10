@@ -1,0 +1,125 @@
+\documentclass[11pt]{article}
+
+% Page layout
+\usepackage[letterpaper,landscape,margin=0.35in]{geometry}
+
+% Tables and layout
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{ragged2e}
+\usepackage{adjustbox}
+
+% Formatting
+\usepackage{xcolor}
+\usepackage{setspace}
+\usepackage{enumitem}
+\usepackage{microtype}
+
+% Links
+\usepackage{hyperref}
+
+% Section heading color
+\definecolor{sectioncolor}{HTML}{0047AB}
+
+% Hyperlink setup
+\hypersetup{
+    colorlinks=true,
+    linkcolor=sectioncolor,
+    urlcolor=sectioncolor,
+    citecolor=sectioncolor
+}
+
+% Custom column types
+\newcolumntype{L}[1]{>{\RaggedRight\arraybackslash}p{#1}}
+
+% Compact table spacing
+\renewcommand{\arraystretch}{0.92}
+\setlength{\tabcolsep}{3pt}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{1pt}
+
+\begin{document}
+\pagestyle{empty}
+\setstretch{1.10}
+
+\vspace*{-0.45in}
+
+\begin{center}
+{\large \textbf{\textcolor{sectioncolor}{EC 410K/EC 610I: Machine Learning in Economics}}} \\[-1pt]
+{\small Tentative Course Schedule, Spring 2026 \quad | \quad Wilfrid Laurier University \quad | \quad M. Jahangir Alam, PhD} \\[-2pt]
+\rule{\textwidth}{0.35pt}
+\end{center}
+
+\vspace{-0.18in}
+
+{\scriptsize
+\textbf{Note:} This schedule is tentative and may be adjusted depending on class progress, data availability, and project needs. Module paper presentations begin on Tuesday, May 12. There will be no class on Tuesday, June 16. The last six class sessions are reserved for group presentations: the first three sessions are online proposal presentations, and the final three sessions are final poster presentations. The final five-page, two-column research report and poster are due on Tuesday, August 4.
+}
+
+\vspace{0.04in}
+
+\begin{adjustbox}{max width=\textwidth, max totalheight=0.84\textheight, keepaspectratio}
+\scriptsize
+\begin{tabularx}{\textwidth}{@{}L{0.045\textwidth} L{0.075\textwidth} L{0.20\textwidth} L{0.13\textwidth} X@{}}
+\toprule
+\textbf{Week} & \textbf{Date} & \textbf{Topic / Activity} & \textbf{Student / Group} & \textbf{Paper / Deliverable} \\
+\midrule
+
+1 & Tue, May 5 & Course introduction & -- & Course overview; assessment structure; project expectations; Python and AI-assisted tools \\
+
+1 & Thu, May 7 & Module 1: Prediction and Causality & -- & Introduction to prediction, causal inference, model validation, and empirical research design in economics \\
+
+2 & Tue, May 12 & Module 1: Machine Learning and Economics & \underline{\hspace{2.1cm}} & Athey (2019), \textit{The Impact of Machine Learning on Economics} \\
+
+2 & Thu, May 14 & Module 2: Supervised Learning in Economics & \underline{\hspace{2.1cm}} & Mullainathan and Spiess (2017), \textit{Machine Learning: An Applied Econometric Approach} \\
+
+3 & Tue, May 19 & Module 2: High-Dimensional Prediction & \underline{\hspace{2.1cm}} & Gu, Kelly, and Xiu (2020), \textit{Empirical Asset Pricing via Machine Learning} \\
+
+3 & Thu, May 21 & Module 3: Linear Models and Regularization & \underline{\hspace{2.1cm}} & Chernozhukov, Newey, and Singh (2022), \textit{Automatic Debiased Machine Learning of Causal and Structural Effects} \\
+
+4 & Tue, May 26 & Module 3: Policy Learning and Observational Data & \underline{\hspace{2.1cm}} & Athey and Wager (2021), \textit{Policy Learning with Observational Data} \\
+
+4 & Thu, May 28 & Coding: Lasso, Ridge, and Elastic Net & -- & Python implementation: regularization, variable selection, prediction, and economic interpretation \\
+
+5 & Tue, Jun 2 & Module 4: Machine Learning for Causal Inference & \underline{\hspace{2.1cm}} & Chernozhukov, Chetverikov, Demirer, et al. (2018), \textit{Double/Debiased Machine Learning for Treatment and Structural Parameters} \\
+
+5 & Thu, Jun 4 & Module 4: Heterogeneous Treatment Effects & \underline{\hspace{2.1cm}} & Athey, Tibshirani, and Wager (2019), \textit{Generalized Random Forests} \\
+
+6 & Tue, Jun 9 & Module 5: Tree-Based Methods and Explainability & \underline{\hspace{2.1cm}} & Lundberg and Lee (2017), \textit{A Unified Approach to Interpreting Model Predictions} \\
+
+6 & Thu, Jun 11 & Module 5: SHAP and Interpretable Tree Models & \underline{\hspace{2.1cm}} & Lundberg, Erion, Chen, et al. (2020), \textit{From Local Explanations to Global Understanding with Explainable AI for Trees} \\
+
+7 & Tue, Jun 16 & No Class & -- & No class meeting \\
+
+7 & Thu, Jun 18 & Module 6: Deep Learning Forecasting & \underline{\hspace{2.1cm}} & Alam and Isakin (2026), \textit{Dispersion of News Sentiment and Stock Price Return: Applying a Deep Learning Approach} \\
+
+8 & Tue, Jun 23 & Module 6: Multi-Horizon Forecasting & \underline{\hspace{2.1cm}} & Lim, Arik, Loeff, and Pfister (2021), \textit{Temporal Fusion Transformers for Interpretable Multi-Horizon Time Series Forecasting} \\
+
+8 & Thu, Jun 25 & Module 7: Text Data and Monetary Policy & \underline{\hspace{2.1cm}} & Aruoba and Drechsel (2024), \textit{Identifying Monetary Policy Shocks: A Natural Language Approach} \\
+
+9 & Tue, Jun 30 & Module 7: Text as Data in Economics & \underline{\hspace{2.1cm}} & Gentzkow, Kelly, and Taddy (2019), \textit{Text as Data} \\
+
+9 & Thu, Jul 2 & Module 7: Generative AI and Forecasting & \underline{\hspace{2.1cm}} & Alam, Boyle, Li, and Sekhposyan (2026), \textit{ChatMacro: Evaluating Inflation Forecasts of Generative AI} \\
+
+10 & Tue, Jul 7 & Empirical Replication Workshop & -- & Replication assignment due; groups finalize machine learning extension plans \\
+
+10 & Thu, Jul 9 & Online Proposal Presentations & Group 1: \underline{\hspace{1.4cm}}; Group 2: \underline{\hspace{1.4cm}} & Group 1: Acemoglu et al. (2001); Group 2: Nunn (2008) \\
+
+11 & Tue, Jul 14 & Online Proposal Presentations & Group 3: \underline{\hspace{1.4cm}}; Group 4: \underline{\hspace{1.4cm}} & Group 3: Goldin et al. (2016); Group 4: Hansen (2015) \\
+
+11 & Thu, Jul 16 & Online Proposal Presentations & Group 5: \underline{\hspace{1.4cm}}; Group 6: \underline{\hspace{1.4cm}} & Group 5: Anderson (2017); Group 6: Autor, Dorn, and Hanson (2013) \\
+
+12 & Tue, Jul 21 & Final Poster Presentations & Group 1: \underline{\hspace{1.4cm}}; Group 2: \underline{\hspace{1.4cm}} & Group 1: Acemoglu et al. (2001); Group 2: Nunn (2008) \\
+
+12 & Thu, Jul 23 & Final Poster Presentations & Group 3: \underline{\hspace{1.4cm}}; Group 4: \underline{\hspace{1.4cm}} & Group 3: Goldin et al. (2016); Group 4: Hansen (2015) \\
+
+13 & Tue, Jul 28 & Final Poster Presentations / Wrap-Up & Group 5: \underline{\hspace{1.4cm}}; Group 6: \underline{\hspace{1.4cm}} & Group 5: Anderson (2017); Group 6: Autor, Dorn, and Hanson (2013) \\
+
+-- & Tue, Aug 4 & Final Deadline & -- & Final five-page, two-column research report and poster due \\
+
+\bottomrule
+\end{tabularx}
+\end{adjustbox}
+
+\end{document}

@@ -1,0 +1,185 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=0.85in]{geometry}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{setspace}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{array}
+
+\definecolor{sectioncolor}{HTML}{0047AB}
+\definecolor{lightblue}{HTML}{EEF5FF}
+\definecolor{softgray}{HTML}{F7F7F7}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=sectioncolor,
+    urlcolor=sectioncolor,
+    citecolor=sectioncolor
+}
+
+\newcommand{\coloredsection}[1]{\vspace{2pt}\section*{\large\textcolor{sectioncolor}{#1}}\vspace{-2pt}}
+\newcommand{\subhead}[1]{\vspace{4pt}\noindent\textbf{#1}}
+\setlist[itemize]{leftmargin=1.35em, itemsep=1.5pt, topsep=2pt}
+\setlist[enumerate]{leftmargin=1.55em, itemsep=1.5pt, topsep=2pt}
+\renewcommand{\arraystretch}{1.18}
+
+\begin{document}
+\setstretch{1.02}
+
+\begin{center}
+    {\LARGE \textbf{\textcolor{sectioncolor}{EC 410K/EC 610I: Machine Learning in Economics}}}\\[4pt]
+    {\large \textbf{Module Paper, Method, and Coding Presentation Guidelines}}\\[3pt]
+    {\normalsize Spring 2026 | Wilfrid Laurier University}
+\end{center}
+
+\vspace{6pt}
+\hrule
+\vspace{10pt}
+
+\coloredsection{Overview and Purpose}
+
+This assignment is worth \textbf{30\%} of the course grade. Each presenter will read one selected \textbf{machine learning or methodological paper} from the course modules, explain the main method, and show how that method could be applied to one of the \textbf{replicated economics papers} in the course. Presenters will also provide a short, reproducible \textbf{Python coding demonstration}.
+
+\vspace{5pt}
+\noindent The goal is not only to summarize a paper. The goal is to teach a method, connect it to an economic research question, and show how it can support a machine learning extension of a replicated paper.
+
+\coloredsection{What Presenters Must Do}
+
+Presenters should organize the presentation around four tasks:
+
+\begin{enumerate}
+    \item \textbf{Explain the machine learning paper.} Identify the research question, motivation, data or setting, contribution, main findings, and limitations.
+    \item \textbf{Teach the method.} Explain what the method does, what problem it solves, what data it requires, what output it produces, and how it differs from a standard econometric approach.
+    \item \textbf{Connect the method to a replicated economics paper.} Choose one replicated paper from the course and explain how the method could extend, improve, or reinterpret that paper.
+    \item \textbf{Demonstrate the method in Python.} Provide a short, clear, and reproducible coding example using GitHub, Google Colab, or both.
+\end{enumerate}
+
+\coloredsection{Connecting the ML Method to a Replicated Paper}
+
+This is a central part of the presentation. Presenters must propose a concrete application of the method learned from the machine learning paper to one replicated economics paper.
+
+\subhead{The presentation should answer:}
+\begin{itemize}
+    \item Which replicated economics paper is connected to the machine learning method?
+    \item What is the original research question and empirical strategy in that paper?
+    \item What method was learned from the machine learning paper?
+    \item How would the method be applied: prediction, classification, variable selection, causal inference, treatment-effect heterogeneity, forecasting, policy targeting, text analysis, or interpretation?
+    \item What would be the outcome variable, predictors, treatment, controls, or text data?
+    \item How would the model be evaluated?
+    \item What economic insight or contribution could this extension provide?
+    \item What limitations or risks would remain?
+\end{itemize}
+
+\noindent The connection must be specific. For example, instead of saying, ``Random forest can be applied to the paper,'' explain the outcome variable, predictors, model objective, validation strategy, and economic interpretation.
+
+\coloredsection{Examples of Possible Method Applications}
+
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{0.25\textwidth} >{\raggedright\arraybackslash}p{0.31\textwidth} X}
+\toprule
+\textbf{Method} & \textbf{Use} & \textbf{Possible connection to a replicated paper} \\
+\midrule
+Lasso or Ridge & Variable selection and high-dimensional controls & Select controls or predictors and compare results with the original regression specification. \\
+Random Forests or Boosting & Prediction, nonlinearities, and classification & Predict economic outcomes and compare out-of-sample performance with a baseline regression. \\
+Double/Debiased Machine Learning & Causal inference with flexible controls & Estimate treatment effects while using machine learning for nuisance functions. \\
+Causal Forests & Heterogeneous treatment effects & Examine whether effects differ across groups, regions, firms, or households. \\
+Policy Learning & Targeting and treatment assignment & Study whether a policy could be targeted more effectively based on predicted gains. \\
+SHAP or Explainable AI & Model interpretation & Explain which variables drive predictions in an economic application. \\
+Deep Learning or Forecasting Models & Time-series or financial forecasting & Compare forecasting performance for macroeconomic or financial outcomes. \\
+Natural Language Processing & Text measurement and document analysis & Use speeches, news, policy documents, or historical text to construct variables. \\
+\bottomrule
+\end{tabularx}
+
+\coloredsection{Suggested Presentation Structure}
+
+A clear presentation may follow this structure:
+
+\begin{enumerate}
+    \item Title slide: paper title, authors, presenter name, and module.
+    \item Motivation and research question.
+    \item Data, setting, or methodological problem.
+    \item Main method: intuition and basic workflow.
+    \item Main contribution and findings of the machine learning paper.
+    \item Connection to one replicated economics paper.
+    \item Proposed machine learning extension: outcome, predictors, method, and evaluation.
+    \item Python coding demonstration.
+    \item Economic interpretation and limitations.
+    \item Discussion questions for the class.
+\end{enumerate}
+
+\coloredsection{Python Coding Demonstration}
+
+The coding demonstration should be short, reproducible, and directly connected to the method. It does not need to replicate the full paper. A simple and well-explained example is better than a complicated example that cannot be explained clearly.
+
+\subhead{The code should include:}
+\begin{itemize}
+    \item a short description of the dataset or simulated data;
+    \item documented Python code;
+    \item implementation of the relevant method;
+    \item a model output, figure, table, prediction, treatment-effect estimate, forecast, or interpretation measure;
+    \item appropriate validation or evaluation where relevant;
+    \item a brief economic interpretation of the output.
+\end{itemize}
+
+\noindent Students may use packages such as \texttt{pandas}, \texttt{numpy}, \texttt{matplotlib}, \texttt{scikit-learn}, \texttt{statsmodels}, \texttt{shap}, \texttt{TensorFlow}, or \texttt{PyTorch}.
+
+\coloredsection{Submission Instructions}
+
+All materials must be submitted through the \textbf{Module Paper, Method, and Coding Presentation} page on the Capstone Project Portal. Presenters should submit \textbf{one main presentation URL}. This may be a link to Google Slides, PowerPoint Online, Notion, OneDrive, Overleaf, a PDF, or another accessible presentation format.
+
+\subhead{In the optional paper/module title field, use a short label, for example:}
+\begin{quote}
+\textit{Module 4 - Double/Debiased Machine Learning - Connection to Hansen (2015)}
+\end{quote}
+
+\subhead{The main presentation link must include:}
+\begin{itemize}
+    \item the slides or presentation notes;
+    \item the full citation of the machine learning paper;
+    \item the method learned from the paper;
+    \item the replicated paper connection;
+    \item the proposed machine learning extension;
+    \item a \textbf{GitHub} and/or \textbf{Google Colab} link for the Python code;
+    \item data links or instructions needed to run the code.
+\end{itemize}
+
+\noindent GitHub is recommended for complete project folders and README files. Google Colab is recommended for a simple classroom demonstration. All links must be accessible before class. Broken, private, or missing links may reduce the grade.
+
+\coloredsection{Expectations for Non-Presenting Students}
+
+Students who are not presenting must read the assigned machine learning paper before class and submit comments through the Capstone Project Portal. Comments should show that students understand the paper, the method, and how the method might apply to a replicated economics paper.
+
+\subhead{Each comment submission should include:}
+\begin{itemize}
+    \item one short summary of the machine learning paper;
+    \item one comment on the method learned from the paper;
+    \item one suggestion for applying the method to a replicated paper;
+    \item one critical comment or limitation;
+    \item one question for the presenter.
+\end{itemize}
+
+\noindent Peer authors may remain anonymous to presenters, but the instructor will be able to see full names for participation and grading purposes.
+
+\coloredsection{Assessment Criteria}
+
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}p{0.28\textwidth} X >{\centering\arraybackslash}p{0.11\textwidth}}
+\toprule
+\textbf{Criterion} & \textbf{Description} & \textbf{Weight} \\
+\midrule
+Paper, method, and replicated-paper connection & Clear explanation of the machine learning paper, the method, and a concrete application to one replicated economics paper. & 15\% \\
+Python implementation and interpretation & Working, documented Python demonstration with clear output and economic interpretation. & 10\% \\
+Critical discussion and Q\&A & Thoughtful limitations, discussion questions, and responses to questions from the class. & 5\% \\
+\bottomrule
+\end{tabularx}
+
+\coloredsection{AI-Assisted Tools Policy}
+
+Students may use tools such as ChatGPT or GitHub Copilot for coding support, debugging, explanation, and preparation. Students remain responsible for verifying outputs, understanding the code, explaining methodological choices, and interpreting results. Use of generative AI must be disclosed when it contributes to coding, writing, slides, analysis, or interpretation.
+
+\coloredsection{Final Note}
+
+A strong presentation connects the machine learning paper, the method, the Python implementation, and a feasible application to a replicated economics paper. Students should aim to make the method understandable, reproducible, and economically meaningful.
+
+\end{document}

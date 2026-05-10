@@ -1,0 +1,1346 @@
+
+\documentclass[aspectratio=169,11pt]{beamer}
+
+% ---------- Packages ----------
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb,bm}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{multicol}
+\usepackage{microtype}
+
+% ---------- Theme ----------
+\usetheme{Madrid}
+\usecolortheme{default}
+\definecolor{WLUBlue}{HTML}{0047AB}
+\definecolor{WLUGray}{HTML}{444444}
+\definecolor{WLULight}{HTML}{EEF4FF}
+\definecolor{WLUGold}{HTML}{B9985A}
+
+\setbeamercolor{structure}{fg=WLUBlue}
+\setbeamercolor{title}{fg=white,bg=WLUBlue}
+\setbeamercolor{frametitle}{fg=white,bg=WLUBlue}
+\setbeamercolor{block title}{fg=white,bg=WLUBlue}
+\setbeamercolor{block body}{bg=WLULight,fg=black}
+\setbeamercolor{alertblock title}{fg=white,bg=WLUGold}
+\setbeamercolor{alertblock body}{bg=WLUGold!12,fg=black}
+\setbeamercolor{exampleblock title}{fg=white,bg=WLUGray}
+\setbeamercolor{exampleblock body}{bg=black!4,fg=black}
+
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{%
+  \hfill\scriptsize Module 1: Economic Questions, Prediction, and Causality \quad Slide \insertframenumber\hspace{1em}\vspace{0.6em}
+}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=WLUBlue,
+  urlcolor=WLUBlue,
+  citecolor=WLUBlue
+}
+
+% ---------- Helpers ----------
+\newcommand{\core}[1]{\begin{block}{Core intuition}#1\end{block}}
+\newcommand{\grad}[1]{\begin{alertblock}{Technical layer}#1\end{alertblock}}
+\newcommand{\econ}[1]{\begin{exampleblock}{Economic interpretation}#1\end{exampleblock}}
+\newcommand{\smallcite}[1]{{\scriptsize \textcolor{WLUGray}{#1}}}
+
+\title[ML in Economics]{Module 1: Economic Questions, Prediction, and Causality}
+\subtitle{Machine Learning in Economics}
+\author{EC 410K / EC 610I}
+\institute{Wilfrid Laurier University}
+\date{Spring 2026}
+
+\begin{document}
+
+% =========================================================
+\begin{frame}
+  \titlepage
+  \vspace{-0.5em}
+  \begin{center}
+  \small
+  This module builds the conceptual bridge between econometrics, machine learning, and policy-relevant empirical work.
+  \end{center}
+\end{frame}
+
+% =========================================================
+\begin{frame}{Why this module matters}
+\core{
+Before choosing Lasso, random forests, neural networks, instrumental variables, regression discontinuity, or difference-in-differences, we must decide what question we are answering.
+}
+\begin{itemize}
+  \item Machine learning is excellent at discovering predictive patterns.
+  \item Economics often asks causal and policy questions.
+  \item The empirical strategy should follow the economic question, not the other way around.
+\end{itemize}
+\econ{
+A model that predicts poverty well may still fail to identify whether a transfer program reduces poverty.
+}
+\end{frame}
+
+% =========================================================
+\begin{frame}{Learning goals}
+By the end of Module 1, students should be able to:
+\begin{enumerate}
+  \item Distinguish prediction questions from causal questions.
+  \item Translate an economic question into an estimand.
+  \item Explain why endogeneity and selection bias create causal problems.
+  \item Identify the main logic behind common identification strategies.
+  \item Explain how machine learning can support, but not replace, identification.
+  \item Read replication papers with a clear map: question, data, design, estimand, threats, and possible ML extension.
+\end{enumerate}
+\end{frame}
+
+% =========================================================
+\begin{frame}{How the module connects to the course}
+\begin{columns}
+\begin{column}{0.48\textwidth}
+\begin{block}{Module 1 foundation}
+\begin{itemize}
+  \item Economic questions
+  \item Prediction versus causality
+  \item Endogeneity
+  \item Selection
+  \item Identification
+\end{itemize}
+\end{block}
+\end{column}
+\begin{column}{0.48\textwidth}
+\begin{alertblock}{Later modules build on this}
+\begin{itemize}
+  \item Supervised learning
+  \item Regularization
+  \item Causal ML
+  \item Trees and interpretability
+  \item Forecasting
+  \item NLP and generative AI
+  \item Replication and project work
+\end{itemize}
+\end{alertblock}
+\end{column}
+\end{columns}
+\end{frame}
+
+% =========================================================
+\begin{frame}{The central distinction}
+\begin{center}
+\Large
+Prediction asks: \quad ``What will happen?''
+
+\vspace{1em}
+
+Causal inference asks: \quad ``What would happen if we changed something?''
+\end{center}
+
+\vspace{1em}
+\begin{block}{A simple rule}
+If the question contains a policy, treatment, intervention, rule, threshold, exposure, institution, or historical shock, it is probably a causal question.
+\end{block}
+\end{frame}
+
+% =========================================================
+\begin{frame}{Prediction questions}
+\core{
+Prediction aims to estimate an unknown outcome for an observation.
+}
+\[
+\widehat{Y}_i = \widehat{f}(X_i)
+\]
+\begin{itemize}
+  \item Who is likely to default on a loan?
+  \item Which counties will experience employment decline?
+  \item Which Medicare drug plans will attract subsidized enrollees?
+  \item Which regions are likely to have low income today?
+\end{itemize}
+\grad{
+The target is a prediction function $\widehat f$, evaluated using out-of-sample performance such as RMSE, MAE, accuracy, AUC, or log loss.
+}
+\end{frame}
+
+% =========================================================
+\begin{frame}{Causal questions}
+\core{
+Causal inference asks about a counterfactual: what would have happened to the same unit under a different treatment or policy?
+}
+\[
+\tau_i = Y_i(1)-Y_i(0)
+\]
+\begin{itemize}
+  \item Did colonial institutions affect modern income?
+  \item Did exposure to slave trades affect current economic performance?
+  \item Did stronger drunk-driving sanctions reduce recidivism?
+  \item Did import competition from China reduce U.S. manufacturing employment?
+\end{itemize}
+\grad{
+The target is usually an estimand such as ATE, ATT, LATE, CATE, or a policy value function.
+}
+\end{frame}
+
+% =========================================================
+\begin{frame}{Prediction versus causality: same data, different question}
+Suppose we observe workers with earnings $Y$, training status $D$, and characteristics $X$.
+\begin{columns}
+\begin{column}{0.48\textwidth}
+\begin{block}{Prediction}
+\[
+\widehat{Y} = \widehat f(D,X)
+\]
+Goal: predict earnings accurately.
+\begin{itemize}
+  \item Use all predictive variables.
+  \item Care about test error.
+  \item Coefficients need not be causal.
+\end{itemize}
+\end{block}
+\end{column}
+\begin{column}{0.48\textwidth}
+\begin{alertblock}{Causality}
+\[
+\tau = E[Y(1)-Y(0)]
+\]
+Goal: estimate effect of training.
+\begin{itemize}
+  \item Need a credible comparison group.
+  \item Need assumptions or design.
+  \item Predictive variables may be confounders, mediators, or colliders.
+\end{itemize}
+\end{alertblock}
+\end{column}
+\end{columns}
+\end{frame}
+
+% =========================================================
+\begin{frame}{A prediction model can be useful and non-causal}
+\begin{block}{Example}
+A random forest predicts unemployment using age, education, industry, location, and prior earnings.
+\end{block}
+\begin{itemize}
+  \item It may identify workers at risk.
+  \item It may help target outreach.
+  \item But it does not tell us whether a training program works.
+\end{itemize}
+\econ{
+Prediction can improve policy administration even when it does not estimate causal effects. For example, a government agency may use prediction to screen who is at risk, then evaluate the treatment using a randomized or quasi-experimental design.
+}
+\end{frame}
+
+% =========================================================
+\begin{frame}{Why causal inference is hard}
+For each unit $i$, we would like to observe both:
+\[
+Y_i(1) \quad \text{and} \quad Y_i(0)
+\]
+But we only observe one:
+\[
+Y_i = D_iY_i(1) + (1-D_i)Y_i(0)
+\]
+\begin{block}{Fundamental problem of causal inference}
+We never observe the same unit at the same time both treated and untreated.
+\end{block}
+\end{frame}
+
+% =========================================================
+\begin{frame}{The econometric model is not the identification strategy}
+A regression equation may look causal:
+\[
+Y_i = \alpha + \theta D_i + X_i'\beta + \varepsilon_i
+\]
+But the coefficient $\theta$ is causal only if the variation in $D_i$ is as-good-as-random after conditioning on $X_i$.
+\begin{alertblock}{Key warning}
+Adding more controls, using nonlinear ML, or achieving high $R^2$ does not automatically solve endogeneity.
+\end{alertblock}
+\end{frame}
+
+% =========================================================
+\begin{frame}{Selection bias: the basic problem}
+Observed difference in outcomes:
+\[
+E[Y|D=1]-E[Y|D=0]
+\]
+can be decomposed as:
+\[
+\underbrace{E[Y(1)-Y(0)|D=1]}_{\text{treatment effect on treated}}
++
+\underbrace{E[Y(0)|D=1]-E[Y(0)|D=0]}_{\text{selection bias}}
+\]
+\core{
+Selection bias arises when treated and untreated units would have differed even without treatment.
+}
+\end{frame}
+
+% =========================================================
+\begin{frame}{Selection bias in economic examples}
+\begin{itemize}
+  \item Students who receive tutoring may be more motivated.
+  \item Counties exposed to trade shocks may have different industrial structures before the shock.
+  \item Countries with stronger institutions may differ in geography, disease environment, or colonial history.
+  \item Medicare plans near subsidy thresholds may differ strategically from plans far away.
+\end{itemize}
+\econ{
+The empirical task is not just to compare groups; it is to construct a comparison that approximates the missing counterfactual.
+}
+\end{frame}
+
+% =========================================================
+\begin{frame}{Endogeneity: three common channels}
+\begin{enumerate}
+  \item \textbf{Omitted variables:} $D$ is correlated with unobserved determinants of $Y$.
+  \item \textbf{Reverse causality:} $Y$ affects $D$, not only the other way around.
+  \item \textbf{Measurement error:} the observed treatment or key regressor is noisy.
+\end{enumerate}
+\begin{alertblock}{Economic implication}
+A flexible algorithm can estimate the wrong relationship very accurately if the source of variation is not credible.
+\end{alertblock}
+\end{frame}
+
+% =========================================================
+\begin{frame}{Identification: the credibility problem}
+\core{
+Identification is the argument that the data contain variation capable of answering the causal question.
+}
+\begin{itemize}
+  \item What is the source of variation in treatment?
+  \item Why is it plausibly unrelated to potential outcomes?
+  \item What is the relevant counterfactual group?
+  \item What assumptions are required?
+  \item What evidence can support or challenge those assumptions?
+\end{itemize}
+\grad{
+Estimation is about computing a number. Identification is about whether that number has the meaning we assign to it.
+}
+\end{frame}
+
+% =========================================================
+\begin{frame}{Common causal designs}
+\begin{center}
+\begin{tabular}{p{0.25\textwidth}p{0.32\textwidth}p{0.30\textwidth}}
+\toprule
+Design & Source of variation & Key assumption \\
+\midrule
+Randomized experiment & Random assignment & Randomization worked \\
+Instrumental variables & Instrument shifts treatment & Exclusion and relevance \\
+Regression discontinuity & Threshold rule & Continuity around cutoff \\
+Difference-in-differences & Before-after and treated-control & Parallel trends \\
+Propensity score methods & Observed covariates & Unconfoundedness and overlap \\
+Shift-share design & Differential exposure to aggregate shocks & Valid shares and shocks \\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{frame}
+
+% =========================================================
+\begin{frame}{Where machine learning enters}
+Machine learning can help with:
+\begin{itemize}
+  \item prediction of outcomes,
+  \item flexible control functions,
+  \item high-dimensional covariate adjustment,
+  \item variable selection,
+  \item propensity score estimation,
+  \item heterogeneous treatment effects,
+  \item policy targeting,
+  \item text-as-data measurement,
+  \item robustness and diagnostics.
+\end{itemize}
+\begin{alertblock}{But}
+Machine learning does not itself create exogenous variation.
+\end{alertblock}
+\end{frame}
+
+% =========================================================
+\begin{frame}{Two roles for ML in economics}
+\begin{columns}
+\begin{column}{0.48\textwidth}
+\begin{block}{ML as the main object}
+\begin{itemize}
+  \item Forecast inflation.
+  \item Predict loan default.
+  \item Classify recession risk.
+  \item Extract sentiment from text.
+\end{itemize}
+Evaluation: prediction quality and usefulness.
+\end{block}
+\end{column}
+\begin{column}{0.48\textwidth}
+\begin{alertblock}{ML as a supporting tool}
+\begin{itemize}
+  \item Estimate nuisance functions.
+  \item Select controls.
+  \item Explore heterogeneity.
+  \item Improve policy assignment.
+\end{itemize}
+Evaluation: causal validity plus statistical performance.
+\end{alertblock}
+\end{column}
+\end{columns}
+\end{frame}
+
+% =========================================================
+\begin{frame}{Terminology map}
+\begin{center}
+\begin{tabular}{p{0.25\textwidth}p{0.33\textwidth}p{0.32\textwidth}}
+\toprule
+Term & Prediction meaning & Causal meaning \\
+\midrule
+Target & $Y$ to forecast & Effect or counterfactual \\
+Model & $\widehat f(X)$ & Estimand plus design \\
+Error & Test loss & Bias, variance, invalid inference \\
+Controls & Predictive features & Confounders to adjust for \\
+Validation & Holdout or CV & Balance, pre-trends, placebo tests, sensitivity \\
+Interpretability & Feature importance & Economic mechanism and credible assumptions \\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{frame}
+
+% =========================================================
+\begin{frame}{Estimands: what exactly are we trying to learn?}
+\begin{block}{Average treatment effect}
+\[
+ATE = E[Y(1)-Y(0)]
+\]
+\end{block}
+\begin{block}{Average treatment effect on treated}
+\[
+ATT = E[Y(1)-Y(0)|D=1]
+\]
+\end{block}
+\begin{block}{Conditional average treatment effect}
+\[
+CATE(x)=E[Y(1)-Y(0)|X=x]
+\]
+\end{block}
+\econ{
+Policy often cares about CATE: not only whether a program works on average, but for whom it works best.
+}
+\end{frame}
+
+% =========================================================
+\begin{frame}{From research question to estimand}
+\begin{center}
+\begin{tabular}{p{0.30\textwidth}p{0.30\textwidth}p{0.30\textwidth}}
+\toprule
+Question & Candidate estimand & Example design \\
+\midrule
+Did a policy work? & ATE or ATT & RCT, DiD, RD \\
+Who benefits most? & CATE & Causal forest, subgroup analysis \\
+What happens near a rule cutoff? & Local treatment effect & RD \\
+What is the effect for compliers? & LATE & IV \\
+How should we target a policy? & Policy value & Policy learning \\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{frame}
+
+% =========================================================
+\begin{frame}{A minimal empirical workflow}
+\begin{enumerate}
+  \item State the economic question.
+  \item Define units, outcome, treatment, and timing.
+  \item Decide whether the question is predictive, causal, or both.
+  \item Specify the estimand.
+  \item Identify the source of variation.
+  \item Choose the estimator.
+  \item Validate the design and model.
+  \item Interpret results economically.
+  \item Discuss limitations and external validity.
+\end{enumerate}
+\end{frame}
+
+% =========================================================
+\begin{frame}{What makes an economic question good?}
+A strong empirical question is:
+\begin{itemize}
+  \item \textbf{specific:} clear units, period, outcome, and treatment;
+  \item \textbf{economically meaningful:} linked to theory, policy, or behavior;
+  \item \textbf{empirically feasible:} data can measure the key objects;
+  \item \textbf{identifiable:} credible comparison exists;
+  \item \textbf{interpretable:} results can be explained to economists and policymakers.
+\end{itemize}
+\begin{block}{Bad question}
+Does technology affect workers?
+\end{block}
+\begin{alertblock}{Better question}
+How did rising Chinese import competition affect manufacturing employment in U.S. commuting zones from 1990 to 2007?
+\end{alertblock}
+\end{frame}
+
+% =========================================================
+\begin{frame}{Reading empirical papers: the six-part checklist}
+For every paper in the course replication list, ask:
+\begin{enumerate}
+  \item What is the economic question?
+  \item What is the outcome?
+  \item What is the treatment, exposure, or policy variable?
+  \item What is the comparison group or source of variation?
+  \item What could make the estimate biased?
+  \item How could machine learning extend the analysis?
+\end{enumerate}
+\end{frame}
+
+% =========================================================
+\begin{frame}{Replication papers used throughout this module}
+This module uses examples from papers students may later replicate and extend:
+\begin{enumerate}
+  \item Acemoglu, Johnson, and Robinson (2001): colonial origins and institutions.
+  \item Nunn (2008): slave trades and current economic performance.
+  \item Goldin, Lurie, and McCubbin (2016): Medicare Part D subsidy design.
+  \item Hansen (2015): punishment and deterrence in drunk driving.
+  \item Anderson (2017): college athletic success and institutional outcomes.
+  \item Autor, Dorn, and Hanson (2013): China import competition and local labor markets.
+\end{enumerate}
+\smallcite{These are listed in the course outline as replication and ML-extension papers.}
+\end{frame}
+
+% =========================================================
+\begin{frame}{Paper example 1: AJR (2001)}
+\begin{block}{Question}
+Do colonial-era institutions help explain current differences in economic development?
+\end{block}
+\begin{itemize}
+  \item Outcome: modern income per capita.
+  \item Key explanatory variable: institutional quality.
+  \item Empirical challenge: institutions are endogenous.
+  \item Strategy: use historical settler mortality as an instrument for institutions.
+\end{itemize}
+\smallcite{Acemoglu, Johnson, and Robinson (2001), American Economic Review.}
+\end{frame}
+
+% =========================================================
+\begin{frame}{AJR as a prediction question}
+A pure prediction version might ask:
+\begin{center}
+\Large
+Can we predict current GDP per capita using geography, colonial history, institutions, disease environment, and regional variables?
+\end{center}
+\vspace{0.5em}
+Possible ML tools:
+\begin{itemize}
+  \item random forests or boosting to predict income,
+  \item Lasso to select strong predictors,
+  \item cross-validation to evaluate predictive performance.
+\end{itemize}
+\begin{alertblock}{Limitation}
+High predictive performance would not prove that institutions caused income differences.
+\end{alertblock}
+\end{frame}
+
+% =========================================================
+\begin{frame}{AJR as a causal question}
+The causal version asks:
+\begin{center}
+\Large
+What is the effect of institutions on long-run economic development?
+\end{center}
+\[
+\log GDP_i = \alpha + \theta Institutions_i + X_i'\beta + u_i
+\]
+\begin{itemize}
+  \item $Institutions_i$ may be correlated with geography, colonial strategy, and unobserved historical factors.
+  \item The IV strategy seeks variation in institutions caused by settler mortality.
+  \item The central debate is whether the instrument affects income only through institutions.
+\end{itemize}
+\end{frame}
+
+% =========================================================
+\begin{frame}{AJR: what can ML add?}
+\begin{itemize}
+  \item Predict first-stage institutional quality using high-dimensional historical and geographic variables.
+  \item Use ML to test robustness to many alternative controls.
+  \item Explore heterogeneity: are institutional effects different by continent, resource endowment, or colonial power?
+  \item Use explainability tools to compare predictive importance with causal interpretation.
+\end{itemize}
+\begin{alertblock}{Critical caution}
+ML can strengthen prediction and robustness checks, but the IV exclusion restriction remains an economic and historical argument.
+\end{alertblock}
+\end{frame}
+
+% =========================================================
+\begin{frame}{Paper example 2: Nunn (2008)}
+\begin{block}{Question}
+Did historical slave trades have persistent effects on current economic performance in Africa?
+\end{block}
+\begin{itemize}
+  \item Outcome: modern income or economic performance.
+  \item Treatment/exposure: intensity of slave exports.
+  \item Empirical challenge: regions with greater slave exports may differ systematically.
+  \item Identification relies on historical and geographic variation linked to slave trade intensity.
+\end{itemize}
+\smallcite{Nunn (2008), Quarterly Journal of Economics.}
+\end{frame}
+
+% =========================================================
+\begin{frame}{Nunn: prediction versus causality}
+\begin{columns}
+\begin{column}{0.48\textwidth}
+\begin{block}{Prediction question}
+Can historical, geographic, and institutional variables predict current income across countries or ethnic groups?
+\end{block}
+\end{column}
+\begin{column}{0.48\textwidth}
+\begin{alertblock}{Causal question}
+What was the effect of slave trade exposure on long-run development outcomes?
+\end{alertblock}
+\end{column}
+\end{columns}
+\vspace{1em}
+\econ{
+The causal claim requires an argument that the measured exposure is not merely proxying for pre-existing development, geography, conflict, or other long-run factors.
+}
+\end{frame}
+
+% =========================================================
+\begin{frame}{Nunn: ML extensions}
+Possible student project extensions:
+\begin{itemize}
+  \item Use regularization to assess which historical controls matter most.
+  \item Use tree-based models to predict current economic performance and compare with linear specifications.
+  \item Use causal forests to explore whether persistence differs by colonial history, geography, or precolonial institutions.
+  \item Use sensitivity analysis to assess robustness to alternative control sets.
+\end{itemize}
+\grad{
+A useful project should separate ``ML improves prediction'' from ``ML improves the credibility or precision of a causal estimate.''
+}
+\end{frame}
+
+% =========================================================
+\begin{frame}{Historical persistence papers: common identification issues}
+AJR and Nunn share broad challenges:
+\begin{itemize}
+  \item Many causes of current income are historically intertwined.
+  \item Treatment variables are measured with historical uncertainty.
+  \item Geographic, institutional, and cultural mechanisms may overlap.
+  \item External validity and interpretation require careful historical context.
+\end{itemize}
+\begin{alertblock}{Lesson for ML}
+High-dimensional data can help organize evidence, but historical causal claims still require explicit identification assumptions.
+\end{alertblock}
+\end{frame}
+
+% =========================================================
+\begin{frame}{Paper example 3: Goldin, Lurie, and McCubbin (2016)}
+\begin{block}{Question}
+Do insurers strategically respond to the design of the Medicare Part D Low-Income Subsidy?
+\end{block}
+\begin{itemize}
+  \item Setting: Medicare Part D prescription drug plans.
+  \item Policy feature: subsidy rules create incentives around benchmark premiums.
+  \item Outcome: plan pricing, enrollment, or behavior around subsidy eligibility.
+  \item Empirical challenge: distinguishing strategic response from ordinary plan differences.
+\end{itemize}
+\smallcite{Goldin, Lurie, and McCubbin (2016), American Economic Review.}
+\end{frame}
+
+% =========================================================
+\begin{frame}{Goldin et al.: prediction versus causality}
+\begin{block}{Prediction version}
+Which plans are likely to attract low-income subsidy enrollees?
+\end{block}
+\begin{alertblock}{Causal/policy version}
+Did the subsidy design induce insurers to manipulate or strategically set plan premiums?
+\end{alertblock}
+\begin{itemize}
+  \item Prediction can help identify high-risk plans or markets.
+  \item Causality requires understanding incentives created by the policy formula.
+  \item Institutional knowledge is central: the rule itself shapes behavior.
+\end{itemize}
+\end{frame}
+
+% =========================================================
+\begin{frame}{Goldin et al.: ML extensions}
+Possible ML extensions:
+\begin{itemize}
+  \item Classification model: predict which plans will locate near benchmark thresholds.
+  \item Tree-based heterogeneity: examine whether strategic behavior differs by market concentration, plan type, or region.
+  \item Anomaly detection: flag unusual premium-setting patterns.
+  \item Counterfactual simulation: compare actual pricing to predicted pricing absent the incentive.
+\end{itemize}
+\begin{alertblock}{Identification caution}
+A model that detects bunching or unusual pricing is suggestive; causal interpretation depends on the policy rule and counterfactual behavior.
+\end{alertblock}
+\end{frame}
+
+% =========================================================
+\begin{frame}{Paper example 4: Hansen (2015)}
+\begin{block}{Question}
+Does punishment deter drunk driving?
+\end{block}
+\begin{itemize}
+  \item Setting: drunk-driving cases.
+  \item Key institutional feature: penalties increase sharply at blood alcohol content thresholds.
+  \item Outcome: future drunk-driving behavior, recidivism, or related outcomes.
+  \item Design logic: compare individuals just below and just above the threshold.
+\end{itemize}
+\smallcite{Hansen (2015), American Economic Review.}
+\end{frame}
+
+% =========================================================
+\begin{frame}{Hansen: regression discontinuity intuition}
+Regression discontinuity uses a cutoff rule:
+\[
+D_i = 1\{RunningVariable_i \geq c\}
+\]
+\begin{itemize}
+  \item Units just below and just above the cutoff are assumed similar.
+  \item A discontinuity in outcomes at the cutoff is attributed to treatment.
+  \item The estimand is local: it applies near the cutoff.
+\end{itemize}
+\core{
+RD is compelling because the comparison group is constructed by the policy rule itself.
+}
+\end{frame}
+
+% =========================================================
+\begin{frame}{Hansen: prediction versus causality}
+\begin{block}{Prediction}
+Can we predict which drivers will reoffend?
+\end{block}
+\begin{alertblock}{Causality}
+Does crossing the legal punishment threshold reduce future drunk-driving behavior?
+\end{alertblock}
+\econ{
+Prediction might use age, prior record, location, and BAC. Causal inference focuses on whether the threshold creates quasi-random treatment assignment near the cutoff.
+}
+\end{frame}
+
+% =========================================================
+\begin{frame}{Hansen: ML extensions}
+Possible ML extensions:
+\begin{itemize}
+  \item Use ML to predict recidivism risk and compare with RD estimates.
+  \item Estimate heterogeneous treatment effects near the cutoff.
+  \item Use flexible functional forms for the running variable while preserving RD logic.
+  \item Study whether deterrence differs by age, prior record, or local enforcement intensity.
+\end{itemize}
+\grad{
+For RD, flexible ML must be used carefully. Overfitting near the cutoff can distort the estimated discontinuity.
+}
+\end{frame}
+
+% =========================================================
+\begin{frame}{Paper example 5: Anderson (2017)}
+\begin{block}{Question}
+Do successful college athletic programs generate broader institutional benefits?
+\end{block}
+\begin{itemize}
+  \item Outcomes: applications, enrollment, donations, academic indicators, or institutional outcomes.
+  \item Treatment: athletic success.
+  \item Challenge: successful sports programs may differ from other institutions in many ways.
+  \item Design: propensity score approach to improve comparability.
+\end{itemize}
+\smallcite{Anderson (2017), Review of Economics and Statistics.}
+\end{frame}
+
+% =========================================================
+\begin{frame}{Propensity score idea}
+The propensity score is:
+\[
+e(X_i)=P(D_i=1|X_i)
+\]
+\begin{block}{Purpose}
+Compare treated and untreated units with similar probability of receiving treatment.
+\end{block}
+\begin{itemize}
+  \item Balances observed covariates.
+  \item Reduces dimensionality of matching.
+  \item Requires no unobserved confounding after conditioning on $X$.
+\end{itemize}
+\end{frame}
+
+% =========================================================
+\begin{frame}{Anderson: prediction versus causality}
+\begin{block}{Prediction}
+Can we predict which colleges will receive more applications or donations?
+\end{block}
+\begin{alertblock}{Causality}
+Did athletic success cause increases in applications, enrollment, or donations?
+\end{alertblock}
+\econ{
+Predictive success may reflect brand, selectivity, size, conference membership, alumni networks, or location. The causal design tries to compare similar institutions differing in athletic success.
+}
+\end{frame}
+
+% =========================================================
+\begin{frame}{Anderson: ML extensions}
+Possible ML extensions:
+\begin{itemize}
+  \item Estimate propensity scores using flexible methods such as random forests, boosting, or Lasso.
+  \item Check covariate balance before and after matching or weighting.
+  \item Estimate heterogeneous effects by institution type, conference, baseline selectivity, or media exposure.
+  \item Compare conventional propensity score estimates with doubly robust ML estimates.
+\end{itemize}
+\grad{
+ML propensity scores can reduce misspecification, but they do not solve unobserved confounding.
+}
+\end{frame}
+
+% =========================================================
+\begin{frame}{Paper example 6: Autor, Dorn, and Hanson (2013)}
+\begin{block}{Question}
+How did rising import competition from China affect U.S. local labor markets?
+\end{block}
+\begin{itemize}
+  \item Unit: local labor market, often commuting zone.
+  \item Treatment/exposure: import competition exposure.
+  \item Outcomes: manufacturing employment, wages, labor-force participation, transfers, and other local outcomes.
+  \item Strategy: exploit variation in local industry composition and changes in Chinese import growth.
+\end{itemize}
+\smallcite{Autor, Dorn, and Hanson (2013), American Economic Review.}
+\end{frame}
+
+% =========================================================
+\begin{frame}{Autor-Dorn-Hanson: shift-share intuition}
+Local areas differ in pre-existing industry shares.
+\[
+Exposure_{cz} = \sum_j Share_{cz,j,0}\times ImportGrowth_j
+\]
+\begin{itemize}
+  \item Areas initially specialized in industries with large import growth become more exposed.
+  \item The strategy compares local labor markets with different predicted exposure.
+  \item A major concern is whether initial shares are correlated with other local trends.
+\end{itemize}
+\end{frame}
+
+% =========================================================
+\begin{frame}{Autor-Dorn-Hanson: prediction versus causality}
+\begin{block}{Prediction}
+Can we predict which commuting zones will lose manufacturing jobs?
+\end{block}
+\begin{alertblock}{Causality}
+Did Chinese import competition cause local labor-market decline?
+\end{alertblock}
+\begin{itemize}
+  \item Prediction may use demographics, industry mix, education, unionization, regional trends, and trade exposure.
+  \item Causal interpretation depends on the validity of the exposure measure and instrument.
+\end{itemize}
+\end{frame}
+
+% =========================================================
+\begin{frame}{Autor-Dorn-Hanson: ML extensions}
+Possible ML extensions:
+\begin{itemize}
+  \item Predict local labor-market vulnerability using pre-shock covariates.
+  \item Use regularization to select controls from rich local data.
+  \item Estimate heterogeneous effects across regions, skill groups, or baseline industry structures.
+  \item Compare policy targeting rules based on predicted vulnerability versus estimated causal harm.
+\end{itemize}
+\grad{
+A useful extension asks whether ML improves prediction, identifies heterogeneity, or changes substantive policy conclusions.
+}
+\end{frame}
+
+% =========================================================
+\begin{frame}{Cross-paper comparison}
+\begin{center}
+\tiny
+\begin{tabular}{p{0.17\textwidth}p{0.19\textwidth}p{0.22\textwidth}p{0.31\textwidth}}
+\toprule
+Paper & Main design idea & Main threat & ML opportunity \\
+\midrule
+AJR & IV using historical mortality & Exclusion restriction & Robust controls, heterogeneity \\
+Nunn & Historical exposure variation & Omitted historical factors & High-dimensional controls, heterogeneity \\
+Goldin et al. & Policy incentives and strategic response & Counterfactual pricing & Classification, anomaly detection \\
+Hansen & RD at punishment threshold & Manipulation or local misspecification & Heterogeneity near cutoff \\
+Anderson & Propensity score design & Unobserved confounding & ML propensity scores, DR methods \\
+ADH & Shift-share exposure and IV logic & Correlated local trends & Vulnerability prediction, heterogeneous effects \\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{frame}
+
+% =========================================================
+\begin{frame}{A recurring pattern across the papers}
+\begin{enumerate}
+  \item Start with an economically important question.
+  \item Find a setting where treatment or exposure varies.
+  \item Argue why the variation is informative about causality.
+  \item Estimate the effect.
+  \item Conduct robustness checks.
+  \item Interpret the magnitude and mechanism.
+  \item Discuss external validity.
+\end{enumerate}
+\begin{block}{Role of ML in your project}
+ML should extend this logic, not replace it.
+\end{block}
+\end{frame}
+
+% =========================================================
+\begin{frame}{Prediction can be policy-relevant}
+Prediction is not inferior to causality. It answers a different question.
+\begin{itemize}
+  \item Forecast recessions or inflation.
+  \item Predict which households are likely to need support.
+  \item Predict which regions are vulnerable to trade shocks.
+  \item Predict which students are at risk of dropping out.
+\end{itemize}
+\econ{
+A prediction model can improve resource allocation even if it does not estimate causal effects.
+}
+\end{frame}
+
+% =========================================================
+\begin{frame}{But prediction can create policy mistakes}
+\begin{alertblock}{Mistake}
+Use a predictive correlation as if it were a causal effect.
+\end{alertblock}
+\begin{itemize}
+  \item If high school GPA predicts college success, forcing GPA to rise may not cause success.
+  \item If regions with strong institutions are richer, simply copying institutional labels may not reproduce historical conditions.
+  \item If high-risk drivers are predicted to reoffend, punishing them more severely may not reduce reoffense.
+\end{itemize}
+\core{
+Prediction helps identify risk. Causal inference helps evaluate interventions.
+}
+\end{frame}
+
+% =========================================================
+\begin{frame}{Policy targeting needs both prediction and causality}
+A policymaker may ask:
+\begin{enumerate}
+  \item Who is at risk?
+  \item Which intervention works?
+  \item For whom does it work best?
+  \item What is the cost-benefit tradeoff?
+\end{enumerate}
+\[
+\text{Target if } \widehat{\tau}(X_i)\times Benefit_i > Cost_i
+\]
+\grad{
+Policy targeting requires estimating heterogeneous treatment effects, not just predicting untreated outcomes.
+}
+\end{frame}
+
+% =========================================================
+\begin{frame}{Good controls, bad controls, and ML features}
+\begin{block}{Good control}
+A pre-treatment variable that affects treatment and outcome.
+\end{block}
+\begin{alertblock}{Bad control}
+A variable affected by the treatment, or a collider created by conditioning.
+\end{alertblock}
+\begin{itemize}
+  \item ML encourages adding many features.
+  \item Economics requires knowing when a feature belongs in the model.
+  \item Timing matters: pre-treatment variables are generally safer than post-treatment variables.
+\end{itemize}
+\end{frame}
+
+% =========================================================
+\begin{frame}{Example: bad controls in a college athletics study}
+Suppose athletic success affects applications, which affect selectivity, which affects donations.
+\[
+AthleticSuccess \rightarrow Applications \rightarrow Selectivity \rightarrow Donations
+\]
+If we control for applications or selectivity when estimating the effect on donations, we may block part of the causal pathway.
+\begin{alertblock}{Lesson}
+A variable can be highly predictive and still be a bad control for a causal question.
+\end{alertblock}
+\end{frame}
+
+% =========================================================
+\begin{frame}{Train-test splits are not enough for causal claims}
+\begin{block}{Prediction validation}
+Train on one sample and test on another.
+\end{block}
+\begin{alertblock}{Causal validation}
+Ask whether the treatment variation is credible.
+\end{alertblock}
+\begin{itemize}
+  \item Randomization checks.
+  \item Covariate balance.
+  \item Placebo outcomes.
+  \item Pre-trend tests.
+  \item Density or manipulation tests around cutoffs.
+  \item Sensitivity to bandwidths, controls, and samples.
+\end{itemize}
+\end{frame}
+
+% =========================================================
+\begin{frame}{Overfitting versus confounding}
+\begin{columns}
+\begin{column}{0.48\textwidth}
+\begin{block}{Overfitting}
+The model captures noise in the training sample and performs poorly out of sample.
+\end{block}
+Fix: regularization, cross-validation, honest validation.
+\end{column}
+\begin{column}{0.48\textwidth}
+\begin{alertblock}{Confounding}
+The model estimates a relationship that does not represent the causal effect.
+\end{alertblock}
+Fix: research design, credible variation, identification assumptions.
+\end{column}
+\end{columns}
+\vspace{1em}
+\econ{
+ML methods primarily address overfitting. Econometric design addresses confounding.
+}
+\end{frame}
+
+% =========================================================
+\begin{frame}{Cross-validation and causality}
+Cross-validation answers:
+\[
+\text{How well does the model predict new observations from a similar data-generating process?}
+\]
+It does not answer:
+\[
+\text{Would the outcome change if treatment were assigned differently?}
+\]
+\begin{alertblock}{Implication}
+A cross-validated model can be a strong forecasting tool and a weak causal model.
+\end{alertblock}
+\end{frame}
+
+% =========================================================
+\begin{frame}{Double/debiased ML: preview}
+Later in the course, causal ML will use ML to estimate nuisance functions:
+\[
+m(X)=E[Y|X], \quad e(X)=E[D|X]
+\]
+Then estimate the causal effect using residualized variables:
+\[
+Y_i-\widehat m(X_i), \quad D_i-\widehat e(X_i)
+\]
+\core{
+The idea is to use ML flexibly while protecting the target causal parameter from first-stage overfitting.
+}
+\end{frame}
+
+% =========================================================
+\begin{frame}{Orthogonalization intuition}
+If we remove the part of $Y$ and $D$ explained by controls $X$, we focus on residual variation:
+\[
+\tilde Y_i = Y_i-\widehat E[Y_i|X_i]
+\]
+\[
+\tilde D_i = D_i-\widehat E[D_i|X_i]
+\]
+Then regress:
+\[
+\tilde Y_i = \theta \tilde D_i + \text{error}
+\]
+\grad{
+This approach is useful when $X$ is high-dimensional and nuisance functions are complex, but identification still requires assumptions such as conditional exogeneity.
+}
+\end{frame}
+
+% =========================================================
+\begin{frame}{Causal forests: preview}
+Causal forests aim to estimate:
+\[
+\tau(x)=E[Y(1)-Y(0)|X=x]
+\]
+\begin{itemize}
+  \item Instead of one average treatment effect, estimate effects that vary by covariates.
+  \item Useful for policy targeting and heterogeneity analysis.
+  \item Requires careful sample splitting and causal assumptions.
+\end{itemize}
+\econ{
+In the trade-shock paper, one might ask whether import competition harmed some local labor markets more than others.
+}
+\end{frame}
+
+% =========================================================
+\begin{frame}{A simple way to classify your project}
+Ask whether the main contribution is:
+\begin{enumerate}
+  \item \textbf{Prediction:} better forecast or classification.
+  \item \textbf{Causal estimation:} more credible or precise effect estimate.
+  \item \textbf{Heterogeneity:} who is affected most.
+  \item \textbf{Policy learning:} how to allocate treatment.
+  \item \textbf{Measurement:} create a new variable from text, images, or high-dimensional data.
+\end{enumerate}
+\begin{block}{Project advice}
+Be explicit. A project can have more than one goal, but each goal needs its own evaluation standard.
+\end{block}
+\end{frame}
+
+% =========================================================
+\begin{frame}{Module 1 coding mindset}
+Even in the first module, code should reflect the empirical question.
+\begin{itemize}
+  \item Create a data dictionary.
+  \item Separate outcome, treatment, controls, instruments, fixed effects, and sample restrictions.
+  \item Build prediction and causal specifications separately.
+  \item Use train/test splits for prediction.
+  \item Use design-based diagnostics for causal claims.
+  \item Document every transformation.
+\end{itemize}
+\end{frame}
+
+% =========================================================
+\begin{frame}[fragile]{Pseudo-code: prediction workflow}
+\begin{verbatim}
+1. Define outcome Y and features X.
+2. Split data into train and test sets.
+3. Fit candidate models on training data.
+4. Tune hyperparameters using cross-validation.
+5. Evaluate on held-out test data.
+6. Interpret predictive performance.
+7. Ask whether the model is useful for the policy task.
+\end{verbatim}
+\begin{alertblock}{Do not conclude}
+``Feature $D$ is important, therefore $D$ causes $Y$.''
+\end{alertblock}
+\end{frame}
+
+% =========================================================
+\begin{frame}[fragile]{Pseudo-code: causal workflow}
+\begin{verbatim}
+1. Define outcome Y, treatment D, controls X, and timing.
+2. State the estimand: ATE, ATT, LATE, CATE, etc.
+3. Explain the source of treatment variation.
+4. Choose the design: IV, RD, DiD, matching, etc.
+5. Estimate the effect.
+6. Run design diagnostics and robustness checks.
+7. Interpret magnitude, mechanism, and limitations.
+\end{verbatim}
+\begin{block}{Question}
+Where, if anywhere, should ML enter this workflow?
+\end{block}
+\end{frame}
+
+% =========================================================
+\begin{frame}{Class exercise: turn each paper into two questions}
+For each replication paper, write:
+\begin{enumerate}
+  \item One prediction question.
+  \item One causal question.
+  \item One possible ML extension.
+  \item One threat to causal interpretation.
+\end{enumerate}
+\begin{exampleblock}{Example: Hansen}
+Prediction: Who is likely to reoffend? \\
+Causality: Does crossing the punishment threshold reduce reoffense? \\
+ML extension: heterogeneous effects near cutoff. \\
+Threat: manipulation or misspecification around cutoff.
+\end{exampleblock}
+\end{frame}
+
+% =========================================================
+\begin{frame}{Common student mistakes}
+\begin{enumerate}
+  \item Treating high $R^2$ as evidence of causality.
+  \item Using post-treatment variables as controls.
+  \item Confusing variable importance with causal importance.
+  \item Ignoring timing.
+  \item Choosing an ML method before defining the estimand.
+  \item Reporting model accuracy without economic interpretation.
+  \item Reporting causal estimates without discussing identification.
+\end{enumerate}
+\end{frame}
+
+% =========================================================
+\begin{frame}{How to write a good empirical claim}
+\begin{block}{Weak claim}
+The random forest shows that institutions are important for GDP.
+\end{block}
+\begin{alertblock}{Better predictive claim}
+Institutions are among the strongest predictors of GDP in out-of-sample prediction, conditional on the available feature set.
+\end{alertblock}
+\begin{exampleblock}{Better causal claim}
+Using settler mortality as an instrument, the estimated effect of institutions on GDP is positive under the maintained exclusion restriction.
+\end{exampleblock}
+\end{frame}
+
+% =========================================================
+\begin{frame}{Interpretation: magnitude matters}
+A statistically significant coefficient is not enough.
+\begin{itemize}
+  \item What is the size of the effect?
+  \item Is it economically large?
+  \item What is the unit of measurement?
+  \item How does it compare to baseline levels?
+  \item Is the effect local or general?
+  \item What are the policy implications?
+\end{itemize}
+\econ{
+In a trade-shock study, a coefficient should be translated into jobs lost, wage changes, or changes in local labor-market outcomes.
+}
+\end{frame}
+
+% =========================================================
+\begin{frame}{External validity}
+Even a credible estimate may apply only to a specific setting.
+\begin{itemize}
+  \item RD estimates are local to the cutoff.
+  \item IV estimates may apply to compliers.
+  \item Historical persistence estimates may not generalize to modern policy changes.
+  \item A prediction model trained in one period may fail in another.
+\end{itemize}
+\begin{alertblock}{Course habit}
+Always ask: credible for whom, where, and when?
+\end{alertblock}
+\end{frame}
+
+% =========================================================
+\begin{frame}{Ethics and policy relevance}
+ML and causal inference both raise ethical issues:
+\begin{itemize}
+  \item targeting can exclude vulnerable groups;
+  \item historical variables may encode injustice;
+  \item predictions may reinforce existing inequalities;
+  \item policy evaluation can affect resource allocation;
+  \item transparency matters for public trust.
+\end{itemize}
+\econ{
+Economic interpretation should include distributional consequences, not only average performance.
+}
+\end{frame}
+
+% =========================================================
+\begin{frame}{What a strong Module 1 presentation would do}
+A strong paper-method-coding presentation should:
+\begin{enumerate}
+  \item explain the paper's economic question;
+  \item define outcome, treatment, and sample;
+  \item explain the identification strategy;
+  \item identify the main threat to validity;
+  \item show a small reproducible code example;
+  \item interpret results economically;
+  \item propose one credible ML extension.
+\end{enumerate}
+\end{frame}
+
+% =========================================================
+\begin{frame}{Questions for discussion}
+\begin{enumerate}
+  \item Can a model be useful for policy even if it is not causal?
+  \item When is prediction enough?
+  \item When does a policymaker need a causal estimate?
+  \item Which replication paper has the strongest identification strategy?
+  \item Which replication paper seems most promising for an ML extension?
+  \item What are the dangers of using ML in historical or policy settings?
+\end{enumerate}
+\end{frame}
+
+% =========================================================
+\begin{frame}{Module 1 summary}
+\begin{itemize}
+  \item Prediction and causality are different empirical goals.
+  \item Economic questions determine estimands and methods.
+  \item Endogeneity and selection bias make causal inference difficult.
+  \item Identification is about credible variation, not model complexity.
+  \item ML can improve prediction, control selection, heterogeneity analysis, and policy targeting.
+  \item ML does not replace economic reasoning or causal design.
+  \item The replication papers provide concrete settings where these distinctions matter.
+\end{itemize}
+\end{frame}
+
+% =========================================================
+\begin{frame}{Key formulas to remember}
+\begin{block}{Prediction}
+\[
+\widehat f = \arg\min_f E[L(Y,f(X))]
+\]
+\end{block}
+\begin{block}{Causal effect}
+\[
+\tau = E[Y(1)-Y(0)]
+\]
+\end{block}
+\begin{block}{Selection bias}
+\[
+E[Y|D=1]-E[Y|D=0] = ATT + Selection
+\]
+\end{block}
+\begin{block}{Propensity score}
+\[
+e(X)=P(D=1|X)
+\]
+\end{block}
+\end{frame}
+
+% =========================================================
+\begin{frame}{Reading list for Module 1}
+\begin{itemize}
+  \item Athey, S. (2019). \href{https://www.nber.org/chapters/c14009}{The impact of machine learning on economics}.
+  \item Mullainathan, S., and Spiess, J. (2017). Machine learning: an applied econometric approach.
+  \item Acemoglu, Johnson, and Robinson (2001). Colonial origins of comparative development.
+  \item Nunn (2008). Slave trades and current economic performance.
+  \item Hansen (2015). Punishment and deterrence.
+  \item Autor, Dorn, and Hanson (2013). The China Syndrome.
+\end{itemize}
+\smallcite{Additional course papers are used as replication and ML-extension examples.}
+\end{frame}
+
+% =========================================================
+\begin{frame}{Appendix: Paper-to-project template}
+\begin{center}
+\scriptsize
+\begin{tabular}{p{0.18\textwidth}p{0.15\textwidth}p{0.15\textwidth}p{0.17\textwidth}p{0.22\textwidth}}
+\toprule
+Paper & Outcome & Treatment / exposure & Design & Possible ML extension \\
+\midrule
+AJR & Income & Institutions & IV & control robustness, heterogeneity \\
+Nunn & Income & Slave trade exposure & historical variation / IV logic & rich controls \\
+Goldin et al. & Plan behavior & Subsidy incentives & policy design & classification, anomaly detection \\
+Hansen & Recidivism & Punishment threshold & RD & heterogeneous deterrence \\
+Anderson & Applications / donations & Athletic success & propensity score & ML propensity, DR estimation \\
+ADH & Labor outcomes & Import exposure & shift-share/IV & vulnerability prediction \\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{frame}
+
+% =========================================================
+\begin{frame}{Appendix: Example project question templates}
+\begin{itemize}
+  \item Can ML improve prediction of the main outcome relative to the original linear model?
+  \item Does flexible covariate adjustment change the estimated treatment effect?
+  \item Are treatment effects heterogeneous across economically meaningful groups?
+  \item Can a policy-targeting rule based on predicted effects improve welfare?
+  \item Does an interpretable ML model reveal mechanisms consistent with the original paper?
+\end{itemize}
+\begin{alertblock}{Minimum standard}
+Every project must separate predictive performance from causal interpretation.
+\end{alertblock}
+\end{frame}
+
+% =========================================================
+\begin{frame}{Appendix: Diagnostic checklist}
+\begin{center}
+\begin{tabular}{p{0.30\textwidth}p{0.55\textwidth}}
+\toprule
+If using... & Check... \\
+\midrule
+Prediction & holdout performance, leakage, calibration, external validity \\
+IV & first stage, exclusion restriction, monotonicity, weak instruments \\
+RD & manipulation, bandwidth, continuity, local balance \\
+DiD & pre-trends, composition changes, spillovers \\
+Matching/PS & overlap, balance, sensitivity to unobserved confounding \\
+ML causal methods & sample splitting, orthogonality, nuisance performance, assumptions \\
+\bottomrule
+\end{tabular}
+\end{center}
+\end{frame}
+
+% =========================================================
+\begin{frame}{Appendix: A final mental model}
+\begin{center}
+\Large
+Question $\rightarrow$ Estimand $\rightarrow$ Identification $\rightarrow$ Estimation $\rightarrow$ Validation $\rightarrow$ Interpretation
+\end{center}
+\vspace{1em}
+\core{
+Machine learning mostly improves estimation and prediction. Economics determines the question, estimand, identification, and interpretation.
+}
+\end{frame}
+
+% =========================================================
+\begin{frame}{End of Module 1}
+\begin{center}
+\Huge Questions?
+\end{center}
+\vspace{1em}
+\begin{center}
+\large Next: supervised and unsupervised learning in economics.
+\end{center}
+\end{frame}
+
+\end{document}

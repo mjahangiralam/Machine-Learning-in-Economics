@@ -1,0 +1,523 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{setspace}
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{array}
+
+% Section heading color
+\definecolor{sectioncolor}{HTML}{0047AB} % Deep Blue
+
+% Hyperlink setup
+\hypersetup{
+    colorlinks=true,
+    linkcolor=sectioncolor,
+    urlcolor=sectioncolor,
+    citecolor=sectioncolor
+}
+
+% Custom section heading
+\newcommand{\coloredsection}[1]{%
+    \section*{\large\textcolor{sectioncolor}{#1}}%
+}
+
+\begin{document}
+\setstretch{1.02}
+
+\begin{center}
+\vspace*{-1.2cm}
+
+{\LARGE \textbf{\textcolor{sectioncolor}{EC 410K/EC 610I: Machine Learning in Economics}}} \\[4pt]
+{\normalsize Course Syllabus, Spring 2026} \\[3pt]
+{\normalsize Wilfrid Laurier University}
+
+\vspace{6pt}
+
+M. Jahangir Alam, PhD \\
+Email: \href{mailto:moalam@wlu.ca}{moalam@wlu.ca} \\
+Website: \texttt{https://www.mjahangiralam.com} \\
+Office: Lazaridis Hall, LH2015
+
+\vspace{8pt}
+\rule{\textwidth}{0.4pt}
+
+\end{center}
+
+\vspace{-0.3cm}
+
+% Course Overview
+\coloredsection{Course Information}
+
+\begin{tabular}{@{}ll@{}}
+\textbf{Course Number:} & EC 410K/EC 610I \\
+\textbf{Course Title:} & Machine Learning in Economics \\
+\textbf{Credit Hours:} & 3 \\
+\textbf{Time:} & 5:30 -- 6:50 PM, Tuesdays and Thursdays \\
+\textbf{Location:} & Dr. Alvin Woods Building 3-103 \\
+\textbf{Office Hours:} & Tuesday 3:00 PM--4:00 PM, or by appointment \\
+\end{tabular}
+
+
+% Course Description
+\coloredsection{Course Description}
+
+This course introduces machine learning methods and their applications in empirical economics, with a focus on prediction, causal inference, and policy analysis. Students learn how to apply supervised and unsupervised learning techniques, regularization methods, and tree-based models to high-dimensional economic data, while emphasizing economic interpretation and identification. The course also covers causal machine learning methods, forecasting using deep learning, and the use of text data and natural language processing for economic analysis. Machine learning approaches are compared with traditional econometric methods, highlighting trade-offs between prediction, inference, and interpretability. Special attention is given to applications in macroeconomic forecasting, monetary policy, inflation expectations, and policy evaluation.
+
+The course is applied and computational. Students implement models in Python, replicate empirical studies, and complete a group project analyzing economic or policy questions. Emphasis is placed on model validation, reproducibility, hands-on data analysis, and clear communication of empirical results.
+
+
+
+% Prerequisites
+\coloredsection{Course Prerequisites}
+
+To enroll in this course, students should have prior coursework in econometrics, including regression analysis and causal inference. The course uses Python extensively for data analysis, empirical implementation, and machine learning applications. Prior programming experience is helpful but not required; however, students are expected to actively engage with programming tools and develop computational skills throughout the course.
+
+Students are required to bring a laptop to class. AI-assisted tools such as \textbf{\href{https://openai.com/chatgpt}{ChatGPT}} and \textbf{\href{https://github.com/features/copilot}{GitHub Copilot}} may be used to support coding, debugging, prompt engineering, and problem-solving activities. Students remain responsible for verifying outputs, understanding their code, and interpreting results in an economic context.
+
+
+\coloredsection{Course Format}
+
+The course combines lectures, coding sessions, research discussions, empirical replication, and project-based learning. Emphasis is placed on hands-on application, reproducible workflows, and the interpretation of machine learning methods in economic and policy contexts. AI tools are integrated into selected coding, replication, and project activities to support efficient and responsible computational work.
+
+\coloredsection{Software}
+
+Python will be used for all empirical work. Students will work with commonly used libraries such as NumPy, pandas, scikit-learn, and selected deep learning or NLP packages such as PyTorch, TensorFlow, or related tools. The course will also introduce AI-assisted coding tools, with emphasis on verification, reproducibility, documentation, and economic interpretation.
+
+
+\coloredsection{Measurable Learning Outcomes}
+
+By the end of this course, students will be able to:
+
+\begin{itemize}
+\item Apply supervised and unsupervised machine learning methods to analyze high-dimensional economic data and generate predictions.
+\item Integrate machine learning with econometric methods to conduct causal analysis and estimate treatment effects.
+\item Evaluate model performance using appropriate validation techniques and interpret results using modern tools for explainability.
+\item Analyze economic text data using natural language processing and assess the role of generative AI in economic applications.
+\item Design, replicate, and communicate empirical research using reproducible workflows.
+\end{itemize}
+
+
+
+% Textbooks and Resources
+\coloredsection{Textbooks and Learning Resources}
+
+There is no required textbook for this course. Selected readings, lecture notes, coding materials, and replication resources will be provided throughout the semester. The following resources may be useful:
+
+\begin{enumerate}
+    \item \href{https://www.aieconlab.org/}{\textit{\textbf{Data Science with Generative AI for Economic and Social Issues}}} by M. Jahangir Alam.
+    \item \href{https://www.sas.upenn.edu/~fdiebold/Teaching104/Econometrics.pdf}{\textit{\textbf{Econometric Data Science}}} by Francis X. Diebold.
+    \item \href{https://press.princeton.edu/books/paperback/9780691120355/mostly-harmless-econometrics}{\textit{\textbf{Mostly Harmless Econometrics}}} by Angrist \& Pischke.
+    \item \href{https://www.wiley.com/en-us/Applied+Econometric+Time+Series\%2C+4th+Edition-p-9781118808566}{\textit{\textbf{Applied Econometric Time Series}}} by Enders.
+\end{enumerate}
+
+A course-specific ChatBot and AI-assisted learning resources may be used to support coding, replication, and independent learning.
+
+\coloredsection{Course Website and Submissions}
+
+All course materials, including lecture slides, announcements, readings, coding materials, and submission links, will be managed through \href{https://mylearningspace.wlu.ca}{MyLearningSpace (MyLS)}. Unless otherwise instructed, all graded submissions must be uploaded to MyLS. Submissions sent by email will \textbf{not} be accepted.
+
+The \href{https://capstone-project-psi-one.vercel.app/}{Capstone Project Portal} may be used for project development, feedback, replication work, and supplementary project materials.
+
+\coloredsection{Estimated Course Material Costs}
+
+There is no required textbook for this course. Required readings, lecture notes, coding materials, and replication resources will be provided through MyLearningSpace or other accessible online sources. Students are expected to have access to a laptop. Python and the main software packages used in the course are open-source and free. Students are encouraged to use ChatGPT or comparable AI-assisted tools for coding, debugging, and project work. A paid version such as ChatGPT Plus may be helpful but is not required. No graded activity will require a paid tool without a no-cost alternative. Estimated required course material cost: \$0, excluding normal access to a laptop and internet connection.
+
+
+\coloredsection{Assessment and Grading Policy}
+
+Student performance will be evaluated based on four components: module paper, method, and coding presentation; one replication assignment; a group project applying machine learning to a replicated paper; and participation. The assessment structure is designed to develop students' ability to understand frontier research, implement machine learning methods, reproduce empirical findings, and communicate results clearly.
+
+\vspace{4pt}
+\noindent \textit{Grade Breakdown}
+
+\vspace{2pt}
+\begin{tabular}{@{}l r@{}}
+Module Paper, Method, and Coding Presentation & 30\% \\
+Replication Assignment & 20\% \\
+Group Project: ML Application on a Replicated Paper & 40\% \\
+Participation and Discussion & 10\% \\
+\midrule
+Total & 100\% \\
+\end{tabular}
+
+\vspace{8pt}
+
+\noindent \textbf{Module Paper, Method, and Coding Presentation -- 30\%}
+
+Students will present one selected paper from the course modules. The presentation should explain the paper's research question, motivation, data or empirical setting, methodological contribution, main findings, and limitations. Students must also explain the main method associated with the paper or module and provide a short Python-based coding demonstration of that method.
+
+This component assesses whether students can connect economic questions with machine learning methods and explain both the intuition and implementation of the method.
+
+\vspace{4pt}
+\noindent Suggested grading breakdown:
+\begin{itemize}[leftmargin=1.5em]
+    \item Paper understanding and methodological explanation: 15\%
+    \item Python implementation and economic interpretation: 10\%
+    \item Critical discussion, limitations, and Q\&A: 5\%
+\end{itemize}
+
+\noindent \textbf{Replication Assignment -- 20\%}
+
+Students will complete one replication assignment based on a selected empirical economics paper. The purpose of this assignment is to help students understand how empirical research is designed, implemented, and reproduced.
+
+Students are expected to reproduce one key table, figure, regression result, or empirical finding from the original paper using reproducible code. The submission should include a short written explanation of the research question, data, empirical strategy, replication process, and comparison with the original findings.
+
+\vspace{4pt}
+\noindent Suggested grading breakdown:
+\begin{itemize}[leftmargin=1.5em]
+    \item Paper understanding, data, and empirical strategy: 10\%
+    \item Replication result and comparison with original findings: 5\%
+    \item Reproducible Python code and documentation: 5\%
+\end{itemize}
+
+\noindent \textbf{Group Project: ML Application on a Replicated Paper -- 40\%}
+
+The group project builds on the replication assignment. Students will extend the replicated paper by applying appropriate machine learning methods. The goal is to evaluate whether machine learning can improve prediction, classification, variable selection, heterogeneity analysis, forecasting, policy targeting, or interpretation relative to the original empirical approach.
+
+The project should include a clear research question, a short summary of the replicated paper, an explanation of the machine learning extension, model implementation, evaluation of results, economic interpretation, and discussion of limitations. The project will culminate in a five-page, two-column, publication-style research report, excluding references and appendices, and a conference-style poster presentation.
+
+\vspace{4pt}
+\noindent Suggested grading breakdown:
+\begin{itemize}[leftmargin=1.5em]
+    \item Project proposal, replication summary, and ML extension plan: 10\%
+    \item Machine learning implementation, model evaluation, and comparison with original method: 20\%
+    \item Economic interpretation, limitations, publication-style report, and poster presentation: 10\%
+\end{itemize}
+
+\noindent \textbf{Participation and Discussion -- 10\%}
+
+Participation is based on active and constructive engagement throughout the course. Students are expected to contribute to class discussions, ask questions during paper presentations, participate in coding sessions, provide feedback to peers, and engage with group project and poster discussions.
+
+\vspace{4pt}
+\noindent Suggested grading breakdown:
+\begin{itemize}[leftmargin=1.5em]
+    \item Engagement in class and coding sessions: 3\%
+    \item Questions and discussion during module paper presentations: 3\%
+    \item Peer feedback and project/poster engagement: 4\%
+\end{itemize}
+
+\noindent \textbf{AI-Assisted Tools Policy}
+
+Students may use AI-assisted tools, such as ChatGPT or GitHub Copilot, for coding support, debugging, and clarification. However, students are fully responsible for verifying all outputs, understanding the code they submit, explaining their methodological choices, and interpreting results in an economic context. Submissions must reflect the student's own understanding and should include reproducible code, clear documentation, and proper citation of any external resources used.
+
+
+
+\coloredsection{Course Modules}
+
+\begin{description}[leftmargin=0cm, labelindent=0cm, itemsep=1em]
+
+%------------------------------------------------
+
+\item[\textbf{Module 1: Economic Questions, Prediction, and Causality}]
+This module introduces the distinction between prediction and causal inference in economics, emphasizing how economic questions determine empirical strategy. Students examine endogeneity, selection bias, and identification, and learn how modern machine learning methods can be integrated into policy-relevant economic analysis.
+
+\vspace{0.3em}
+\textbf{Selected References:}
+\begin{itemize}[leftmargin=1.5em]
+\item Athey, S. (2019).
+\href{https://www.nber.org/chapters/c14009}{\textit{The impact of machine learning on economics}}.
+In A. Agrawal, J. Gans, \& A. Goldfarb (Eds.), \textit{The economics of artificial intelligence: An agenda}. University of Chicago Press. \\
+Provides a comprehensive overview of how machine learning is transforming empirical economics, including prediction, identification, and policy analysis.
+\end{itemize}
+
+%------------------------------------------------
+
+\item[\textbf{Module 2: Supervised and Unsupervised Learning in Economics}]
+This module introduces supervised and unsupervised learning methods and their roles in economic analysis. Students learn how prediction, clustering, and dimensionality reduction are used in practice, and how economic interpretation remains essential.
+
+\vspace{0.3em}
+\textbf{Selected References:}
+\begin{itemize}[leftmargin=1.5em]
+\item Mullainathan, S., \& Spiess, J. (2017).
+\href{https://doi.org/10.1257/jep.31.2.87}{\textit{Machine learning: An applied econometric approach}}.
+\textit{Journal of Economic Perspectives}, 31(2), 87--106. \\
+Provides a foundational framework linking machine learning methods with econometric thinking.
+
+\item Gu, S., Kelly, B., \& Xiu, D. (2020).
+\href{https://doi.org/10.1093/rfs/hhaa009}{\textit{Empirical asset pricing via machine learning}}.
+\textit{The Review of Financial Studies}, 33(5), 2223--2273. \\
+Demonstrates how supervised learning methods perform in high-dimensional economic prediction tasks.
+\end{itemize}
+
+%------------------------------------------------
+
+\item[\textbf{Module 3: Linear Models and Regularization}]
+This module examines linear models in high-dimensional settings and introduces regularization techniques such as Lasso and Ridge regression. Students learn how regularization improves model selection, prediction, and empirical analysis.
+
+\vspace{0.3em}
+\textbf{Selected References:}
+\begin{itemize}[leftmargin=1.5em]
+\item Chernozhukov, V., Newey, W., \& Singh, R. (2022).
+\href{https://doi.org/10.3982/ECTA18515}{\textit{Automatic debiased machine learning of causal and structural effects}}.
+\textit{Econometrica}, 90(3), 967--1027. \\
+Develops automatic debiasing methods for valid inference in high-dimensional settings using machine learning.
+
+\item Athey, S., \& Wager, S. (2021).
+\href{https://doi.org/10.3982/ECTA15732}{\textit{Policy learning with observational data}}.
+\textit{Econometrica}, 89(1), 133--161. \\
+Develops methods for learning optimal treatment policies using observational data and doubly robust estimation.
+\end{itemize}
+
+%------------------------------------------------
+
+\item[\textbf{Module 4: Machine Learning for Causal Inference}]
+This module focuses on how machine learning complements traditional econometric approaches to causal inference. Students study flexible estimation of nuisance functions, orthogonalization, and heterogeneous treatment effects.
+
+\vspace{0.3em}
+\textbf{Selected References:}
+\begin{itemize}[leftmargin=1.5em]
+
+\item Chernozhukov, V., Chetverikov, D., Demirer, M., et al. (2018).
+\href{https://doi.org/10.1111/ectj.12097}{\textit{Double/debiased machine learning for treatment and structural parameters}}.
+\textit{The Econometrics Journal}, 21(1), C1--C68. \\
+Provides a framework for valid inference on causal and structural parameters using machine learning via orthogonalization and cross-fitting.
+
+\item Athey, S., Tibshirani, J., \& Wager, S. (2019).
+\href{https://doi.org/10.1214/18-AOS1709}{\textit{Generalized random forests}}.
+\textit{Annals of Statistics}, 47(2), 1148--1178. \\
+Extends random forests to estimate heterogeneous treatment effects and other local parameters with asymptotic guarantees.
+
+\end{itemize}
+
+%------------------------------------------------
+
+\item[\textbf{Module 5: Tree-Based Methods, Classification, and Interpretability}]
+This module introduces tree-based models and classification techniques used in applied economics. Students study random forests, boosting, and classification models, with emphasis on interpretability using feature importance and SHAP values.
+
+\vspace{0.3em}
+\textbf{Selected References:}
+\begin{itemize}[leftmargin=1.5em]
+
+\item Lundberg, S. M., \& Lee, S.-I. (2017).
+\href{https://doi.org/10.48550/arXiv.1705.07874}{\textit{A unified approach to interpreting model predictions}}. \\
+Introduces SHAP, a unified framework for interpreting machine learning models using Shapley values with strong theoretical guarantees.
+
+\item Lundberg, S. M., Erion, G., Chen, H., et al. (2020).
+\href{https://doi.org/10.1038/s42256-019-0138-9}{\textit{From local explanations to global understanding with explainable AI for trees}}.
+\textit{Nature Machine Intelligence}, 2, 56--67. \\
+Extends SHAP to tree-based models, enabling fast and consistent interpretation of ensemble methods.
+
+\end{itemize}
+
+%------------------------------------------------
+
+\item[\textbf{Module 6: Financial and Macroeconomic Forecasting Using ML and Deep Learning}]
+This module examines forecasting methods for economic and financial time series, including tree-based models and deep learning architectures such as LSTM and transformer-based models. Emphasis is placed on out-of-sample performance and economic relevance.
+
+\vspace{0.3em}
+\textbf{Selected References:}
+\begin{itemize}[leftmargin=1.5em]
+
+\item Alam, M. J., \& Isakin, M. (2026).
+\href{https://papers.ssrn.com/sol3/papers.cfm?abstract_id=6650318}{\textit{Dispersion of news sentiment and stock price return: Applying a deep learning approach}}. \\ 
+Examines how dispersion in news sentiment affects stock returns using deep learning methods.
+
+\item Lim, B., Arık, S. Ö., Loeff, N., \& Pfister, T. (2021).
+\href{https://doi.org/10.1016/j.ijforecast.2021.03.012}{\textit{Temporal fusion transformers for interpretable multi-horizon time series forecasting}}.
+\textit{International Journal of Forecasting}, 37(4), 1748--1764. \\
+Introduces an attention-based deep learning architecture for multi-horizon forecasting that delivers strong predictive performance with interpretable temporal dynamics.
+
+\end{itemize}
+
+%------------------------------------------------
+
+\item[\textbf{Module 7: Text Data, NLP, and Generative AI}]
+This module explores how unstructured text data can be used in economic analysis, including causal identification, forecasting, and policy applications using modern NLP and generative AI methods.
+
+\vspace{0.3em}
+\textbf{Selected References:}
+\begin{itemize}[leftmargin=1.5em]
+
+\item Aruoba, S. B., \& Drechsel, T. (2024).
+\href{https://www.aeaweb.org/articles?id=10.1257/mac.20240184}{\textit{Identifying monetary policy shocks: A natural language approach}}.
+\textit{American Economic Journal: Macroeconomics (forthcoming)}. \\
+Uses natural language processing and machine learning on Federal Reserve staff documents to recover policymakers’ information sets and identify monetary policy shocks.
+
+\item Gentzkow, M., Kelly, B., \& Taddy, M. (2019).
+\href{https://www.aeaweb.org/articles?id=10.1257/jel.20181020}{\textit{Text as data}}.
+\textit{Journal of Economic Literature}, 57(3), 535--574. \\
+Surveys methods for using text as data in economics, covering measurement, modeling, and applications.
+
+\item Alam, M. J., Boyle, S., Li, H., \& Sekhposyan, T. (2026).
+\href{https://www.frbsf.org/wp-content/uploads/wp2026-04.pdf}{\textit{ChatMacro: Evaluating inflation forecasts of generative AI}}. \\
+Evaluates the out-of-sample forecasting performance of large language models for macroeconomic variables, highlighting strengths and limitations of generative AI in economic prediction.
+
+\end{itemize}
+
+%------------------------------------------------
+
+\item[\textbf{Module 8: Empirical Replication}]
+This module develops applied research skills through replication of influential empirical economics papers, with emphasis on identification strategies, empirical design, and reproducibility using modern data and code workflows.
+
+\item[\textbf{Module 9: Applied Machine Learning and Causal Project}]
+This module integrates the course through an applied project combining machine learning methods with causal inference tools, applied to economic data with a focus on model validation, interpretation, and policy relevance.
+
+\item[\textbf{Module 10: Research Communication}]
+This module focuses on communicating empirical findings through professional presentations and written reports for both academic and policy audiences, including oral and visual formats (e.g., presentations and poster sessions), with emphasis on clear interpretation, reproducibility, and policy relevance.
+
+\end{description}
+
+
+
+
+
+
+
+
+% Papers to Replicate
+\coloredsection{Papers for Replication and Machine Learning Extension}
+
+This section includes influential papers that students will replicate and analyze using machine learning techniques. These papers cover a variety of topics, from historical economics to policy analysis, providing a foundation for advanced econometric and data science methods.
+
+\begin{enumerate}
+    \item Acemoglu, D., Johnson, S., \& Robinson, J. A. (2001). \href{https://www.aeaweb.org/articles?id=10.1257/aer.91.5.1369}{\textit{The Colonial Origins of Comparative Development: An Empirical Investigation}}. \textit{American Economic Review}, 91(5), 1369–1401. \\
+    This seminal paper investigates how historical colonial practices have shaped contemporary economic performance.
+
+    \item Nunn, N. (2008). \href{https://scholar.harvard.edu/files/nunn/files/empirical_slavery.pdf}{\textit{The Role of Slave Trades and Current Economic Performance}}. \textit{Quarterly Journal of Economics}, 123(1), 139–176. \\
+    This paper explores the impact of the transatlantic and other slave trades on present-day African economic outcomes.
+
+    \item Goldin, J., Lurie, I. Z., \& McCubbin, J. (2016). \href{https://www.aeaweb.org/articles?id=10.1257/aer.20130903}{\textit{Are Insurers Gaming the Low Income Subsidy Design?}}. \textit{American Economic Review}, 106(8), 2043–2075. \\
+    This study examines the behavior of insurers under Medicare Part D and evaluates whether they exploit subsidy designs.
+
+    \item Hansen, B. (2015). \href{https://www.aeaweb.org/articles?id=10.1257/aer.20130189}{\textit{Punishment and Deterrence: Evidence from Drunk Driving}}. \textit{American Economic Review}, 105(4), 1581–1617. \\
+    This research evaluates the effectiveness of legal punishment as a deterrent for drunk driving, using a regression discontinuity design.
+
+    \item Anderson, M. L. (2017). \href{https://direct.mit.edu/rest/article-abstract/99/1/119/58365/The-Benefits-of-College-Athletic-Success-An?redirectedFrom=fulltext}{\textit{The Benefits of College Athletic Success: An Application of the Propensity Score Design}}. \textit{Review of Economics and Statistics}, 99(1), 119–134. \\
+    This paper analyzes the relationship between college athletic success and institutional benefits, applying a propensity score design.
+
+    \item Autor, D. H., Dorn, D., \& Hanson, G. H. (2013). 
+    \href{https://www.aeaweb.org/articles?id=10.1257/aer.103.6.2121}
+    {\textit{The China Syndrome: Local Labor Market Effects of Import Competition in the United States}}. 
+    \textit{American Economic Review}, 103(6), 2121--2168. \\
+    This paper examines how rising import competition from China affected U.S. local labor markets.
+\end{enumerate}
+
+
+
+\coloredsection{Group Project Poster Presentation}
+
+As part of the group project, students present their research in a professional poster format. The poster should clearly communicate the research question, data, methodology, and key findings, with emphasis on visual presentation and economic interpretation.
+
+Students are expected to present their work in a structured and concise manner, engage with questions, and discuss the implications of their results. The objective is to develop the ability to communicate empirical research effectively to both academic and policy audiences.
+
+
+\coloredsection{Lazaridis School Mission Statement}
+
+We strive to be leaders in our communities and help shape the future. We generate, disseminate, and implement knowledge about business and economics for the betterment of the world in which we live. We use our impactful research and experiential approach to education to meet the dynamic needs of our local, national, and international stakeholders.
+
+
+
+%--------------------------- ACADEMIC MISCONDUCT ---------------------------
+\coloredsection{Academic Misconduct}
+
+Academic integrity is a core value of Wilfrid Laurier University. Students are expected to 
+complete their own work, uphold honesty in all academic activities, and take personal 
+responsibility for their submissions. Plagiarism, cheating, fabrication, falsification of data, unauthorized collaboration, and 
+resubmission of the same work for multiple courses without prior approval are strictly 
+prohibited. If you plan to extend work completed for another course, you 
+\textbf{must} inform the instructor and submit the prior work at the time of your proposal; 
+failure to do so constitutes academic misconduct.
+
+
+\coloredsection{Generative AI Activities}
+
+This course includes structured use of generative AI tools for coding support, debugging, prompt engineering, replication work, research workflow development, and interpretation of computational results. Students may use AI-assisted tools to support learning, but they remain responsible for verifying outputs, understanding submitted code, explaining methodological choices, and interpreting results in an economic context. Use of generative AI must be disclosed in graded submissions when it contributes to coding, writing, analysis, or interpretation. Submitting AI-generated work without disclosure, or submitting work that students cannot explain or verify, may be treated as academic misconduct.
+
+%--------------------------- PRIVACY STATEMENT ---------------------------
+\coloredsection{Privacy Statement}
+
+This course follows Wilfrid Laurier University’s policies on privacy and the protection of personal information. The following measures are in place:
+
+\begin{enumerate}
+    \item \textbf{Confidentiality of Assessments:}  
+    Exams, assignments, and feedback are released only to the student who submitted them.  
+    If you prefer not to have your name called when returning work, inform the instructor in advance.
+
+    \item \textbf{Release of Grades:}  
+    Grades are posted exclusively on \textbf{MyLearningSpace} and will not be sent by email.
+
+    \item \textbf{Privacy of Student Performance:}  
+    Student performance and personal circumstances are not discussed publicly.  
+    To review your results or discuss concerns, book an appointment with the instructor.
+
+    \item \textbf{Class Participation:}  
+    Participation may involve your name appearing on class lists, bulletin boards,  
+    or online discussions. Contact the instructor during the first week for alternative arrangements if needed.
+
+    \item \textbf{Email Policy and Response Times (Policy 8.15):}  
+Emails must be sent from your official \textbf{@wlu.ca} account.  
+The instructor responds to emails between \textbf{9:00am–4:00pm, Monday to Friday}  
+and typically replies within \textbf{one business day}.
+
+
+    \item \textbf{Special Privacy Requests:}  
+    If you require additional privacy accommodations, notify the instructor within  
+    the first week of classes.
+\end{enumerate}
+
+For full details, see Laurier’s  
+\href{https://www.wlu.ca/privacy}{Notice of Collection, Use, and Disclosure of Personal Information}.
+
+%--------------------------- NOTICE OF DATA COLLECTION ---------------------------
+\coloredsection{Notice of Data Collection}
+
+The Lazaridis School of Business \& Economics is accredited with 
+\href{https://www.aacsb.edu/}{\textbf{AACSB}}. AACSB accreditation helps further Laurier’s goal of inspiring lives of leadership and purpose by demonstrating our commitment to impactful learning, community engagement, and professional growth. In order to maintain this accreditation, aggregate information about student performance in this course may be collected, analyzed, and disclosed to AACSB as part of the Lazaridis School's \textbf{Assurance of Learning (AoL)} reporting requirements. Your name, ID number, and individual performance will not be shared outside the university as part of this process, but it is possible identifiable information may be shared with AACSB in cases where classes or programs are small, i.e., fewer than 5 students.
+
+If you have any questions, please contact the AoL coordinator at \href{mailto:aol@wlu.ca}{aol@wlu.ca}. To find out more about how your personal information is collected, used, and disclosed, please review Laurier’s 
+\href{https://www.wlu.ca/about/public-accountability/privacy/notice-of-collection.html}{\textbf{Notice of Collection, Use and Disclosure of Personal Information}}, or visit \href{https://wlu.ca/privacy}{wlu.ca/privacy}.
+
+
+%--------------------------- ACCESSIBLE LEARNING ---------------------------
+\coloredsection{Accessible Learning}
+
+Students requiring academic accommodations should contact the  
+\href{https://students.wlu.ca/academics/support-and-advising/accessible-learning/index.html}{Accessible Learning Centre}.  
+Review the \href{https://students.wlu.ca/academics/support-and-advising/accessible-learning/registration/index.html}{Registration page}  
+for intake procedures and documentation requirements.  
+Students are responsible for meeting posted deadlines.  
+Requests received after deadlines cannot be guaranteed.
+
+%--------------------------- INTELLECTUAL PROPERTY ---------------------------
+\coloredsection{Intellectual Property}
+
+All course materials — including lecture notes, slides, handouts, assignments,  
+and materials on \textbf{MyLearningSpace} — are the intellectual property  
+of the instructor and are provided for student use only. Redistribution, recording, or sharing these materials without permission  
+violates the instructor’s rights and the \textbf{Canadian Copyright Act}.  
+Recording lectures is prohibited unless explicitly authorized by the instructor.  
+Participation in this course constitutes agreement to abide by these policies.
+
+%--------------------------- OTHER RESOURCES ---------------------------
+\coloredsection{Other Resources}
+
+Free resources available to students include:
+\begin{itemize}
+    \item \href{https://good2talk.ca/}{Good2Talk (24/7 Mental Health Support)}
+    \item \href{https://www.yourstudentsunion.ca/food-bank}{WLUSU Student Food Bank}
+    \item \href{https://students.wlu.ca/wellness-and-recreation/safety/foot-patrol.html}{WLUSU Foot Patrol}
+    \item \href{https://students.wlu.ca/wellness-and-recreation/health-and-wellness/index.html}{Waterloo Student Wellness Centre}
+\end{itemize}
+
+
+
+\coloredsection{Experiential Learning Activities}
+
+This course includes experiential learning through applied coding exercises, empirical replication, module paper presentations, and a group project. Students will apply machine learning and econometric methods to real economic data, reproduce selected empirical results, and develop a machine-learning extension of a replicated paper. The project culminates in a five-page, two-column, publication-style research report and a conference-style poster presentation.
+
+\coloredsection{UN Sustainable Development Goals}
+
+This course advances the following UN Sustainable Development Goals:
+
+\begin{itemize}
+    \item \textbf{SDG 4: Quality Education} -- Students develop applied data, coding, replication, and research communication skills through hands-on empirical work.
+    \item \textbf{SDG 8: Decent Work and Economic Growth} -- The course examines economic prediction, policy evaluation, productivity, labor-market outcomes, and economic performance.
+    \item \textbf{SDG 9: Industry, Innovation and Infrastructure} -- Students study machine learning, artificial intelligence, data-driven innovation, and modern computational methods in economic research.
+\end{itemize}
+
+
+\end{document}

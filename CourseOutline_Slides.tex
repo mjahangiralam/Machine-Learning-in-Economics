@@ -1,0 +1,549 @@
+\documentclass[aspectratio=169,11pt]{beamer}
+
+% -------------------------------------------------
+% Packages
+% -------------------------------------------------
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{ragged2e}
+\usepackage{multicol}
+\usepackage{etoolbox}
+
+% -------------------------------------------------
+% Beamer style
+% -------------------------------------------------
+\definecolor{LaurierPurple}{HTML}{4B116F}
+\definecolor{DeepBlue}{HTML}{0047AB}
+\definecolor{AccentGold}{HTML}{C99700}
+\definecolor{SoftGray}{HTML}{F4F6F8}
+\definecolor{DarkGray}{HTML}{2E2E2E}
+\definecolor{MutedGray}{HTML}{666666}
+
+\usetheme{Madrid}
+\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{itemize item}{\color{AccentGold}$\blacktriangleright$}
+\setbeamertemplate{itemize subitem}{\color{DeepBlue}$\circ$}
+\setbeamercolor{title}{fg=white,bg=LaurierPurple}
+\setbeamercolor{frametitle}{fg=white,bg=LaurierPurple}
+\setbeamercolor{block title}{fg=white,bg=DeepBlue}
+\setbeamercolor{block body}{fg=DarkGray,bg=SoftGray}
+\setbeamercolor{alerted text}{fg=LaurierPurple}
+\setbeamercolor{structure}{fg=DeepBlue}
+\setbeamerfont{title}{size=\Large,series=\bfseries}
+\setbeamerfont{subtitle}{size=\normalsize}
+\setbeamerfont{frametitle}{size=\large,series=\bfseries}
+\setbeamerfont{block title}{series=\bfseries}
+\setbeamersize{text margin left=0.65cm,text margin right=0.65cm}
+
+\hypersetup{colorlinks=true,urlcolor=DeepBlue,linkcolor=DeepBlue}
+
+\newcolumntype{Y}{>{\RaggedRight\arraybackslash}X}
+\newcommand{\smallgap}{\vspace{0.35em}}
+\newcommand{\course}{EC 410K/EC 610I: Machine Learning in Economics}
+\newcommand{\instructor}{M. Jahangir Alam, PhD}
+
+\AtBeginEnvironment{tabularx}{\scriptsize}
+
+% -------------------------------------------------
+% Title info
+% -------------------------------------------------
+\title[Machine Learning in Economics]{\course}
+\subtitle{Course Outline Slides \; | \; Spring 2026}
+\author{\instructor}
+\institute{Wilfrid Laurier University}
+\date{}
+
+\begin{document}
+
+% -------------------------------------------------
+\begin{frame}[plain]
+\titlepage
+\vspace{-0.6em}
+\begin{center}
+\small
+\href{mailto:moalam@wlu.ca}{moalam@wlu.ca} \quad | \quad
+\href{https://www.mjahangiralam.com}{www.mjahangiralam.com} \quad | \quad
+Office: Lazaridis Hall, LH2015
+\end{center}
+\end{frame}
+
+% -------------------------------------------------
+\begin{frame}{Course at a Glance}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{0.49\textwidth}
+\begin{block}{Course information}
+\begin{tabular}{@{}ll@{}}
+\textbf{Course} & EC 410K / EC 610I \\
+\textbf{Title} & Machine Learning in Economics \\
+\textbf{Credit hours} & 3 \\
+\textbf{Term} & Spring 2026 \\
+\textbf{Meeting time} & Tue/Thu, 5:30--6:50 PM \\
+\textbf{Location} & DAWB 3-103 \\
+\textbf{Office hours} & Tue, 3:00--4:00 PM \\
+\end{tabular}
+\end{block}
+\end{column}
+\begin{column}{0.49\textwidth}
+\begin{block}{Main course idea}
+This course connects \textbf{economic questions} with \textbf{modern machine learning}, emphasizing prediction, causal inference, forecasting, text analysis, policy evaluation, and reproducible empirical research.
+\end{block}
+\smallgap
+\begin{block}{Applied focus}
+Students implement models in \textbf{Python}, replicate empirical studies, and complete a machine-learning extension of an economics paper.
+\end{block}
+\end{column}
+\end{columns}
+\end{frame}
+
+% -------------------------------------------------
+\begin{frame}{Why This Course Matters}
+\begin{block}{The central tension}
+Economics increasingly uses high-dimensional data, text, forecasts, and algorithmic tools - but the key challenge is still to connect methods to \textbf{economic interpretation}, \textbf{identification}, and \textbf{policy relevance}.
+\end{block}
+
+\vspace{0.4em}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{0.32\textwidth}
+\begin{block}{Prediction}
+Forecast economic outcomes, classify risks, and validate models out of sample.
+\end{block}
+\end{column}
+\begin{column}{0.32\textwidth}
+\begin{block}{Causality}
+Use ML to support treatment-effect estimation, heterogeneity analysis, and policy targeting.
+\end{block}
+\end{column}
+\begin{column}{0.32\textwidth}
+\begin{block}{Communication}
+Replicate, extend, interpret, and present empirical evidence clearly.
+\end{block}
+\end{column}
+\end{columns}
+\end{frame}
+
+% -------------------------------------------------
+\begin{frame}{Course Format}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{0.54\textwidth}
+\begin{block}{Learning activities}
+\begin{itemize}
+    \item Lectures on machine learning and econometric foundations
+    \item Python-based coding sessions
+    \item Research paper discussions and method presentations
+    \item Empirical replication workshop
+    \item Group project and conference-style poster presentation
+\end{itemize}
+\end{block}
+\end{column}
+\begin{column}{0.42\textwidth}
+\begin{block}{Pedagogical emphasis}
+\begin{itemize}
+    \item Hands-on application
+    \item Reproducible workflows
+    \item Model validation
+    \item Economic interpretation
+    \item Responsible use of AI tools
+\end{itemize}
+\end{block}
+\end{column}
+\end{columns}
+\end{frame}
+
+% -------------------------------------------------
+\begin{frame}{Prerequisites, Software, and AI Tools}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{0.48\textwidth}
+\begin{block}{Prerequisites}
+\begin{itemize}
+    \item Prior coursework in econometrics
+    \item Familiarity with regression and causal inference
+    \item Programming experience is helpful but not required
+    \item Students should bring a laptop to class
+\end{itemize}
+\end{block}
+\end{column}
+\begin{column}{0.48\textwidth}
+\begin{block}{Software and tools}
+\begin{itemize}
+    \item Python for all empirical work
+    \item NumPy, pandas, scikit-learn
+    \item Selected deep learning or NLP packages
+    \item ChatGPT / GitHub Copilot for coding support, debugging, and learning
+\end{itemize}
+\end{block}
+\end{column}
+\end{columns}
+
+\vspace{0.25em}
+\begin{alertblock}{Key principle}
+AI-assisted tools may support learning, but students remain responsible for verifying outputs, understanding submitted code, and interpreting results in an economic context.
+\end{alertblock}
+\end{frame}
+
+% -------------------------------------------------
+\begin{frame}{Measurable Learning Outcomes}
+By the end of the course, students should be able to:
+\vspace{0.25em}
+\begin{enumerate}
+    \item Apply supervised and unsupervised ML methods to high-dimensional economic data.
+    \item Integrate ML with econometric methods for causal analysis and treatment effects.
+    \item Evaluate model performance using validation techniques and explainability tools.
+    \item Analyze economic text data and assess generative AI in economic applications.
+    \item Design, replicate, and communicate empirical research using reproducible workflows.
+\end{enumerate}
+\end{frame}
+
+% -------------------------------------------------
+\begin{frame}{Assessment Structure}
+\begin{block}{Grade breakdown}
+\begin{tabularx}{\textwidth}{@{}Y r@{}}
+\toprule
+\textbf{Component} & \textbf{Weight} \\
+\midrule
+Module paper, method, and Python coding presentation & 30\% \\
+Replication assignment & 20\% \\
+Group project: ML application on a replicated paper & 40\% \\
+Participation and discussion & 10\% \\
+\midrule
+\textbf{Total} & \textbf{100\%} \\
+\bottomrule
+\end{tabularx}
+\end{block}
+
+\vspace{0.35em}
+\begin{block}{Assessment logic}
+The course moves from \textbf{understanding frontier papers}, to \textbf{replicating empirical evidence}, to \textbf{extending research with machine learning}, and finally to \textbf{communicating results professionally}.
+\end{block}
+\end{frame}
+
+% -------------------------------------------------
+\begin{frame}{Presentation, Replication, and Project Expectations}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{0.31\textwidth}
+\begin{block}{30\% Presentation}
+\small
+One module paper, one method explanation, and a short Python demonstration.\\[0.25em]
+\textbf{Focus:} paper logic, method intuition, coding, limitations, and Q\&A.
+\end{block}
+\end{column}
+\begin{column}{0.31\textwidth}
+\begin{block}{20\% Replication}
+\small
+Reproduce one key table, figure, regression, or empirical finding.\\[0.25em]
+\textbf{Focus:} data, empirical strategy, reproducible code, and comparison.
+\end{block}
+\end{column}
+\begin{column}{0.31\textwidth}
+\begin{block}{40\% Group Project}
+\small
+Extend a replicated paper using appropriate ML methods.\\[0.25em]
+\textbf{Output:} five-page two-column report and conference-style poster.
+\end{block}
+\end{column}
+\end{columns}
+\end{frame}
+
+% -------------------------------------------------
+\begin{frame}{Course Modules: Big Picture}
+\begin{tabularx}{\textwidth}{@{}>{\bfseries}p{0.12\textwidth}Y@{}}
+\toprule
+Module & Topic \\
+\midrule
+1 & Economic questions, prediction, and causality \\
+2 & Supervised and unsupervised learning in economics \\
+3 & Linear models and regularization \\
+4 & Machine learning for causal inference \\
+5 & Tree-based methods, classification, and interpretability \\
+6 & Financial and macroeconomic forecasting using ML and deep learning \\
+7 & Text data, NLP, and generative AI \\
+8 & Empirical replication \\
+9 & Applied machine learning and causal project \\
+10 & Research communication \\
+\bottomrule
+\end{tabularx}
+\end{frame}
+
+% -------------------------------------------------
+\begin{frame}{Core Methods Sequence}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{0.49\textwidth}
+\begin{block}{Modules 1--3}
+\begin{itemize}
+    \item Prediction vs. causal inference
+    \item Endogeneity, selection bias, and identification
+    \item Supervised learning and high-dimensional prediction
+    \item Unsupervised learning, clustering, and dimensionality reduction
+    \item Lasso, Ridge, Elastic Net, and model selection
+\end{itemize}
+\end{block}
+\end{column}
+\begin{column}{0.49\textwidth}
+\begin{block}{Modules 4--5}
+\begin{itemize}
+    \item Double/debiased machine learning
+    \item Cross-fitting and orthogonalization
+    \item Heterogeneous treatment effects
+    \item Random forests, boosting, classification
+    \item SHAP and model interpretability
+\end{itemize}
+\end{block}
+\end{column}
+\end{columns}
+\end{frame}
+
+% -------------------------------------------------
+\begin{frame}{Advanced Applications Sequence}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{0.48\textwidth}
+\begin{block}{Module 6: Forecasting}
+\begin{itemize}
+    \item Financial and macroeconomic time series
+    \item Tree-based forecasting models
+    \item LSTM and transformer-based architectures
+    \item Out-of-sample performance and economic relevance
+\end{itemize}
+\end{block}
+\end{column}
+\begin{column}{0.48\textwidth}
+\begin{block}{Module 7: Text and AI}
+\begin{itemize}
+    \item Text as data in economics
+    \item NLP and monetary policy applications
+    \item Generative AI for forecasting
+    \item Responsible use and disclosure of AI tools
+\end{itemize}
+\end{block}
+\end{column}
+\end{columns}
+
+\vspace{0.2em}
+\begin{block}{Modules 8--10}
+Empirical replication, applied ML/causal projects, professional reports, and poster-based research communication.
+\end{block}
+\end{frame}
+
+% -------------------------------------------------
+\begin{frame}{Selected Readings}
+\begin{multicols}{2}
+\scriptsize
+\begin{itemize}
+    \item Athey (2019), \textit{The Impact of Machine Learning on Economics}
+    \item Mullainathan and Spiess (2017), \textit{Machine Learning: An Applied Econometric Approach}
+    \item Gu, Kelly, and Xiu (2020), \textit{Empirical Asset Pricing via Machine Learning}
+    \item Chernozhukov, Newey, and Singh (2022), \textit{Automatic Debiased Machine Learning}
+    \item Athey and Wager (2021), \textit{Policy Learning with Observational Data}
+    \item Chernozhukov et al. (2018), \textit{Double/Debiased Machine Learning}
+    \item Athey, Tibshirani, and Wager (2019), \textit{Generalized Random Forests}
+    \item Lundberg and Lee (2017), \textit{A Unified Approach to Interpreting Model Predictions}
+    \item Lim et al. (2021), \textit{Temporal Fusion Transformers}
+    \item Gentzkow, Kelly, and Taddy (2019), \textit{Text as Data}
+    \item Aruoba and Drechsel (2024), \textit{Identifying Monetary Policy Shocks}
+    \item Alam et al. (2026), \textit{ChatMacro: Evaluating Inflation Forecasts of Generative AI}
+\end{itemize}
+\end{multicols}
+\end{frame}
+
+% -------------------------------------------------
+\begin{frame}{Replication and ML Extension Papers}
+\scriptsize
+\begin{tabularx}{\textwidth}{@{}p{0.30\textwidth}Y@{}}
+\toprule
+\textbf{Paper} & \textbf{Core empirical theme} \\
+\midrule
+Acemoglu, Johnson, and Robinson (2001) & Colonial origins and comparative development \\
+Nunn (2008) & Slave trades and current African economic performance \\
+Goldin, Lurie, and McCubbin (2016) & Medicare Part D low-income subsidy design \\
+Hansen (2015) & Punishment, deterrence, and drunk driving \\
+Anderson (2017) & College athletic success and institutional outcomes \\
+Autor, Dorn, and Hanson (2013) & Import competition from China and U.S. local labor markets \\
+\bottomrule
+\end{tabularx}
+
+\vspace{0.55em}
+\begin{block}{Project task}
+Replicate one core result, then ask whether ML can improve prediction, classification, variable selection, heterogeneity analysis, forecasting, policy targeting, or interpretation.
+\end{block}
+\end{frame}
+
+% -------------------------------------------------
+\begin{frame}{Tentative Course Timeline}
+\scriptsize
+\begin{tabularx}{\textwidth}{@{}p{0.12\textwidth}Y p{0.27\textwidth}@{}}
+\toprule
+\textbf{Weeks} & \textbf{Main focus} & \textbf{Key milestone} \\
+\midrule
+1--2 & Course introduction; prediction, causality, and ML in economics & Module paper presentations begin May 12 \\
+3--4 & High-dimensional prediction; linear models and regularization & Coding with Lasso, Ridge, Elastic Net \\
+5--6 & Causal ML, heterogeneous treatment effects, tree models, SHAP & Method and coding presentations continue \\
+7--9 & Deep learning forecasting, text data, NLP, generative AI & No class on June 16 \\
+10 & Empirical replication workshop and online proposal presentations & Replication assignment due July 7 \\
+11 & Online proposal presentations & Group project plans presented \\
+12--13 & Final poster presentations and wrap-up & Posters presented July 21, 23, 28 \\
+-- & Final deadline & Report and poster due August 4 \\
+\bottomrule
+\end{tabularx}
+\end{frame}
+
+% -------------------------------------------------
+\begin{frame}{Important Dates}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{0.49\textwidth}
+\begin{block}{Early and middle term}
+\begin{itemize}
+    \item Tue, May 5: Course introduction
+    \item Tue, May 12: Module paper presentations begin
+    \item Tue, June 16: No class
+    \item Tue, July 7: Replication assignment due
+\end{itemize}
+\end{block}
+\end{column}
+\begin{column}{0.49\textwidth}
+\begin{block}{Project and final outputs}
+\begin{itemize}
+    \item July 9, 14, 16: Online proposal presentations
+    \item July 21, 23, 28: Final poster presentations
+    \item Tue, August 4: Five-page report and poster due
+\end{itemize}
+\end{block}
+\end{column}
+\end{columns}
+\end{frame}
+
+
+% -------------------------------------------------
+\begin{frame}{Job-Market Preparation Toolkit}
+\small
+\begin{block}{Why this matters}
+These tools help students produce job-market-ready evidence: \textbf{reproducible code}, \textbf{visible projects}, professional writing, and a credible online profile.
+\end{block}
+
+\vspace{0.15em}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{0.32\textwidth}
+\begin{block}{Code workflow}
+\scriptsize
+\begin{itemize}
+    \item \textbf{VS Code}: Python coding environment
+    \item \textbf{GitHub Desktop}: manage version control
+    \item \textbf{GitHub}: host replication and project repositories
+\end{itemize}
+\end{block}
+\end{column}
+\begin{column}{0.32\textwidth}
+\begin{block}{Cloud and AI}
+\scriptsize
+\begin{itemize}
+    \item \textbf{Google Colab}: cloud notebooks for sharing and execution
+    \item \textbf{Generative AI}: coding support, debugging, documentation, and research workflow
+\end{itemize}
+\end{block}
+\end{column}
+\begin{column}{0.32\textwidth}
+\begin{block}{Professional profile}
+\scriptsize
+\begin{itemize}
+    \item \textbf{LinkedIn}: profile, skills, projects, and research interests
+    \item \textbf{Overleaf / LaTeX}: reports, slides, papers, and documentation
+\end{itemize}
+\end{block}
+\end{column}
+\end{columns}
+
+\vspace{0.15em}
+\begin{alertblock}{Student action item}
+\scriptsize
+Create accounts or install tools early, then use them consistently for coding assignments, replication work, the group project, and the final research poster.
+\end{alertblock}
+\end{frame}
+
+% -------------------------------------------------
+\begin{frame}{Course Website, Submissions, and Costs}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{0.50\textwidth}
+\begin{block}{Course websites}
+\begin{itemize}
+    \item MyLearningSpace: course materials, announcements, readings, coding materials, and graded submissions
+    \item Capstone Project Portal: project development, feedback, replication work, and supplementary materials
+    \item Email submissions are not accepted unless explicitly instructed
+\end{itemize}
+\end{block}
+\end{column}
+\begin{column}{0.46\textwidth}
+\begin{block}{Estimated costs}
+\begin{itemize}
+    \item No required textbook
+    \item Python and main packages are open-source and free
+    \item ChatGPT Plus may be helpful but is not required
+    \item Required course material cost: \textbf{\$0}, excluding laptop/internet access
+\end{itemize}
+\end{block}
+\end{column}
+\end{columns}
+\end{frame}
+
+% -------------------------------------------------
+\begin{frame}{Academic Integrity and Generative AI}
+\begin{block}{Academic integrity}
+Students are expected to complete their own work, uphold honesty, and take responsibility for submissions. Plagiarism, cheating, fabrication, falsification of data, unauthorized collaboration, and resubmission of prior work without approval are prohibited.
+\end{block}
+
+\vspace{0.25em}
+\begin{block}{Generative AI policy}
+Generative AI may be used for coding support, debugging, prompt engineering, replication work, workflow development, and interpretation support. Use must be disclosed when it contributes to coding, writing, analysis, or interpretation.
+\end{block}
+
+\vspace{0.25em}
+\begin{alertblock}{Submission standard}
+Students must be able to explain and verify all submitted work.
+\end{alertblock}
+\end{frame}
+
+% -------------------------------------------------
+\begin{frame}{Experiential Learning, Mission, and SDGs}
+\begin{columns}[T,onlytextwidth]
+\begin{column}{0.47\textwidth}
+\begin{block}{Experiential learning}
+\begin{itemize}
+    \item Applied coding exercises
+    \item Empirical replication
+    \item Module paper presentations
+    \item Group project and poster presentation
+\end{itemize}
+\end{block}
+\end{column}
+\begin{column}{0.49\textwidth}
+\begin{block}{UN Sustainable Development Goals}
+\begin{itemize}
+    \item SDG 4: Quality Education
+    \item SDG 8: Decent Work and Economic Growth
+    \item SDG 9: Industry, Innovation and Infrastructure
+\end{itemize}
+\end{block}
+\end{column}
+\end{columns}
+
+\vspace{0.3em}
+\begin{block}{Lazaridis School mission connection}
+The course supports impactful learning, experiential education, and applied research capacity in economics and business.
+\end{block}
+\end{frame}
+
+% -------------------------------------------------
+\begin{frame}[plain]
+\begin{center}
+\vspace{1.0cm}
+{\Huge \textbf{Welcome to the Course}}\\[0.7em]
+{\Large Machine Learning in Economics}\\[1.2em]
+{\normalsize Bring your laptop, your questions, and your curiosity.}\\[1.2em]
+\href{https://www.mjahangiralam.com}{www.mjahangiralam.com}
+\end{center}
+\end{frame}
+
+\end{document}
