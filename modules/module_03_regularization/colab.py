@@ -77,11 +77,11 @@ print(f"Lasso alpha: {lasso_grid.best_params_}")
 
 print("\n=== Holdout performance ===")
 print(
-    f"Ridge RMSE: {mean_squared_error(y_test, ridge_hat, squared=False):.4f} | "
+    f"Ridge RMSE: {np.sqrt(mean_squared_error(y_test, ridge_hat)):.4f} | "
     f"R2: {r2_score(y_test, ridge_hat):.4f}"
 )
 print(
-    f"Lasso RMSE: {mean_squared_error(y_test, lasso_hat, squared=False):.4f} | "
+    f"Lasso RMSE: {np.sqrt(mean_squared_error(y_test, lasso_hat)):.4f} | "
     f"R2: {r2_score(y_test, lasso_hat):.4f}"
 )
 

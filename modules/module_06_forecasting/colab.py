@@ -73,8 +73,8 @@ for s in range(test_start, len(y_all)):
     y_hat_hgb[s] = hgb.predict(X_te)[0]
 
 idx = np.arange(test_start, len(y_all))
-rmse_ols = mean_squared_error(y_all[idx], y_hat_ols[idx], squared=False)
-rmse_hgb = mean_squared_error(y_all[idx], y_hat_hgb[idx], squared=False)
+rmse_ols = np.sqrt(mean_squared_error(y_all[idx], y_hat_ols[idx]))
+rmse_hgb = np.sqrt(mean_squared_error(y_all[idx], y_hat_hgb[idx]))
 
 print("=== One-step-ahead pseudo OOS (rolling origin) ===")
 print(f"OLS RMSE: {rmse_ols:.4f}")

@@ -62,7 +62,7 @@ best_rf = rf_grid.best_estimator_
 
 for name, model in [("Ridge (linear baseline)", ridge), ("Random forest (flexible)", best_rf)]:
     pred = model.predict(X_test)
-    rmse = mean_squared_error(y_test, pred, squared=False)
+    rmse = np.sqrt(mean_squared_error(y_test, pred))
     r2 = r2_score(y_test, pred)
     print(f"{name}: RMSE={rmse:.3f}, R2={r2:.3f}")
 

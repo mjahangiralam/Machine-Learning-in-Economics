@@ -56,7 +56,7 @@ lr_pred = LinearRegression().fit(X_train, y_train)
 y_hat = lr_pred.predict(X_test)
 
 print("=== Prediction performance (features: S only) ===")
-print(f"Test RMSE: {mean_squared_error(y_test, y_hat, squared=False):.4f}")
+print(f"Test RMSE: {np.sqrt(mean_squared_error(y_test, y_hat)):.4f}")
 print(f"Test R2:   {r2_score(y_test, y_hat):.4f}")
 
 # -----------------------------
