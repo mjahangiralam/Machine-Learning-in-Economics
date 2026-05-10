@@ -1,0 +1,22 @@
+MODULE 1: Economic Questions, Prediction, and Causality
+
+A. Module Description
+This module establishes how economic questions map to empirical goals—especially the distinction between prediction (“what will happen?”) and causal inference (“what would happen under an intervention?”). Students connect identification logic (selection, endogeneity, credible variation) to the course’s replication papers and learn where machine learning can help without substituting for design.
+
+B. Learning Objectives
+1. Separate prediction problems from causal estimands (ATE, ATT, CATE, LATE, etc.).
+2. Explain selection bias and why flexible models do not automatically fix endogeneity.
+3. Name common designs (RCT, IV, RD, DiD, matching/shift-share intuition) and their credibility requirements.
+4. Propose one concrete, valid ML extension for a replication paper (prediction, heterogeneity, nuisance modeling) with clear evaluation criteria.
+
+C. Student/Group Assignment
+Present Athey (2019) at a level appropriate for peers; teach one identification concept using a replication-paper example (e.g., Hansen RD, AJR IV, ADH exposure); run the Colab notebook (or an extension) and explain what is predictive versus what would require a design for causal claims; lead discussion questions.
+
+D. Python Colab Code
+See colab.py in this folder (install block + simulated “policy targeting” vs “causal effect” illustration).
+
+E. LaTeX Beamer Slides
+See slides.tex (standalone; compile with pdflatex).
+
+F. Notes for Instructor
+Use early weeks to set norms: estimand first, then estimator. Pair with the existing long Module 1 deck in Slides/ for optional deeper reading; this folder’s slides are sized for a single presentation session plus demo.

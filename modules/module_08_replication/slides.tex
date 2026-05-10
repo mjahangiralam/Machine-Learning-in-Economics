@@ -1,0 +1,123 @@
+\documentclass[aspectratio=169,11pt]{beamer}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{microtype}
+
+\usetheme{Madrid}
+\usecolortheme{default}
+
+\definecolor{LaurierPurple}{HTML}{4B116F}
+\definecolor{DeepBlue}{HTML}{0047AB}
+
+\setbeamertemplate{navigation symbols}{}
+\setbeamercolor{title}{fg=white,bg=LaurierPurple}
+\setbeamercolor{frametitle}{fg=white,bg=LaurierPurple}
+\setbeamercolor{block title}{fg=white,bg=DeepBlue}
+\setbeamercolor{structure}{fg=DeepBlue}
+
+\hypersetup{colorlinks=true,urlcolor=DeepBlue,linkcolor=DeepBlue}
+
+\title[Replication]{Module 8: Empirical Replication}
+\subtitle{EC 410K / EC 610I --- Machine Learning in Economics}
+\author{M. Jahangir Alam, PhD}
+\institute{Wilfrid Laurier University}
+\date{Spring 2026}
+
+\begin{document}
+
+\begin{frame}[plain]
+  \titlepage
+\end{frame}
+
+\begin{frame}{Module overview}
+  \begin{itemize}
+    \item Replication is the bridge between reading papers and doing research.
+    \item Goals: verify computational claims, understand design details, and create a foundation for extensions.
+    \item Outputs: clean code, documented data, and a short memo explaining matches and discrepancies.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Learning objectives}
+  \begin{enumerate}
+    \item Build a replication checklist from a paper’s empirical section.
+    \item Diagnose common failures: sample mismatch, wrong clustering, missing weights, version drift.
+    \item Practice writing reproducible workflows suitable for GitHub + Colab.
+    \item Connect replication to the course’s ML extension project.
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}{What counts as a successful replication?}
+  \begin{itemize}
+    \item Reproduce \textbf{one} core exhibit well (table, figure, key coefficient).
+    \item Document every step: data pull, cleaning, estimation command, package versions.
+    \item If you cannot match: explain the most likely reasons and what you tried.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Replication and identification}
+  \begin{itemize}
+    \item Replication clarifies \textbf{what variation} the estimate uses.
+    \item It does not by itself validate assumptions---but it makes scrutiny possible.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Course replication papers (reminder)}
+  \begin{itemize}
+    \item Acemoglu--Johnson--Robinson (2001); Nunn (2008); Goldin--Lurie--McCubbin (2016);
+    \item Hansen (2015); Anderson (2017); Autor--Dorn--Hanson (2013).
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Workflow (recommended)}
+  \begin{enumerate}
+    \item Read the empirical strategy before coding.
+    \item Obtain data; verify units and merges.
+    \item Reconstruct the baseline sample.
+    \item Match a simple exhibit first; then complex robustness.
+    \item Version control + environment snapshot (\texttt{requirements.txt} / conda).
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}{Python / Colab demonstration}
+  \begin{itemize}
+    \item Toy DGP where the target parameter is known.
+    \item Compare OLS estimate to a fake ``published'' value to practice writing a replication memo.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Colab setup}
+  \begin{verbatim}
+!pip -q install numpy pandas statsmodels
+  \end{verbatim}
+\end{frame}
+
+\begin{frame}{Student / group assignment}
+  \begin{itemize}
+    \item Create a two-page replication memo draft for your assigned paper: question, data sources, baseline spec, target exhibit.
+    \item Run the toy Colab exercise and use it as a template for discussing mismatch sources.
+    \item Present progress: what is reproduced, what is blocked, next steps toward ML extension.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Summary}
+  \begin{itemize}
+    \item Replication is a disciplined craft: transparency, testing, documentation.
+    \item Treat mismatch as information, not failure---but require a clear debugging plan.
+    \item Strong replication makes the ML extension scientifically meaningful.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[plain]
+  \begin{center}
+    \Large Questions?\\[0.8em]
+    \normalsize Next: applied ML + causal project integration (Module 9).
+  \end{center}
+\end{frame}
+
+\end{document}

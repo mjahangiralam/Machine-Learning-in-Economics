@@ -1,0 +1,22 @@
+MODULE 4: Machine Learning for Causal Inference
+
+A. Module Description
+Students learn the double/debiased machine learning (DML) idea: use flexible ML to estimate nuisance functions (conditional expectations) while preserving a low-dimensional causal parameter via orthogonalization and sample splitting (cross-fitting). The module also introduces causal forests conceptually as a tool for heterogeneous treatment effects (HTE).
+
+B. Learning Objectives
+1. Explain partialing out / orthogonalization for the partially linear model \(Y = D\theta + g(X) + u\).
+2. Implement a simple cross-fitted DML estimator with scikit-learn nuisances.
+3. Contrast naive regression vs DML when \(g(X)\) is nonlinear and confounding enters through \(X\).
+4. Connect to Chernozhukov et al.\ (2018) and Athey, Tibshirani, and Wager (2019), and to Hansen (2015) or Anderson (2017) as settings where HTE matters.
+
+C. Student/Group Assignment
+Teach the DML workflow diagram (split, estimate nuisances, residualize, second stage); run Colab; propose HTE analysis for a replication paper (e.g., punishment effects varying by prior record; athletic effects varying by conference).
+
+D. Python Colab Code
+See colab.py.
+
+E. LaTeX Beamer Slides
+See slides.tex.
+
+F. Notes for Instructor
+This is the heaviest module computationally; keep the data-generating process simple. Mention that full theory needs regularity conditions; students should focus on intuition + correct workflow.

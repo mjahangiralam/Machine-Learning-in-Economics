@@ -1,0 +1,22 @@
+MODULE 7: Text Data, NLP, and Generative AI
+
+A. Module Description
+Students learn a practical “text as data” pipeline: tokenization via bag-of-words / TF-IDF, supervised classification for measurement, and a disciplined discussion of generative AI for forecasting (what can go wrong). Readings connect to central bank text (Aruoba and Drechsel, 2024), the survey by Gentzkow, Kelly, and Taddy (2019), and evaluation of LLM forecasts (Alam, Boyle, Li, and Sekhposyan, 2026).
+
+B. Learning Objectives
+1. Build a TF-IDF document matrix and train a baseline classifier.
+2. Interpret coefficients / top terms as descriptive measurement (not causal language by default).
+3. Explain use cases: topic models, sentiment, shock extraction from text (high level).
+4. Discuss responsible use/disclosure for generative AI in student work.
+
+C. Student/Group Assignment
+Present one NLP paper + one GenAI evaluation paper (split within group if needed); run Colab; propose how text could measure a variable in a replication context (e.g., policy uncertainty) with clear limitations.
+
+D. Python Colab Code
+See colab.py.
+
+E. LaTeX Beamer Slides
+See slides.tex.
+
+F. Notes for Instructor
+Keep expectations realistic: modern transformers are optional extra reading; TF-IDF logistic is enough for pedagogy.

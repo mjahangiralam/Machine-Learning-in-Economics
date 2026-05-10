@@ -1,0 +1,152 @@
+\documentclass[aspectratio=169,11pt]{beamer}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{microtype}
+
+\usetheme{Madrid}
+\usecolortheme{default}
+
+\definecolor{LaurierPurple}{HTML}{4B116F}
+\definecolor{DeepBlue}{HTML}{0047AB}
+
+\setbeamertemplate{navigation symbols}{}
+\setbeamercolor{title}{fg=white,bg=LaurierPurple}
+\setbeamercolor{frametitle}{fg=white,bg=LaurierPurple}
+\setbeamercolor{block title}{fg=white,bg=DeepBlue}
+\setbeamercolor{structure}{fg=DeepBlue}
+
+\hypersetup{colorlinks=true,urlcolor=DeepBlue,linkcolor=DeepBlue}
+
+\title[Regularization]{Module 3: Linear Models and Regularization}
+\subtitle{EC 410K / EC 610I --- Machine Learning in Economics}
+\author{M. Jahangir Alam, PhD}
+\institute{Wilfrid Laurier University}
+\date{Spring 2026}
+
+\begin{document}
+
+\begin{frame}[plain]
+  \titlepage
+\end{frame}
+
+\begin{frame}{Module overview}
+  \begin{itemize}
+    \item High-dimensional regressors appear in modern empirical work: many controls, many baseline characteristics, many engineered features.
+    \item \textbf{Ridge (L2)} stabilizes estimates via shrinkage; \textbf{Lasso (L1)} encourages sparsity (automatic variable selection).
+    \item These tools are central to \textbf{prediction} and also appear inside modern \textbf{causal ML} pipelines as ways to estimate flexible nuisances (preview).
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Learning objectives}
+  \begin{enumerate}
+    \item Write Ridge and Lasso penalized least squares objectives and interpret \(\lambda\).
+    \item Explain why we standardize predictors before L1/L2 in practice.
+    \item Tune \(\lambda\) with cross-validation and compare holdout error.
+    \item Connect regularization to course papers: CNS (2022) and Athey--Wager (2021), plus replication examples with many covariates.
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}{Baseline problem: OLS in high dimensions}
+  Minimize \(\|y - X\beta\|_2^2\). If \(p\) is large relative to \(n\), OLS can:
+  \begin{itemize}
+    \item overfit badly,
+    \item be unstable (multicollinearity),
+    \item produce models that generalize poorly.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Ridge regression (L2 penalty)}
+  \[
+    \widehat{\beta}^{\text{ridge}}
+    = \arg\min_{\beta} \;\|y - X\beta\|_2^2 + \lambda \|\beta\|_2^2
+  \]
+  \begin{itemize}
+    \item Shrinks coefficients toward 0; often improves out-of-sample prediction.
+    \item Typically does not set coefficients exactly to 0.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Lasso (L1 penalty)}
+  \[
+    \widehat{\beta}^{\text{lasso}}
+    = \arg\min_{\beta} \;\|y - X\beta\|_2^2 + \lambda \|\beta\|_1
+  \]
+  \begin{itemize}
+    \item Can produce \textbf{exact zeros}: a form of variable selection.
+    \item Tradeoff: useful for sparse signals; can be unstable with correlated predictors (elastic net is a common fix).
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Choosing \(\lambda\)}
+  \begin{itemize}
+    \item \(\lambda\) controls bias--variance: larger \(\lambda\) \(\Rightarrow\) more shrinkage.
+    \item Standard practice: grid search + \(K\)-fold cross-validation using out-of-sample loss.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Chernozhukov, Newey, and Singh (2022)}
+  \begin{itemize}
+    \item Develops \textbf{automatic debiased} machine learning approaches for valid inference on causal/structural parameters in high-dimensional settings.
+    \item Big picture for students: first-stage ML must be handled carefully if you want confidence intervals for a low-dimensional target parameter.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Athey and Wager (2021): policy learning}
+  \begin{itemize}
+    \item Learns treatment assignment rules from observational data using robust objective functions.
+    \item Connects to regularized/ML decision making: the goal is a \textbf{policy}, not only a coefficient.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Replication paper connections}
+  \begin{itemize}
+    \item \textbf{Anderson (2017):} many institutional covariates; ML regularization can help predict outcomes or estimate propensity models (later modules).
+    \item \textbf{Goldin et al.\ (2016):} rich plan/market features; prediction of enrollment patterns vs causal claims about strategic pricing.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Python / Colab demonstration}
+  \begin{enumerate}
+    \item Simulate sparse \(\beta\) in \(p=60\) predictors.
+    \item Fit Ridge and Lasso with \texttt{GridSearchCV}.
+    \item Report holdout RMSE/R\(^2\) and visualize Lasso vs true \(\beta\).
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}[fragile]{Colab setup}
+  \begin{verbatim}
+!pip -q install numpy pandas scikit-learn matplotlib
+  \end{verbatim}
+\end{frame}
+
+\begin{frame}{Student / group assignment}
+  \begin{itemize}
+    \item Explain Ridge vs Lasso with one geometric/intuitive analogy.
+    \item Present CNS (2022) \textbf{or} Athey--Wager (2021) at overview level (students choose with instructor approval).
+    \item Run the Colab script; discuss what would change if predictors were time-series autocorrelated.
+    \item Propose a regularization-based extension for one replication paper (clear predictive vs causal scope).
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Summary}
+  \begin{itemize}
+    \item Regularization makes linear models work better in high dimensions for \textbf{prediction}.
+    \item Lasso induces sparsity; Ridge stabilizes; choose penalties with CV.
+    \item Advanced causal inference with ML requires additional tools (orthogonalization, debiasing)---Module 4.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[plain]
+  \begin{center}
+    \Large Questions?\\[0.8em]
+    \normalsize Next: machine learning for causal inference (Module 4).
+  \end{center}
+\end{frame}
+
+\end{document}

@@ -1,0 +1,242 @@
+\documentclass[aspectratio=169,11pt]{beamer}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{microtype}
+
+\usetheme{Madrid}
+\usecolortheme{default}
+
+\definecolor{LaurierPurple}{HTML}{4B116F}
+\definecolor{DeepBlue}{HTML}{0047AB}
+\definecolor{AccentGold}{HTML}{C99700}
+
+\setbeamertemplate{navigation symbols}{}
+\setbeamercolor{title}{fg=white,bg=LaurierPurple}
+\setbeamercolor{frametitle}{fg=white,bg=LaurierPurple}
+\setbeamercolor{block title}{fg=white,bg=DeepBlue}
+\setbeamercolor{structure}{fg=DeepBlue}
+
+\hypersetup{colorlinks=true,urlcolor=DeepBlue,linkcolor=DeepBlue}
+
+\title[Prediction \& Causality]{Module 1: Economic Questions, Prediction, and Causality}
+\subtitle{EC 410K / EC 610I --- Machine Learning in Economics}
+\author{M. Jahangir Alam, PhD}
+\institute{Wilfrid Laurier University}
+\date{Spring 2026}
+
+\begin{document}
+
+\begin{frame}[plain]
+  \titlepage
+  \vspace{-0.5em}
+  \begin{center}
+    \small \href{mailto:moalam@wlu.ca}{moalam@wlu.ca}
+  \end{center}
+\end{frame}
+
+\begin{frame}{Module overview}
+  \begin{itemize}
+    \item Economics asks both \textbf{predictive} and \textbf{causal} questions.
+    \item Machine learning is powerful for prediction and flexible estimation, but it does not automatically create \textbf{credible causal variation}.
+    \item This module builds the map: \textbf{question} $\rightarrow$ \textbf{estimand} $\rightarrow$ \textbf{identification} $\rightarrow$ \textbf{estimation} $\rightarrow$ \textbf{validation} $\rightarrow$ \textbf{interpretation}.
+    \item We connect ideas to replication papers used later in the course.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Learning objectives}
+  \begin{enumerate}
+    \item Distinguish prediction targets from causal estimands (ATE, ATT, CATE, LATE, etc.).
+    \item Explain \textbf{selection bias} and why ``more controls'' / flexible ML does not automatically fix endogeneity.
+    \item Recognize common \textbf{designs}: RCT, IV, RD, DiD, matching/propensity, shift-share intuition.
+    \item Describe \textbf{two roles} for ML: main prediction object vs.\ supporting tool (nuisance functions, heterogeneity, robustness).
+    \item Propose a feasible ML extension for a replication paper with correct evaluation metric.
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}{Background and motivation}
+  \begin{itemize}
+    \item Applied economics increasingly uses high-dimensional data, text, and ML algorithms.
+    \item The core difficulty remains: linking evidence to \textbf{economic mechanisms} and \textbf{policy counterfactuals}.
+    \item A strong predictive model can be \textbf{useful} for targeting and risk screening while still being \textbf{non-causal}.
+  \end{itemize}
+  \vspace{0.4em}
+  \begin{block}{Key reading}
+    Athey (2019), \textit{The impact of machine learning on economics} (survey + agenda).
+  \end{block}
+\end{frame}
+
+\begin{frame}{The central distinction}
+  \begin{center}
+    \Large Prediction: ``What will $Y$ be?''\\[0.7em]
+    \Large Causality: ``What would $Y$ be if we changed $D$?''
+  \end{center}
+  \vspace{0.6em}
+  \begin{alertblock}{Practical rule}
+    If the question involves a \textbf{policy}, \textbf{treatment}, \textbf{threshold rule}, \textbf{historical shock exposure}, or \textbf{institutional change}, treat it as causal until proven otherwise.
+  \end{alertblock}
+\end{frame}
+
+\begin{frame}{Prediction: objective and evaluation}
+  We approximate a function \(f\) so that \(\widehat{Y}_i = \widehat{f}(X_i)\).
+  \begin{itemize}
+    \item Examples: default risk, recession probability, earnings prediction, inflation forecasts.
+    \item Evaluation: out-of-sample loss (RMSE, MAE), calibration, stability over time.
+  \end{itemize}
+  \vspace{0.3em}
+  \begin{block}{Important}
+    Strong predictors need not be \textbf{policy levers}. Predictive importance \(\neq\) causal effect.
+  \end{block}
+\end{frame}
+
+\begin{frame}{Causality: counterfactuals}
+  Individual treatment effect:
+  \[
+    \tau_i = Y_i(1) - Y_i(0)
+  \]
+  Common targets: ATE, ATT, CATE\((x)\), LATE (IV), local effects (RD).
+  \begin{itemize}
+    \item The challenge is \textbf{missing counterfactuals}: we never observe both potential outcomes for the same unit at the same time.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Selection bias decomposition (intuition)}
+  \[
+    \mathbb{E}[Y \mid D{=}1] - \mathbb{E}[Y \mid D{=}0]
+    =
+    \underbrace{\mathbb{E}[Y(1){-}Y(0)\mid D{=}1]}_{\text{ATT}}
+    +
+    \underbrace{\mathbb{E}[Y(0)\mid D{=}1]{-}\mathbb{E}[Y(0)\mid D{=}0]}_{\text{selection bias}}
+  \]
+  \begin{itemize}
+    \item ML can fit the conditional expectation tightly and still not answer what \(\tau\) is without a design.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Identification vs.\ estimation}
+  \begin{itemize}
+    \item \textbf{Estimation}: compute a number from data.
+    \item \textbf{Identification}: argue the variation in \(D\) supports a causal interpretation of that number.
+  \end{itemize}
+  \vspace{0.3em}
+  \begin{alertblock}{Warning}
+    High \(R^2\), many features, or flexible nonparametrics do \textbf{not} substitute for credible variation.
+  \end{alertblock}
+\end{frame}
+
+\begin{frame}{Common causal designs (high level)}
+  \begin{center}
+    \footnotesize
+    \begin{tabular}{@{}p{0.22\textwidth}p{0.34\textwidth}p{0.38\textwidth}@{}}
+      \toprule
+      Design & Source of variation & Key concern \\
+      \midrule
+      RCT & Randomization & Compliance / attrition \\
+      IV & Instrument shifts \(D\) & Exclusion / relevance \\
+      RD & Cutoff rule & Manipulation / bandwidth \\
+      DiD & Timing + groups & Parallel trends \\
+      Matching/PS & Overlap on \(X\) & Unobserved confounding \\
+      \bottomrule
+    \end{tabular}
+  \end{center}
+\end{frame}
+
+\begin{frame}{Where machine learning enters (without replacing design)}
+  \begin{itemize}
+    \item Flexible prediction of nuisances: \(\mathbb{E}[Y\mid X]\), \(\mathbb{E}[D\mid X]\) (later: DML).
+    \item High-dimensional control selection / regularization (careful interpretation).
+    \item Heterogeneous effects: forests, boosting partitions (later modules).
+    \item Text measurement: topics, sentiment, shocks from documents (Module 7).
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Connection to replication papers I: AJR (2001)}
+  \begin{itemize}
+    \item \textbf{Question:} do institutions matter for long-run development?
+    \item \textbf{Causal tool:} IV (settler mortality) addressing endogeneity of institutions.
+    \item \textbf{Prediction angle:} predict GDP using geography/history features (useful, not causal proof).
+    \item \textbf{ML extension idea:} robustness with many controls; heterogeneity by region; but IV exclusion remains economic.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Connection to replication papers II: Hansen (2015)}
+  \begin{itemize}
+    \item \textbf{Question:} does punishment deter drunk driving?
+    \item \textbf{Causal tool:} RD at BAC thresholds.
+    \item \textbf{Prediction angle:} predict recidivism risk from covariates.
+    \item \textbf{ML extension idea:} CATE near cutoff; flexible running-variable fit with RD discipline.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Connection to replication papers III: ADH (2013)}
+  \begin{itemize}
+    \item \textbf{Question:} China import competition and local labor markets.
+    \item \textbf{Causal tool:} exposure / shift-share logic (with debate about pre-trends and validity).
+    \item \textbf{Prediction angle:} predict manufacturing decline from pre-shock features.
+    \item \textbf{ML extension idea:} vulnerability index; heterogeneous impacts across CZs.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Python / Colab demonstration (what students should show)}
+  \begin{enumerate}
+    \item Simulate \(Y\) with a confounder \(W\) and treatment/feature \(S\).
+    \item Show \textbf{holdout prediction} of \(Y\) from \(S\) (good prediction possible).
+    \item Compare \textbf{short vs long regression} for causal coefficient of \(S\) when \(W\) is observed vs omitted.
+    \item Emphasize: prediction metrics do not validate causal claims.
+  \end{enumerate}
+  \vspace{0.3em}
+  \begin{block}{Files}
+    Use \texttt{colab.py} in \texttt{modules/module\_01\_prediction\_causality/}.
+  \end{block}
+\end{frame}
+
+\begin{frame}[fragile]{Colab setup (minimal)}
+  \begin{verbatim}
+# If needed:
+!pip -q install numpy pandas scikit-learn statsmodels matplotlib
+  \end{verbatim}
+  \vspace{0.2em}
+  \begin{itemize}
+    \item Run the script top-to-bottom; discuss each printed block in economic language.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Student / group task}
+  \begin{itemize}
+    \item \textbf{Present:} Athey (2019) + one replication-paper bridge (choose one from the syllabus list).
+    \item \textbf{Teach:} one identification concept (selection, RD local comparability, IV exclusion intuition, DiD parallel trends).
+    \item \textbf{Code:} reproduce the Module 1 notebook outputs and extend with one twist (e.g., stronger confounding).
+    \item \textbf{Lead:} two discussion questions separating prediction vs causation.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Rubric alignment (course)}
+  \begin{itemize}
+    \item Paper understanding + method connection: clarity of estimand and design.
+    \item Coding: reproducible, explained, economically interpreted.
+    \item Critical discussion: limitations, threats, and honest scope of ML.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Summary}
+  \begin{itemize}
+    \item Match methods to \textbf{questions}: prediction loss vs causal assumptions.
+    \item ML improves many estimation tasks but does not create exogenous variation.
+    \item Build course habit: state estimand, state identification, then choose tools.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[plain]
+  \begin{center}
+    \Large Questions?\\[1em]
+    \normalsize Next: supervised and unsupervised learning (Module 2).
+  \end{center}
+\end{frame}
+
+\end{document}

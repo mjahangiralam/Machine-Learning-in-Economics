@@ -1,0 +1,168 @@
+\documentclass[aspectratio=169,11pt]{beamer}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{microtype}
+
+\usetheme{Madrid}
+\usecolortheme{default}
+
+\definecolor{LaurierPurple}{HTML}{4B116F}
+\definecolor{DeepBlue}{HTML}{0047AB}
+
+\setbeamertemplate{navigation symbols}{}
+\setbeamercolor{title}{fg=white,bg=LaurierPurple}
+\setbeamercolor{frametitle}{fg=white,bg=LaurierPurple}
+\setbeamercolor{block title}{fg=white,bg=DeepBlue}
+\setbeamercolor{structure}{fg=DeepBlue}
+
+\hypersetup{colorlinks=true,urlcolor=DeepBlue,linkcolor=DeepBlue}
+
+\title[Supervised \& Unsupervised]{Module 2: Supervised and Unsupervised Learning in Economics}
+\subtitle{EC 410K / EC 610I --- Machine Learning in Economics}
+\author{M. Jahangir Alam, PhD}
+\institute{Wilfrid Laurier University}
+\date{Spring 2026}
+
+\begin{document}
+
+\begin{frame}[plain]
+  \titlepage
+\end{frame}
+
+\begin{frame}{Module overview}
+  \begin{itemize}
+    \item \textbf{Supervised learning:} learn \(\widehat f\) mapping features \(X\) to outcome \(Y\) using labeled data.
+    \item \textbf{Unsupervised learning:} discover structure in \(X\) (clusters, low-dimensional representations).
+    \item Economics adds: \textbf{interpretation}, \textbf{stability}, and separating \textbf{prediction} from \textbf{causal} claims.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Learning objectives}
+  \begin{enumerate}
+    \item Explain train/validation/test evaluation and why in-sample fit misleads.
+    \item Implement regularized regression and a flexible learner (random forest) with cross-validation.
+    \item Use PCA and k-means and discuss what they do (and do not) imply economically.
+    \item Connect methods to Mullainathan and Spiess (2017) and Gu, Kelly, and Xiu (2020).
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}{Background: why economists care}
+  \begin{itemize}
+    \item Many problems are naturally \textbf{high-dimensional}: many predictors, interactions, latent types.
+    \item Classic linear models may miss nonlinearities; ML methods may improve \textbf{predictive accuracy}.
+    \item But improved prediction does not automatically answer causal policy questions (Module 1).
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Supervised learning setup}
+  Given pairs \((Y_i, X_i)\), choose \(\widehat f\) in a class \(\mathcal{F}\):
+  \[
+    \widehat f \in \arg\min_{f \in \mathcal{F}} \;\frac{1}{n}\sum_{i=1}^n \ell\big(Y_i, f(X_i)\big) + \text{complexity penalty}
+  \]
+  \begin{itemize}
+    \item Regression losses: squared error, Huber; classification: log loss, hinge; etc.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Overfitting and the bias--variance tradeoff (intuition)}
+  \begin{itemize}
+    \item \textbf{Bias:} systematic error from wrong functional form / restrictions.
+    \item \textbf{Variance:} sensitivity to training noise; tends to rise with model flexibility.
+    \item Goal: good \textbf{out-of-sample} performance, not maximizing in-sample \(R^2\).
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Cross-validation (workflow)}
+  \begin{enumerate}
+    \item Split data into \(K\) folds; rotate which fold is held out.
+    \item Tune hyperparameters using average holdout loss.
+    \item Report performance honestly (avoid ``testing on the training set'').
+  \end{enumerate}
+  \vspace{0.3em}
+  \begin{alertblock}{Economics note}
+    Time series need specialized splitting (rolling windows), not i.i.d.\ folds.
+  \end{alertblock}
+\end{frame}
+
+\begin{frame}{Gu, Kelly, and Xiu (2020): empirical asset pricing via ML}
+  \begin{itemize}
+    \item Massive predictor sets in asset pricing: compare many ML methods for \textbf{return prediction}.
+    \item Central lesson for this course: careful out-of-sample design and economic interpretation of signals.
+    \item Students are not required to replicate the full paper; the Colab exercise captures the \textbf{spirit}: many \(Z\), compare learners.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Mullainathan and Spiess (2017): ML as applied econometrics}
+  \begin{itemize}
+    \item Bridges ML practice with econometric goals: prediction, estimation, hypothesis formation.
+    \item Emphasizes discipline about goals (prediction vs structure) and validation.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Unsupervised learning: PCA (idea)}
+  \begin{itemize}
+    \item Find directions of maximum variance in standardized \(X\): scores \(Z_k^\top X\).
+    \item Useful for visualization, compression, and building features---but PCs are not automatically ``economic factors.''
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Unsupervised learning: k-means (idea)}
+  \begin{itemize}
+    \item Partition units into \(K\) groups minimizing within-cluster dispersion.
+    \item Clusters can be useful stylized facts or segmentation---but labeling requires domain reasoning.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Connection to applied research: ADH (2013) as a discussion example}
+  \begin{itemize}
+    \item \textbf{Supervised angle:} predict local manufacturing decline from pre-shock covariates (``vulnerability'').
+    \item \textbf{Unsupervised angle:} cluster commuting zones by industry mix / shock exposure geometry.
+    \item \textbf{Causal angle:} separate from prediction---requires the paper’s identification logic.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Python / Colab demo plan}
+  \begin{enumerate}
+    \item Simulate many characteristics predicting returns (sparse linear truth + noise).
+    \item Compare Ridge vs random forest using 5-fold CV MSE.
+    \item Run PCA + k-means; plot PC1--PC2; describe clusters descriptively.
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}[fragile]{Colab setup}
+  \begin{verbatim}
+!pip -q install numpy pandas scikit-learn matplotlib
+  \end{verbatim}
+\end{frame}
+
+\begin{frame}{Student / group assignment}
+  \begin{itemize}
+    \item Present MS (2017) + GKX (2020): question, data setting (GKX), main ML takeaway.
+    \item Teach cross-validation clearly with a diagram on the board or slides.
+    \item Run \texttt{colab.py}; explain each output block in economics language.
+    \item Propose one extension idea for ADH or another replication paper (prediction feature, clustering, risk score).
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Summary}
+  \begin{itemize}
+    \item Supervised ML optimizes predictive performance with disciplined out-of-sample checks.
+    \item Unsupervised methods summarize \(X\); economic meaning is not automatic.
+    \item Connect every algorithmic output to a \textbf{question} and a \textbf{validation strategy}.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[plain]
+  \begin{center}
+    \Large Questions?\\[0.8em]
+    \normalsize Next: linear models and regularization (Module 3).
+  \end{center}
+\end{frame}
+
+\end{document}

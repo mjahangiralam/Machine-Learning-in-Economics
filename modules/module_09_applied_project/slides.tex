@@ -1,0 +1,117 @@
+\documentclass[aspectratio=169,11pt]{beamer}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{microtype}
+
+\usetheme{Madrid}
+\usecolortheme{default}
+
+\definecolor{LaurierPurple}{HTML}{4B116F}
+\definecolor{DeepBlue}{HTML}{0047AB}
+
+\setbeamertemplate{navigation symbols}{}
+\setbeamercolor{title}{fg=white,bg=LaurierPurple}
+\setbeamercolor{frametitle}{fg=white,bg=LaurierPurple}
+\setbeamercolor{block title}{fg=white,bg=DeepBlue}
+\setbeamercolor{structure}{fg=DeepBlue}
+
+\hypersetup{colorlinks=true,urlcolor=DeepBlue,linkcolor=DeepBlue}
+
+\title[Applied Project]{Module 9: Applied Machine Learning and Causal Project}
+\subtitle{EC 410K / EC 610I --- Machine Learning in Economics}
+\author{M. Jahangir Alam, PhD}
+\institute{Wilfrid Laurier University}
+\date{Spring 2026}
+
+\begin{document}
+
+\begin{frame}[plain]
+  \titlepage
+\end{frame}
+
+\begin{frame}{Module overview}
+  \begin{itemize}
+    \item The group project asks: \textbf{given a replicated empirical paper, what can ML add}?
+    \item Successful projects are explicit about the \textbf{task} (prediction, heterogeneity, measurement, targeting) and the \textbf{evaluation}.
+    \item The best work connects ML outputs to economic interpretation without confusing correlation with causation.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Learning objectives}
+  \begin{enumerate}
+    \item Draft a feasible ML extension that matches the paper’s data and question.
+    \item Choose baselines and tune models with honest validation.
+    \item Communicate limitations: external validity, sample size, endogeneity, overfitting.
+    \item Produce outputs aligned with the final report + poster.
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}{Three common project templates}
+  \begin{enumerate}
+    \item \textbf{Prediction upgrade:} can ML improve out-of-sample prediction of a key outcome?
+    \item \textbf{Heterogeneity:} do effects vary across units in economically interpretable ways?
+    \item \textbf{Measurement / text:} can new variables be extracted to enrich the analysis?
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}{What reviewers will look for}
+  \begin{itemize}
+    \item Clear link between replication baseline and ML extension.
+    \item Correct metrics for the stated goal (not only in-sample \(R^2\)).
+    \item Interpretability where appropriate (coefficients, SHAP, partial dependence---used carefully).
+    \item Reproducible code and data documentation.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Avoid these project failures}
+  \begin{itemize}
+    \item ``We ran random forest'' without a stated economic question.
+    \item Training on the full sample and reporting training accuracy as success.
+    \item Claiming causality from predictive feature importance.
+    \item ML extension unrelated to the paper’s setting or outcomes.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Python / Colab demonstration}
+  \begin{itemize}
+    \item Dry-run comparison: Ridge baseline vs random forest on a nonlinear simulated surface.
+    \item Use the pattern as a coding template: split, tune, evaluate, summarize.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Colab setup}
+  \begin{verbatim}
+!pip -q install numpy pandas scikit-learn
+  \end{verbatim}
+\end{frame}
+
+\begin{frame}{Student / group assignment}
+  \begin{itemize}
+    \item Peer review another team’s 1-page plan using a rubric: question, baseline, metric, risks.
+    \item Revise plan; run the dry-run notebook; begin implementing on replication data.
+    \item Milestone: minimal viable result (one clean table or figure).
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Summary}
+  \begin{itemize}
+    \item Integration beats complexity: one sharp extension beats many shallow models.
+    \item Tie every result to economics and to what the original paper already established.
+    \item Build the poster storyline early: motivation \(\rightarrow\) replication \(\rightarrow\) ML \(\rightarrow\) takeaway.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[plain]
+  \begin{center}
+    \Large Questions?\\[0.8em]
+    \normalsize Next: research communication (Module 10).
+  \end{center}
+\end{frame}
+
+\end{document}

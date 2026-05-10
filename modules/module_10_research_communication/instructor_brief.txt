@@ -1,0 +1,22 @@
+MODULE 10: Research Communication
+
+A. Module Description
+Students learn to communicate empirical work to academic and policy audiences through slides, a structured five-page two-column report, and a conference-style poster. Emphasis is placed on clarity of estimands, honest limitations, reproducibility links, and visual hierarchy.
+
+B. Learning Objectives
+1. Structure a 10–12 minute talk: motivation, design, main result, ML extension, limitations.
+2. Apply poster design principles: one main message, readable figures, QR code to code/data.
+3. Write an abstract-style summary avoiding causal overclaiming.
+4. Practice Q\&A strategies for identification challenges and ML critique.
+
+C. Student/Group Assignment
+Draft poster layout (digital), rehearse timed talk, exchange peer feedback using a rubric (clarity, accuracy, design).
+
+D. Python Colab Code
+See colab.py (optional poster layout mockup in matplotlib).
+
+E. LaTeX Beamer Slides
+See slides.tex.
+
+F. Notes for Instructor
+Pair with a “bad poster / good poster” discussion; require accessibility checks (font size, color contrast).

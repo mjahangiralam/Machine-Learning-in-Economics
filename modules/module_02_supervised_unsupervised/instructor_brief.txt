@@ -1,0 +1,22 @@
+MODULE 2: Supervised and Unsupervised Learning in Economics
+
+A. Module Description
+Students learn the economist’s lens on supervised learning (prediction, loss functions, train/validation splits, overfitting) and unsupervised learning (clustering, dimensionality reduction) as tools for describing structure in data. The module connects high-dimensional prediction in asset pricing (Gu, Kelly, and Xiu, 2020) to broader empirical workflows while emphasizing that unsupervised outputs require careful economic labeling.
+
+B. Learning Objectives
+1. Implement supervised regression with out-of-sample evaluation using cross-validation.
+2. Interpret bias–variance tradeoffs intuitively and connect them to overfitting in economic panels.
+3. Apply PCA and k-means to simulated “many characteristics” data and discuss interpretability limits.
+4. Relate the workflow to Mullainathan and Spiess (2017) and Gu, Kelly, and Xiu (2020).
+
+C. Student/Group Assignment
+Present both reference papers at a high level; teach train/validation/test logic; demonstrate Colab on simulated asset-characteristic-like data; propose how supervised prediction or PCA/k-means features could connect to Autor, Dorn, and Hanson (2013) (e.g., vulnerability prediction or market segmentation) without overclaiming causality.
+
+D. Python Colab Code
+See colab.py.
+
+E. LaTeX Beamer Slides
+See slides.tex.
+
+F. Notes for Instructor
+Good early “methods” module: keep math light, emphasize evaluation discipline. Use the ADH connection as a structured class discussion on predictive vs causal claims.

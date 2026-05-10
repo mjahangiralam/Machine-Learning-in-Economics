@@ -1,0 +1,22 @@
+MODULE 6: Financial and Macroeconomic Forecasting Using ML and Deep Learning
+
+A. Module Description
+Students learn baseline time-series forecasting workflows: constructing supervised learning datasets from lags, rolling/expanding validation, and comparing models out of sample. Deep learning (LSTM, TFT) is discussed conceptually with references; the Colab demo stays lightweight (tree boosting on lag features) so it runs reliably in Colab without GPUs.
+
+B. Learning Objectives
+1. Transform a univariate series into a supervised regression problem using lags.
+2. Evaluate forecasts with pseudo out-of-sample tests (rolling origin).
+3. Compare a linear baseline to a nonlinear tree ensemble for prediction.
+4. Connect readings to Alam and Isakin (2026) and Lim et al.\ (2021) and discuss when interpretability matters in macro/finance.
+
+C. Student/Group Assignment
+Present one of the two module papers; explain multi-step forecasting vs direct horizons; run Colab; propose a forecasting extension for a replication paper only if a time-series outcome exists (otherwise discuss why forecasting is not the right task).
+
+D. Python Colab Code
+See colab.py.
+
+E. LaTeX Beamer Slides
+See slides.tex.
+
+F. Notes for Instructor
+If you want an optional “deep learning extra,” assign a follow-up notebook with \texttt{torch} on GPU for advanced groups.

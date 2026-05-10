@@ -1,0 +1,22 @@
+MODULE 8: Empirical Replication
+
+A. Module Description
+Students learn replication as a research skill: locating data and code, aligning samples, reproducing a target exhibit, and documenting discrepancies. The module emphasizes identification transparency and reproducible workflows (environment files, random seeds, directory structure).
+
+B. Learning Objectives
+1. Translate a paper’s empirical strategy into a checklist (sample, outcomes, treatments, fixed effects, SEs).
+2. Reproduce a toy “Table 1” result from a known data-generating process and report deviation from published numbers.
+3. Practice writing a replication memo structure: what matched, what differed, why.
+4. Map replication to the course group project pipeline (replication \(\rightarrow\) ML extension).
+
+C. Student/Group Assignment
+Run the Colab “toy replication” then apply the same workflow outline to the group’s assigned replication paper; present a 10-minute replication status update: data acquired?, baseline reproduced?, next steps.
+
+D. Python Colab Code
+See colab.py.
+
+E. LaTeX Beamer Slides
+See slides.tex.
+
+F. Notes for Instructor
+This module pairs well with a lab session: require a public GitHub template repo structure.

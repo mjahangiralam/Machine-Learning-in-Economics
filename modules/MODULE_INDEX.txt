@@ -1,0 +1,24 @@
+EC 410K / EC 610I — Module materials index (Spring 2026)
+
+Each folder contains:
+  - instructor_brief.txt  (A–F summary for instructors)
+  - slides.tex            (standalone Beamer deck)
+  - colab.py              (paste into Google Colab or run as a script)
+
+Module folders:
+  module_01_prediction_causality
+  module_02_supervised_unsupervised
+  module_03_regularization
+  module_04_causal_ml
+  module_05_trees_shap
+  module_06_forecasting
+  module_07_text_nlp
+  module_08_replication
+  module_09_applied_project
+  module_10_research_communication
+
+Note: A longer Module 1 slide deck also exists at:
+  Slides/Module1: Economic Questions, Prediction, and Causality.tex
+
+Compile slides (local LaTeX install required):
+  pdflatex -interaction=nonstopmode slides.tex

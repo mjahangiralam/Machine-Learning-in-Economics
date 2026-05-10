@@ -1,0 +1,22 @@
+MODULE 3: Linear Models and Regularization
+
+A. Module Description
+Students study high-dimensional linear models where classical OLS can overfit or become unstable. Ridge (L2) and Lasso (L1) provide regularization paths that improve prediction and support variable selection, with direct connections to debiased/orthogonalized estimation ideas used in modern causal ML (preview: nuisance estimation in later modules). Policy learning (Athey and Wager, 2021) motivates learning rules from data under explicit decision objectives.
+
+B. Learning Objectives
+1. Implement Ridge and Lasso with standardized predictors and interpret penalty parameters.
+2. Explain sparsity from L1 and shrinkage from L2 using intuition and simple geometry.
+3. Use cross-validation to choose \(\lambda\) and compare out-of-sample performance.
+4. Connect regularization to high-dimensional controls in empirical papers (e.g., many baseline covariates in Anderson, 2017) and cite Chernozhukov, Newey, and Singh (2022) + Athey and Wager (2021).
+
+C. Student/Group Assignment
+Teach the role of \(\lambda\); demonstrate the Colab notebook on simulated high-D regression; connect to Goldin, Lurie, and McCubbin (2016) or Anderson (2017): “many controls / many market features” for prediction of enrollment vs causal claims about strategic behavior or athletic success.
+
+D. Python Colab Code
+See colab.py.
+
+E. LaTeX Beamer Slides
+See slides.tex.
+
+F. Notes for Instructor
+Emphasize standardization before L1/L2. Mention that inference after selection is subtle; full inferential theory is beyond one lecture—point to CNS (2022) for the course’s advanced causal angle.

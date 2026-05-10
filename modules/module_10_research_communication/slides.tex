@@ -1,0 +1,127 @@
+\documentclass[aspectratio=169,11pt]{beamer}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{microtype}
+
+\usetheme{Madrid}
+\usecolortheme{default}
+
+\definecolor{LaurierPurple}{HTML}{4B116F}
+\definecolor{DeepBlue}{HTML}{0047AB}
+
+\setbeamertemplate{navigation symbols}{}
+\setbeamercolor{title}{fg=white,bg=LaurierPurple}
+\setbeamercolor{frametitle}{fg=white,bg=LaurierPurple}
+\setbeamercolor{block title}{fg=white,bg=DeepBlue}
+\setbeamercolor{structure}{fg=DeepBlue}
+
+\hypersetup{colorlinks=true,urlcolor=DeepBlue,linkcolor=DeepBlue}
+
+\title[Communication]{Module 10: Research Communication}
+\subtitle{EC 410K / EC 610I --- Machine Learning in Economics}
+\author{M. Jahangir Alam, PhD}
+\institute{Wilfrid Laurier University}
+\date{Spring 2026}
+
+\begin{document}
+
+\begin{frame}[plain]
+  \titlepage
+\end{frame}
+
+\begin{frame}{Module overview}
+  \begin{itemize}
+    \item Great empirical work fails if it is communicated poorly.
+    \item This module focuses on \textbf{structure}, \textbf{visual design}, and \textbf{honest framing} for two outputs: a report and a poster.
+    \item The goal is policy- and academic-ready clarity, not marketing hype.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Learning objectives}
+  \begin{enumerate}
+    \item Build a talk storyline that matches the course project: replication \(\rightarrow\) ML \(\rightarrow\) interpretation.
+    \item Design a poster with a single main message and readable typography.
+    \item Write an abstract and introduction that correctly scopes causal vs predictive claims.
+    \item Handle Q\&A on identification and ML limitations professionally.
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}{The 10--12 minute talk template}
+  \begin{enumerate}
+    \item Motivation (why should the audience care?)
+    \item Setting and data (units, outcomes, key variables)
+    \item Baseline empirical strategy (high level, correct)
+    \item Replication result (what you matched)
+    \item ML extension (question, method, validation)
+    \item Results + economic interpretation
+    \item Limitations and next steps
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}{Report structure (five pages, two columns)}
+  \begin{itemize}
+    \item Page 1: abstract, introduction, contribution
+    \item Middle pages: baseline, ML method, results, robustness
+    \item Final page: conclusion, limitations, reproducibility statement
+    \item References separate; appendix optional for extra figures
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Poster design principles}
+  \begin{itemize}
+    \item One main message visible from 6 feet away
+    \item Fewer words, more clean figures
+    \item Consistent color palette; avoid rainbow defaults
+    \item Include a QR code to code/data (when allowed)
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Communicating ML responsibly}
+  \begin{itemize}
+    \item State whether claims are \textbf{predictive}, \textbf{descriptive}, or \textbf{causal}.
+    \item Report out-of-sample performance and baselines.
+    \item Do not imply SHAP explains causal mechanisms by itself.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Python / Colab demonstration}
+  \begin{itemize}
+    \item Optional matplotlib template to plan poster panels (structure only).
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Colab setup}
+  \begin{verbatim}
+!pip -q install matplotlib
+  \end{verbatim}
+\end{frame}
+
+\begin{frame}{Student / group assignment}
+  \begin{itemize}
+    \item Create a full poster draft and swap with another group for peer review.
+    \item Record a 3-minute practice talk; cut slides that do not advance the story.
+    \item Finalize reproducibility footnote: repository link + environment details.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Summary}
+  \begin{itemize}
+    \item Communication is part of research integrity: clarity reduces misinterpretation.
+    \item Design for the audience: busy policymakers vs specialized researchers.
+    \item Rehearse limitations; confidence comes from precision, not overselling.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[plain]
+  \begin{center}
+    \Large Good luck with final presentations and posters.
+  \end{center}
+\end{frame}
+
+\end{document}

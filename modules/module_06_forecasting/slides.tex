@@ -1,0 +1,128 @@
+\documentclass[aspectratio=169,11pt]{beamer}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{microtype}
+
+\usetheme{Madrid}
+\usecolortheme{default}
+
+\definecolor{LaurierPurple}{HTML}{4B116F}
+\definecolor{DeepBlue}{HTML}{0047AB}
+
+\setbeamertemplate{navigation symbols}{}
+\setbeamercolor{title}{fg=white,bg=LaurierPurple}
+\setbeamercolor{frametitle}{fg=white,bg=LaurierPurple}
+\setbeamercolor{block title}{fg=white,bg=DeepBlue}
+\setbeamercolor{structure}{fg=DeepBlue}
+
+\hypersetup{colorlinks=true,urlcolor=DeepBlue,linkcolor=DeepBlue}
+
+\title[Forecasting]{Module 6: Financial and Macroeconomic Forecasting Using ML and Deep Learning}
+\subtitle{EC 410K / EC 610I --- Machine Learning in Economics}
+\author{M. Jahangir Alam, PhD}
+\institute{Wilfrid Laurier University}
+\date{Spring 2026}
+
+\begin{document}
+
+\begin{frame}[plain]
+  \titlepage
+\end{frame}
+
+\begin{frame}{Module overview}
+  \begin{itemize}
+    \item Forecasting asks for \(\widehat{Y}_{t+h}\) under evolving information.
+    \item ML methods (trees, neural nets, attention models) can improve nonlinear patterns but require \textbf{time-aware validation}.
+    \item This module balances methods with economic evaluation: what is the decision problem the forecast serves?
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Learning objectives}
+  \begin{enumerate}
+    \item Convert a series into a supervised dataset using lags and leads (horizons).
+    \item Implement rolling-origin (pseudo out-of-sample) evaluation.
+    \item Compare a simple linear benchmark to a nonlinear ensemble.
+    \item Summarize deep learning forecasting references at conceptual level (LSTM, TFT).
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}{Background: why validation differs from i.i.d.\ ML}
+  \begin{itemize}
+    \item Time order matters: random K-fold CV can leak future information into training.
+    \item Use expanding/rolling windows, careful feature construction, and realistic forecast origins.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Direct vs iterative multi-step forecasts (idea)}
+  \begin{itemize}
+    \item \textbf{Direct:} model targets \(h\)-step ahead directly.
+    \item \textbf{Iterative:} one-step model chained forward (error accumulation).
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Alam and Isakin (2026): deep learning and sentiment dispersion}
+  \begin{itemize}
+    \item Illustrates text-derived signals combined with ML for financial outcomes.
+    \item Discussion angle: measurement + prediction + economic interpretation of sentiment dispersion.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Lim et al.\ (2021): Temporal Fusion Transformers}
+  \begin{itemize}
+    \item Attention-based architecture for multi-horizon forecasting with interpretable components.
+    \item Practical message: architecture choice is secondary to careful benchmarking and validation.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Connection to replication papers (careful)}
+  \begin{itemize}
+    \item Forecasting is natural when the outcome is inherently dynamic (macro series, asset returns with caveats).
+    \item Many replication papers are causal RD/IV/DiD: a forecasting extension may be \textbf{inappropriate} unless you redefine a clear predictive target.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Python / Colab demonstration}
+  \begin{enumerate}
+    \item Simulate an AR-like series with mild seasonality.
+    \item Build 12 lags; rolling one-step-ahead forecasts from a fixed training start.
+    \item Compare OLS vs histogram gradient boosting RMSE.
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}[fragile]{Colab setup}
+  \begin{verbatim}
+!pip -q install numpy pandas scikit-learn matplotlib
+  \end{verbatim}
+\end{frame}
+
+\begin{frame}{Student / group assignment}
+  \begin{itemize}
+    \item Present Alam--Isakin (2026) \textbf{or} Lim et al.\ (2021).
+    \item Explain leakage: give one concrete example of accidental future information in features.
+    \item Run Colab; discuss why in-sample \(R^2\) is misleading for forecasting.
+    \item Optional: replicate a simple benchmark on public FRED data (outside notebook).
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Summary}
+  \begin{itemize}
+    \item Forecasting ML is about building the right supervised representation + honest time-series CV.
+    \item Deep learning can help but should be judged against strong baselines.
+    \item Keep the economic decision problem explicit (who acts on the forecast?).
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[plain]
+  \begin{center}
+    \Large Questions?\\[0.8em]
+    \normalsize Next: text, NLP, generative AI (Module 7).
+  \end{center}
+\end{frame}
+
+\end{document}

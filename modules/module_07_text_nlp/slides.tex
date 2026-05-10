@@ -1,0 +1,135 @@
+\documentclass[aspectratio=169,11pt]{beamer}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{microtype}
+
+\usetheme{Madrid}
+\usecolortheme{default}
+
+\definecolor{LaurierPurple}{HTML}{4B116F}
+\definecolor{DeepBlue}{HTML}{0047AB}
+
+\setbeamertemplate{navigation symbols}{}
+\setbeamercolor{title}{fg=white,bg=LaurierPurple}
+\setbeamercolor{frametitle}{fg=white,bg=LaurierPurple}
+\setbeamercolor{block title}{fg=white,bg=DeepBlue}
+\setbeamercolor{structure}{fg=DeepBlue}
+
+\hypersetup{colorlinks=true,urlcolor=DeepBlue,linkcolor=DeepBlue}
+
+\title[Text \& NLP]{Module 7: Text Data, NLP, and Generative AI}
+\subtitle{EC 410K / EC 610I --- Machine Learning in Economics}
+\author{M. Jahangir Alam, PhD}
+\institute{Wilfrid Laurier University}
+\date{Spring 2026}
+
+\begin{document}
+
+\begin{frame}[plain]
+  \titlepage
+\end{frame}
+
+\begin{frame}{Module overview}
+  \begin{itemize}
+    \item Economics increasingly uses documents: central bank communication, earnings calls, news, legislation, historical archives.
+    \item NLP turns text into variables: topics, tone, uncertainty, entities, embeddings.
+    \item Generative AI (LLMs) can support forecasting and summarization but requires rigorous evaluation and disclosure.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Learning objectives}
+  \begin{enumerate}
+    \item Implement a baseline NLP pipeline: TF-IDF features + logistic regression.
+    \item Explain \(n\)-grams, sparsity, and regularization in text models.
+    \item Describe how text enters identification in modern macro finance (high level).
+    \item Discuss evaluation and limitations of LLM-based economic prediction.
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}{Gentzkow, Kelly, and Taddy (2019): text as data}
+  \begin{itemize}
+    \item Framework for representation, inference, and validation when text is the measurement system.
+    \item Key lesson: treat text variables like any other measure---document preprocessing choices matter.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Aruoba and Drechsel (2024): NLP and monetary policy shocks}
+  \begin{itemize}
+    \item Uses text from Fed staff materials to inform shock identification.
+    \item Combines domain knowledge + statistical learning; identification remains central.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Alam, Boyle, Li, and Sekhposyan (2026): ChatMacro}
+  \begin{itemize}
+    \item Evaluates generative AI inflation forecasts vs benchmarks.
+    \item Practical takeaway: define the forecasting protocol, horizons, and comparison models carefully.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Bag-of-words and TF-IDF (intuition)}
+  \begin{itemize}
+    \item Represent documents by word frequencies (or weighted frequencies).
+    \item TF-IDF downweights very common terms; captures informative discriminatory words.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{From text to economic variables}
+  \begin{itemize}
+    \item \textbf{Supervised:} label documents (human or rule-based) to train classifiers.
+    \item \textbf{Unsupervised:} topics via LDA, clustering in embedding space (advanced).
+    \item \textbf{LLMs:} prompting for classification/extraction; watch stability and hallucination risk.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Python / Colab demonstration}
+  \begin{enumerate}
+    \item Simulate short policy-communication-like sentences.
+    \item Train TF-IDF + logistic regression; report AUC and a classification report.
+    \item Inspect highest-weight terms for each class.
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}[fragile]{Colab setup}
+  \begin{verbatim}
+!pip -q install numpy pandas scikit-learn
+  \end{verbatim}
+\end{frame}
+
+\begin{frame}{Student / group assignment}
+  \begin{itemize}
+    \item Present GKT (2019) survey \textbf{and} either Aruoba--Drechsel (2024) or ChatMacro (2026).
+    \item Run Colab; discuss what would change with real documents and richer preprocessing.
+    \item Propose a text-based measurement for a replication paper \textbf{without} claiming it identifies shocks by itself.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Generative AI course policy reminder}
+  \begin{itemize}
+    \item Disclosure when AI contributes to writing, coding, or analysis.
+    \item Verify outputs; do not treat LLM text as authoritative data generation without checks.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Summary}
+  \begin{itemize}
+    \item NLP expands the feasible covariate space; validation and transparency are essential.
+    \item Baseline models (TF-IDF + linear classifiers) remain excellent teaching tools.
+    \item Separate \textbf{measurement} from \textbf{identification} from \textbf{prediction}.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[plain]
+  \begin{center}
+    \Large Questions?\\[0.8em]
+    \normalsize Next: empirical replication workshop (Module 8).
+  \end{center}
+\end{frame}
+
+\end{document}

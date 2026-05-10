@@ -1,0 +1,137 @@
+\documentclass[aspectratio=169,11pt]{beamer}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{microtype}
+
+\usetheme{Madrid}
+\usecolortheme{default}
+
+\definecolor{LaurierPurple}{HTML}{4B116F}
+\definecolor{DeepBlue}{HTML}{0047AB}
+
+\setbeamertemplate{navigation symbols}{}
+\setbeamercolor{title}{fg=white,bg=LaurierPurple}
+\setbeamercolor{frametitle}{fg=white,bg=LaurierPurple}
+\setbeamercolor{block title}{fg=white,bg=DeepBlue}
+\setbeamercolor{structure}{fg=DeepBlue}
+
+\hypersetup{colorlinks=true,urlcolor=DeepBlue,linkcolor=DeepBlue}
+
+\title[Causal ML]{Module 4: Machine Learning for Causal Inference}
+\subtitle{EC 410K / EC 610I --- Machine Learning in Economics}
+\author{M. Jahangir Alam, PhD}
+\institute{Wilfrid Laurier University}
+\date{Spring 2026}
+
+\begin{document}
+
+\begin{frame}[plain]
+  \titlepage
+\end{frame}
+
+\begin{frame}{Module overview}
+  \begin{itemize}
+    \item Many causal parameters can be written so that \textbf{nuisance functions} (conditional expectations) are high-dimensional or nonlinear.
+    \item \textbf{Double/debiased ML (DML)} uses ML for nuisances with \textbf{orthogonalization} and \textbf{cross-fitting} to reduce bias in estimating a low-dimensional target (e.g., \(\theta\) in a partially linear model).
+    \item \textbf{Causal forests} target heterogeneous effects \(\tau(x)=\mathbb{E}[Y(1)-Y(0)\mid X=x]\) with forest-based methods.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Learning objectives}
+  \begin{enumerate}
+    \item State the partially linear model and interpret \(\theta\) vs the nuisance \(g(X)\).
+    \item Explain why plugging in ML estimates without caution can bias causal estimates (regularization bias).
+    \item Describe cross-fitting (sample splitting) at a high level.
+    \item Connect methods to Chernozhukov et al.\ (2018) and Athey--Tibshirani--Wager (2019).
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}{Motivation: flexible confounding}
+  Suppose
+  \[
+    Y = D\theta + g(X) + u,\qquad D = m(X) + v
+  \]
+  where \(g,m\) are unknown and nonlinear. A short regression of \(Y\) on \(D\) can be biased if \(D\) is correlated with \(g(X)\) through \(X\).
+\end{frame}
+
+\begin{frame}{Orthogonalization / partialling out (idea)}
+  Define residuals (population):
+  \[
+    \tilde Y = Y - \mathbb{E}[Y\mid X],\qquad \tilde D = D - \mathbb{E}[D\mid X]
+  \]
+  Then (under conditional exogeneity assumptions) a regression of \(\tilde Y\) on \(\tilde D\) targets \(\theta\).
+\end{frame}
+
+\begin{frame}{Why cross-fitting?}
+  \begin{itemize}
+    \item If we estimate \(\widehat{\mathbb{E}}[Y\mid X]\) on the same observations we use for the second stage, overfitting can contaminate inference.
+    \item \textbf{Cross-fitting:} estimate nuisances on training folds, predict on held-out folds, then second stage on orthogonalized out-of-fold predictions.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Chernozhukov et al.\ (2018)}
+  \begin{itemize}
+    \item Framework for \(\sqrt{n}\)-consistent estimation and inference for causal/structural parameters with ML nuisances.
+    \item Key ingredients: Neyman orthogonality (insensitivity to nuisance estimation error) + cross-fitting.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Athey, Tibshirani, and Wager (2019): generalized random forests}
+  \begin{itemize}
+    \item Random forests adapted to estimate heterogeneous effects and other local parameters.
+    \item Useful when the goal is \(\tau(x)\) for policy targeting, not only an ATE.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Replication paper connections}
+  \begin{itemize}
+    \item \textbf{Hansen (2015):} local heterogeneity in deterrence effects (RD setting)---conceptual link to HTE.
+    \item \textbf{Anderson (2017):} effects of athletic success may vary by institution type---CATE as a substantive question.
+    \item \textbf{Nunn (2008):} heterogeneity by geography/history---discuss carefully (identification remains historical).
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Python / Colab demonstration}
+  \begin{enumerate}
+    \item Simulate nonlinear \(g(X)\), \(m(X)\) with known \(\theta\).
+    \item Show naive OLS \(\mathrm{Y \sim D}\) is off.
+    \item Run 2-fold cross-fitted DML with random forest nuisances; compare \(\widehat{\theta}\) to truth.
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}[fragile]{Colab setup}
+  \begin{verbatim}
+!pip -q install numpy pandas scikit-learn statsmodels matplotlib
+  \end{verbatim}
+\end{frame}
+
+\begin{frame}{Student / group assignment}
+  \begin{itemize}
+    \item Draw the DML workflow: split \(\rightarrow\) estimate \(\widehat{\mathbb{E}}[Y\mid X]\), \(\widehat{\mathbb{E}}[D\mid X]\) \(\rightarrow\) residualize \(\rightarrow\) second stage.
+    \item Present either DML (2018) or causal forests (2019) with correct scope (what assumption is still needed?).
+    \item Run Colab; discuss what breaks if treatment is structurally endogenous beyond \(X\) confounding.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Summary}
+  \begin{itemize}
+    \item ML can estimate high-dimensional nuisances, but causal validity still requires economic identification.
+    \item DML combines orthogonalization + cross-fitting to reduce regularization bias in the target parameter.
+    \item Causal forests help summarize heterogeneity when assumptions for HTE interpretation hold.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[plain]
+  \begin{center}
+    \Large Questions?\\[0.8em]
+    \normalsize Next: trees, classification, interpretability (Module 5).
+  \end{center}
+\end{frame}
+
+\end{document}

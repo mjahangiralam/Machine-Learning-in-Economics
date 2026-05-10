@@ -1,0 +1,22 @@
+MODULE 5: Tree-Based Methods, Classification, and Interpretability
+
+A. Module Description
+Students study decision trees, random forests, and gradient boosting as flexible predictors and classifiers in economics. The module emphasizes interpretability: feature importance vs SHAP values, and the difference between explaining predictions and claiming causal mechanisms.
+
+B. Learning Objectives
+1. Train a random forest classifier on simulated “default” data and evaluate with ROC/AUC.
+2. Compute SHAP values for tree models and interpret them as cooperative game attributions (local vs global summaries).
+3. Contrast default feature importance with SHAP-based explanations.
+4. Connect to Lundberg and Lee (2017) and Lundberg et al.\ (2020), and to Goldin, Lurie, and McCubbin (2016) (plan choice / strategic behavior as classification).
+
+C. Student/Group Assignment
+Teach tree ensembles intuitively (bagging vs boosting); present SHAP paper at overview level; run Colab; propose a classification or heterogeneity project linked to Medicare plan features or drunk-driving recidivism prediction (prediction framing).
+
+D. Python Colab Code
+See colab.py (install shap).
+
+E. LaTeX Beamer Slides
+See slides.tex.
+
+F. Notes for Instructor
+SHAP can be computationally heavy; the notebook uses a small sample for TreeExplainer speed. Discuss fairness and misuse: explaining a biased model does not justify deployment.

@@ -1,0 +1,22 @@
+MODULE 9: Applied Machine Learning and Causal Project
+
+A. Module Description
+Students integrate replication with a machine learning extension: defining a precise ML objective (prediction, heterogeneity, measurement, policy rule) separate from the paper’s causal estimand, selecting appropriate validation, and comparing to the original baseline without overclaiming.
+
+B. Learning Objectives
+1. Write a one-page project plan: baseline result + ML extension + evaluation metrics.
+2. Identify leakage risks and unrealistic causal claims in ML extensions.
+3. Outline a results section: tables/figures + interpretability + limitations.
+4. Align the project with the five-page, two-column report + poster expectations.
+
+C. Student/Group Assignment
+Workshop: peer review of another group’s plan; revise hypotheses; implement a minimal viable ML baseline (from earlier modules) on simulated or public data as a dry run.
+
+D. Python Colab Code
+See colab.py (project scaffolding + dry-run ML comparison).
+
+E. LaTeX Beamer Slides
+See slides.tex.
+
+F. Notes for Instructor
+Use this module as a structured studio session; grading should reward clarity of estimand and honest scope.

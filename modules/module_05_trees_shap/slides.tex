@@ -1,0 +1,146 @@
+\documentclass[aspectratio=169,11pt]{beamer}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{microtype}
+
+\usetheme{Madrid}
+\usecolortheme{default}
+
+\definecolor{LaurierPurple}{HTML}{4B116F}
+\definecolor{DeepBlue}{HTML}{0047AB}
+
+\setbeamertemplate{navigation symbols}{}
+\setbeamercolor{title}{fg=white,bg=LaurierPurple}
+\setbeamercolor{frametitle}{fg=white,bg=LaurierPurple}
+\setbeamercolor{block title}{fg=white,bg=DeepBlue}
+\setbeamercolor{structure}{fg=DeepBlue}
+
+\hypersetup{colorlinks=true,urlcolor=DeepBlue,linkcolor=DeepBlue}
+
+\title[Trees \& SHAP]{Module 5: Tree-Based Methods, Classification, and Interpretability}
+\subtitle{EC 410K / EC 610I --- Machine Learning in Economics}
+\author{M. Jahangir Alam, PhD}
+\institute{Wilfrid Laurier University}
+\date{Spring 2026}
+
+\begin{document}
+
+\begin{frame}[plain]
+  \titlepage
+\end{frame}
+
+\begin{frame}{Module overview}
+  \begin{itemize}
+    \item Tree ensembles (random forests, boosting) are workhorses for prediction and classification in applied work.
+    \item They capture nonlinearities and interactions but can be harder to interpret than linear models.
+    \item SHAP provides a principled way to attribute predictions to features---useful, but not a substitute for causal reasoning.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Learning objectives}
+  \begin{enumerate}
+    \item Explain bagging (random forests) vs boosting at intuition level.
+    \item Train/evaluate a classification model with out-of-sample AUC.
+    \item Interpret SHAP summary plots for global and local insight.
+    \item Connect to Lundberg and Lee (2017) and Lundberg et al.\ (2020).
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}{Trees: idea}
+  \begin{itemize}
+    \item Recursive partitioning: split feature space to minimize impurity (Gini, entropy) or loss.
+    \item Pros: flexible; interactions; minimal tuning sometimes.
+    \item Cons: can overfit; unstable individually; extrapolation weaknesses.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Random forests (bagging + random feature subsets)}
+  \begin{itemize}
+    \item Average many deep trees trained on bootstrap samples.
+    \item Variance reduction; improved generalization vs a single tree.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Boosting (high level)}
+  \begin{itemize}
+    \item Sequentially fit weak learners to correct residuals.
+    \item Often strong accuracy; requires more careful tuning and can overfit.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Classification metrics economists use}
+  \begin{itemize}
+    \item Accuracy can mislead with imbalance; ROC-AUC summarizes discrimination.
+    \item Calibration matters for policy: predicted probabilities should match frequencies when possible.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{SHAP values: cooperative game interpretation}
+  \begin{itemize}
+    \item Shapley values from game theory allocate ``payout'' (prediction) across features.
+    \item Local explanation: why did this unit get \(\widehat{p}\)?
+    \item Global view: aggregate \(|\text{SHAP}|\) for variable importance comparisons.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{SHAP \(\neq\) causality}
+  \begin{alertblock}{Common mistake}
+    ``SHAP says \(X_1\) matters most, therefore \(X_1\) is a policy lever.''
+  \end{alertblock}
+  \begin{itemize}
+    \item SHAP explains the fitted model; confounding and endogeneity remain.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Replication paper connections}
+  \begin{itemize}
+    \item \textbf{Goldin et al.\ (2016):} classify plan types or predict enrollment responses; interpret drivers via SHAP (prediction narrative).
+    \item \textbf{Hansen (2015):} predict recidivism vs estimate deterrence at threshold---keep tasks separate.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Python / Colab demonstration}
+  \begin{enumerate}
+    \item Simulate a logistic data-generating process with interactions/nonlinearities.
+    \item Train random forest; report holdout AUC.
+    \item Compute SHAP with TreeExplainer; show summary plot.
+  \end{enumerate}
+\end{frame}
+
+\begin{frame}[fragile]{Colab setup}
+  \begin{verbatim}
+!pip -q install numpy pandas scikit-learn matplotlib shap
+  \end{verbatim}
+\end{frame}
+
+\begin{frame}{Student / group assignment}
+  \begin{itemize}
+    \item Explain one example where feature importance differs from SHAP attributions and why.
+    \item Present Lundberg and Lee (2017) or tree SHAP paper (2020).
+    \item Run Colab; discuss computational cost and subsampling strategies.
+    \item Propose an interpretability study for a replication paper that stays within defensible claims.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Summary}
+  \begin{itemize}
+    \item Tree ensembles are strong predictors; interpretability tools help audit and communicate.
+    \item SHAP is useful for explaining model behavior, not establishing causal mechanisms.
+    \item Always pair interpretability with identification for policy claims.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[plain]
+  \begin{center}
+    \Large Questions?\\[0.8em]
+    \normalsize Next: forecasting with ML/deep learning (Module 6).
+  \end{center}
+\end{frame}
+
+\end{document}
