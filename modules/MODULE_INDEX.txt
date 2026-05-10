@@ -4,6 +4,10 @@ Each folder contains:
   - instructor_brief.txt  (A–F summary for instructors)
   - slides.tex            (standalone Beamer deck)
   - colab.py              (paste into Google Colab or run as a script)
+  - notebook.ipynb        (Jupyter notebook clone of colab.py; open locally or upload to Colab)
+
+Regenerate all notebooks after editing colab.py:
+  python3 modules/build_notebooks.py
 
 Module folders:
   module_01_prediction_causality
