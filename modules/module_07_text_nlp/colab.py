@@ -71,7 +71,7 @@ Xtr = vec.fit_transform(X_train)
 Xte = vec.transform(X_test)
 print(f"TF-IDF matrix shape (train): {Xtr.shape} — fit vectorizer on train only to avoid leakage.")
 
-clf = LogisticRegression(max_iter=2000, C=2.0, n_jobs=-1)
+clf = LogisticRegression(max_iter=2000, C=2.0)
 clf.fit(Xtr, y_train)
 
 proba = clf.predict_proba(Xte)[:, 1]
