@@ -32,16 +32,21 @@ df = pd.DataFrame({"Y": Y, "D": D, "X1": X1, "X2": X2})
 # "Published" (fake) table value with a typo / different sample assumption
 PUBLISHED_COEF = 2.08
 
-model = sm.OLS(df["Y"], sm.add_constant(df[["D", "X1", "X2"]])).fit()
-est = float(model.params["D"])
-se = float(model.bse["D"])
+model_long = sm.OLS(df["Y"], sm.add_constant(df[["D", "X1", "X2"]])).fit()
+est_long = float(model_long.params["D"])
+se_long = float(model_long.bse["D"])
+
+# Short specification (omit confounders) — common replication failure mode
+model_short = sm.OLS(df["Y"], sm.add_constant(df["D"])).fit()
+est_short = float(model_short.params["D"])
 
 print("=== Toy replication memo ===")
 print(f"Target estimand (simulation truth): {TRUE_THETA:.3f}")
-print(f"OLS estimate of theta (long regression): {est:.3f} (SE={se:.3f})")
+print(f"OLS theta | long spec (D + X1 + X2): {est_long:.3f} (SE={se_long:.3f})")
+print(f"OLS theta | short spec (D only):     {est_short:.3f}  <-- often biased; won't match paper using long spec")
 print(f"Fake 'published' coefficient: {PUBLISHED_COEF:.3f}")
-print(f"Difference (estimate - published): {est - PUBLISHED_COEF:.3f}")
+print(f"Difference (long estimate - published): {est_long - PUBLISHED_COEF:.3f}")
 
 print("\nDiscussion prompts:")
-print("- If your estimate differs from the paper, is it sampling variation, coding, or specification?")
+print("- If your estimate differs from the paper, is it sampling variation, coding, or specification (short vs long)?")
 print("- What diagnostics would you run next (sample restrictions, clustering, weights)?")

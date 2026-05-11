@@ -14,7 +14,7 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import classification_report, roc_auc_score
+from sklearn.metrics import classification_report, roc_auc_score, confusion_matrix
 
 rng = np.random.default_rng(5)
 
@@ -69,6 +69,7 @@ vec = TfidfVectorizer(
 
 Xtr = vec.fit_transform(X_train)
 Xte = vec.transform(X_test)
+print(f"TF-IDF matrix shape (train): {Xtr.shape} — fit vectorizer on train only to avoid leakage.")
 
 clf = LogisticRegression(max_iter=2000, C=2.0, n_jobs=-1)
 clf.fit(Xtr, y_train)
@@ -79,6 +80,8 @@ pred = clf.predict(Xte)
 print("=== Holdout metrics (label: 1 dovish vs 0 hawkish in this toy generator) ===")
 print(classification_report(y_test, pred, digits=3))
 print(f"ROC-AUC: {roc_auc_score(y_test, proba):.3f}")
+print("\nConfusion matrix [rows=true 0,1; cols=pred 0,1]:")
+print(confusion_matrix(y_test, pred))
 
 # Show most hawkish/dovish terms by linear coefficients
 vocab = np.array(vec.get_feature_names_out())

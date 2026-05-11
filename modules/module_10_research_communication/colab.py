@@ -38,4 +38,18 @@ ax.text(0.3, 1.05, "Footer: QR code to GitHub/Colab + key takeaway in one senten
 plt.tight_layout()
 plt.show()
 
-print("Tip: keep figure text >= 18–22 pt on the final printed poster; this matplotlib preview is only structural.")
+CHECKLIST = """
+Poster / talk checklist (fill in for your project):
+  [ ] One-sentence takeaway (prediction vs causal scope stated)
+  [ ] Data source + sample definition
+  [ ] Baseline replication result (what you matched from the paper)
+  [ ] ML method name + validation strategy (no leakage)
+  [ ] Figure readable at ~1 m distance (font size)
+  [ ] QR or link to reproducible code
+  [ ] Limitations / external validity (1–2 bullets)
+"""
+print(CHECKLIST)
+print(
+    "Tip: keep figure text >= 18–22 pt on the final printed poster; "
+    "this matplotlib preview is only structural."
+)

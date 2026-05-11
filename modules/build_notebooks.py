@@ -130,6 +130,8 @@ def module_title(folder_name: str) -> str:
         return rest.replace("_", " ").title()
     num = int(m.group(1))
     slug = m.group(2).replace("_", " ").title()
+    if folder_name == "module_07_text_nlp":
+        return f"Module {num}: Text Data, NLP, and Generative AI"
     return f"Module {num}: {slug}"
 
 

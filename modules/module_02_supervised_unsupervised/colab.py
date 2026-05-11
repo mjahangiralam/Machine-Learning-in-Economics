@@ -13,7 +13,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
-from sklearn.model_selection import cross_val_score, KFold
+from sklearn.model_selection import cross_val_score, KFold, train_test_split
 from sklearn.linear_model import Ridge
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.decomposition import PCA
@@ -75,6 +75,31 @@ r_hat_rf = rf.predict(Z)
 print("\n=== Full-sample fit (illustrative; not a causal claim) ===")
 print(f"Ridge R2 (in-sample): {r2_score(r, r_hat_ridge):.4f}")
 print(f"RF R2 (in-sample):    {r2_score(r, r_hat_rf):.4f}")
+
+# -----------------------------
+# 2b) Holdout test set (single split) — complements CV
+# -----------------------------
+Z_tr, Z_te, r_tr, r_te = train_test_split(Z, r, test_size=0.25, random_state=0)
+ridge_h = Pipeline(
+    steps=[
+        ("scale", StandardScaler()),
+        ("model", Ridge(alpha=2.0, random_state=0)),
+    ]
+)
+rf_h = RandomForestRegressor(
+    n_estimators=400,
+    max_depth=None,
+    min_samples_leaf=2,
+    random_state=0,
+    n_jobs=-1,
+)
+ridge_h.fit(Z_tr, r_tr)
+rf_h.fit(Z_tr, r_tr)
+print("\n=== Holdout RMSE (25% test split; same hyperparameters as CV block) ===")
+print(
+    f"Ridge: {np.sqrt(mean_squared_error(r_te, ridge_h.predict(Z_te))):.4f} | "
+    f"RF: {np.sqrt(mean_squared_error(r_te, rf_h.predict(Z_te))):.4f}"
+)
 
 # -----------------------------
 # 3) Unsupervised: PCA + k-means on standardized Z

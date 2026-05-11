@@ -61,10 +61,15 @@ rf_grid.fit(X_train, y_train)
 best_rf = rf_grid.best_estimator_
 
 for name, model in [("Ridge (linear baseline)", ridge), ("Random forest (flexible)", best_rf)]:
-    pred = model.predict(X_test)
-    rmse = np.sqrt(mean_squared_error(y_test, pred))
-    r2 = r2_score(y_test, pred)
-    print(f"{name}: RMSE={rmse:.3f}, R2={r2:.3f}")
+    pred_te = model.predict(X_test)
+    pred_tr = model.predict(X_train)
+    rmse_te = np.sqrt(mean_squared_error(y_test, pred_te))
+    rmse_tr = np.sqrt(mean_squared_error(y_train, pred_tr))
+    r2 = r2_score(y_test, pred_te)
+    print(
+        f"{name}: holdout RMSE={rmse_te:.3f}, R2={r2:.3f} | "
+        f"train RMSE={rmse_tr:.3f} (large train vs test gap ⇒ overfitting risk)"
+    )
 
 print("\nProject writing prompts:")
 print("1) What is the economic question for the ML part (prediction vs heterogeneity vs measurement)?")

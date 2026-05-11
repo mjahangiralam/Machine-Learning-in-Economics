@@ -63,6 +63,16 @@ ols_naive = sm.OLS(df["Y"], sm.add_constant(df["D"])).fit()
 print("=== Naive OLS: Y ~ 1 + D ===")
 print(f"coef(D) = {ols_naive.params['D']:.4f} (true theta = {true_theta})")
 
+# OLS with *linear* controls in X (g(X) is nonlinear in the DGP — linear misspecification remains)
+X_lin = sm.add_constant(pd.concat([df["D"], df[[f"x{k}" for k in range(p)]]], axis=1))
+ols_lin = sm.OLS(df["Y"], X_lin).fit()
+coef_d_lin = float(ols_lin.params["D"])
+print("\n=== OLS: Y ~ 1 + D + linear X (all covariates enter linearly) ===")
+print(f"coef(D) = {coef_d_lin:.4f} (true theta = {true_theta})")
+print(
+    "(If g(X) is nonlinear, controlling X linearly need not remove confounding bias in D.)"
+)
+
 # -----------------------------
 # 3) DML with cross-fitting (2-fold for speed/clarity)
 # -----------------------------

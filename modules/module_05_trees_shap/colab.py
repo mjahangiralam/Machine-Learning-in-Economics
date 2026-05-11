@@ -14,7 +14,7 @@ import matplotlib.pyplot as plt
 
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import roc_auc_score, accuracy_score
+from sklearn.metrics import roc_auc_score, accuracy_score, confusion_matrix
 import shap
 
 rng = np.random.default_rng(99)
@@ -57,6 +57,13 @@ pred = model.predict(X_test)
 print("=== Holdout performance ===")
 print(f"Accuracy: {accuracy_score(y_test, pred):.3f}")
 print(f"ROC-AUC:  {roc_auc_score(y_test, proba):.3f}")
+print("\nConfusion matrix [rows=true 0,1; cols=pred 0,1]:")
+print(confusion_matrix(y_test, pred))
+
+# sklearn: impurity-based importances (tree default) — compare conceptually to SHAP below
+imp = pd.Series(model.feature_importances_, index=feature_names).sort_values(ascending=False)
+print("\n=== RandomForest.feature_importances_ (impurity; not Shapley) ===")
+print(imp.to_string())
 
 # -----------------------------
 # 2) SHAP values (TreeExplainer)
@@ -97,4 +104,7 @@ for j in order:
 
 print(
     "\nTakeaway: SHAP explains model predictions (local attributions), not causal effects."
+)
+print(
+    "Impurity importances and SHAP can rank features differently; both describe the fitted model."
 )

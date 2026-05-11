@@ -15,7 +15,7 @@ from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.metrics import mean_squared_error, r2_score
 from sklearn.pipeline import Pipeline
 from sklearn.preprocessing import StandardScaler
-from sklearn.linear_model import Ridge, Lasso
+from sklearn.linear_model import Ridge, Lasso, LinearRegression
 
 rng = np.random.default_rng(123)
 
@@ -68,8 +68,24 @@ lasso_grid = GridSearchCV(
 ridge_grid.fit(X_train, y_train)
 lasso_grid.fit(X_train, y_train)
 
+# OLS on standardized X (high-dimensional but n>p here: compare stability to penalized fits)
+ols_pipe = Pipeline(
+    steps=[
+        ("scale", StandardScaler()),
+        ("model", LinearRegression()),
+    ]
+)
+ols_pipe.fit(X_train, y_train)
+ols_hat = ols_pipe.predict(X_test)
+
 ridge_hat = ridge_grid.predict(X_test)
 lasso_hat = lasso_grid.predict(X_test)
+
+print("=== Baseline: OLS on all p features (standardized) ===")
+print(
+    f"Holdout RMSE: {np.sqrt(mean_squared_error(y_test, ols_hat)):.4f} | "
+    f"R2: {r2_score(y_test, ols_hat):.4f}"
+)
 
 print("=== Best hyperparameters (CV) ===")
 print(f"Ridge alpha: {ridge_grid.best_params_}")

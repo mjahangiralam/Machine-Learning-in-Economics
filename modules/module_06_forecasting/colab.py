@@ -54,6 +54,7 @@ y_all = data["y"].values
 
 y_hat_ols = np.full(len(y_all), np.nan)
 y_hat_hgb = np.full(len(y_all), np.nan)
+y_hat_naive = np.full(len(y_all), np.nan)  # random-walk: forecast y_t using y_{t-1}
 
 for s in range(test_start, len(y_all)):
     X_tr = X_all[start_train:s]
@@ -72,16 +73,21 @@ for s in range(test_start, len(y_all)):
     hgb.fit(X_tr, y_tr)
     y_hat_hgb[s] = hgb.predict(X_te)[0]
 
+    y_hat_naive[s] = y_all[s - 1]
+
 idx = np.arange(test_start, len(y_all))
+rmse_naive = np.sqrt(mean_squared_error(y_all[idx], y_hat_naive[idx]))
 rmse_ols = np.sqrt(mean_squared_error(y_all[idx], y_hat_ols[idx]))
 rmse_hgb = np.sqrt(mean_squared_error(y_all[idx], y_hat_hgb[idx]))
 
 print("=== One-step-ahead pseudo OOS (rolling origin) ===")
-print(f"OLS RMSE: {rmse_ols:.4f}")
-print(f"HGB  RMSE: {rmse_hgb:.4f}")
+print(f"Naive (y_hat = y lag-1) RMSE: {rmse_naive:.4f}")
+print(f"OLS (lags) RMSE:             {rmse_ols:.4f}")
+print(f"HGB (lags) RMSE:             {rmse_hgb:.4f}")
 
 plt.figure(figsize=(9, 4))
 plt.plot(data["t"], y_all, label="y (simulated)", linewidth=1)
+plt.plot(data["t"], y_hat_naive, label="Naive RW (rolling)", linewidth=1, alpha=0.75)
 plt.plot(data["t"], y_hat_ols, label="OLS forecast (rolling)", linewidth=1, alpha=0.85)
 plt.plot(data["t"], y_hat_hgb, label="HGB forecast (rolling)", linewidth=1, alpha=0.85)
 plt.axvline(test_start, color="black", linestyle="--", linewidth=1, alpha=0.6)

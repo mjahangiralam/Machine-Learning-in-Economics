@@ -60,6 +60,22 @@ print(f"Test RMSE: {np.sqrt(mean_squared_error(y_test, y_hat)):.4f}")
 print(f"Test R2:   {r2_score(y_test, y_hat):.4f}")
 
 # -----------------------------
+# 2b) Prediction with richer observables (when W is also in X)
+# -----------------------------
+# If both S and W are available for forecasting Y, accuracy typically improves.
+# This is still a prediction exercise: it does not justify a causal claim about S alone.
+X_sw = df_full[["S", "W"]].values
+Xtr2, Xte2, ytr2, yte2 = train_test_split(
+    X_sw, y, test_size=0.25, random_state=0
+)
+lr2 = LinearRegression().fit(Xtr2, ytr2)
+y_hat2 = lr2.predict(Xte2)
+print("\n=== Prediction performance (features: S and W) ===")
+print(f"Test RMSE: {np.sqrt(mean_squared_error(yte2, y_hat2)):.4f}")
+print(f"Test R2:   {r2_score(yte2, y_hat2):.4f}")
+print("(Compare: adding W improves prediction because W is a strong predictor of Y.)")
+
+# -----------------------------
 # 3) "Causal" comparison: short vs long regression (when W is observed)
 # -----------------------------
 # Short regression (omit confounder): coef on S is biased for true structural effect of S
@@ -72,6 +88,7 @@ model_long = sm.OLS(df_full["Y"], X_long).fit()
 
 print("\n=== OLS: short regression (omit W) ===")
 print(model_short.summary().tables[1])
+print(f"(True coefficient on S in DGP: 0.25; short regression confounds S with omitted W.)")
 
 print("\n=== OLS: long regression (include W) ===")
 print(model_long.summary().tables[1])
