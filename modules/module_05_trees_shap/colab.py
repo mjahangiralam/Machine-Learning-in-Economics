@@ -69,11 +69,17 @@ explainer = shap.TreeExplainer(model, data=background)
 X_exp = X_test.iloc[:400]
 shap_values = explainer.shap_values(X_exp)
 
-# For binary classification, shap returns list [class0, class1] in many versions
+# SHAP layout differs by version: list [neg, pos], or ndarray (n, p, 2)
 if isinstance(shap_values, list):
-    sv = shap_values[1]
+    sv = np.asarray(shap_values[1])
 else:
-    sv = shap_values
+    sv = np.asarray(shap_values)
+
+if sv.ndim == 3:
+    # (n_samples, n_features, n_classes) — use positive class (index 1)
+    sv = sv[..., 1]
+elif sv.ndim != 2:
+    raise ValueError(f"Unexpected SHAP shape {sv.shape}; expected 2D or 3D array.")
 
 print("\nSHAP values computed for", X_exp.shape[0], "test observations.")
 
@@ -82,11 +88,12 @@ plt.tight_layout()
 plt.show()
 plt.close("all")
 
-mean_abs = np.mean(np.abs(sv), axis=0)
-order = np.argsort(-mean_abs)
+mean_abs = np.mean(np.abs(sv), axis=0).ravel()
+order = np.argsort(-mean_abs, kind="stable")
 print("\nMean |SHAP| (global importance proxy, this sample):")
-for j in order.tolist():
-    print(f"  {feature_names[int(j)]}: {mean_abs[int(j)]:.4f}")
+for j in order:
+    jj = int(j)
+    print(f"  {feature_names[jj]}: {mean_abs[jj]:.4f}")
 
 print(
     "\nTakeaway: SHAP explains model predictions (local attributions), not causal effects."
